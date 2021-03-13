@@ -1,9 +1,19 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
+import Form from './components/Form'
+import Chat from './components/Chat'
+
 
 const App: FC = () => {
+    const [showChat, setShowChat] = useState(false)
+    const [name, setName] = useState('')
+
     return (
-        <h2>OKKK</h2>
+        <div className="page">
+             <h2>CHAT</h2>
+             <Form setShowChat={setShowChat} setName={setName}/>
+             {showChat && <Chat name={name}/>}
+        </div>
     );
 }
  
