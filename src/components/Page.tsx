@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
@@ -7,32 +8,29 @@ import useSocket from "./hooks/SocketHook";
 const Page: FC = () => {
 
     const [showChat, setShowChat] = useState(false)
-    const [name, setName] = useState('')
+    const [nameOfUser, setNameOfuser] = useState('')
     const [messages, setMessages] = useState<string[]>([])
-    const [id, setId] = useState('')
     const client = useSocket().client
+    const store = useSelector((store: Store) => store.userReducer)
 
-    useEffect(() => {
-        client.on('connect', () => {
-            setId(client.id)
-            client.emit('setuser', client.id)
-        })
-        client.on('test', (messages: string[]) => {
-            setMessages(messages)
-        })
+    useEffect(() => {        
         return () => {
             client.disconnect()
         }
     }, [])
+
     useEffect(() => {
-        if (name.length > 0) setShowChat(true)
-    }, [name])
+        const {name} = store.user
+        if(nameOfUser !== name){
+            setNameOfuser(name)
+        }
+    }, [store])
 
     return (
         <div className="page">
             <h2>CHAT</h2>
-            <Form setName={setName}/>
-            {showChat && <Chat name={name}/>}
+            <Form showChat={setShowChat}/>
+            {showChat && <Chat name={nameOfUser}/>}
             {messages.length > 0 && <ul>
                 {messages.map(mess => (
                     <li key={mess}>{mess}</li>

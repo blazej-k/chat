@@ -1,7 +1,8 @@
 import { useFormik } from 'formik';
 import { FC } from 'react'
 import useSocket from './hooks/SocketHook';
-
+import {useDispatch} from 'react-redux'
+import { signUp } from '../actions/UserActions';
 
 type sex = 'male' | 'female'
 
@@ -12,12 +13,13 @@ interface FormValues {
 }
 
 interface FormProps {
-    setName: (name: string) => void
+    showChat: (show: boolean) => void
 }
 
-const Form: FC<FormProps> = ({setName}) => {
+const Form: FC<FormProps> = ({showChat}) => {
 
     const client = useSocket().client
+    const dispatch = useDispatch()
 
     const forimk = useFormik<FormValues>({
         initialValues: {
@@ -26,7 +28,6 @@ const Form: FC<FormProps> = ({setName}) => {
             sex: '' as sex
         },
         onSubmit: (val, {resetForm}) => {
-            setName(val.login)
             // fetch('http://localhost:1000/saveUser', {
             //     method: 'POST',
             //     headers: {
@@ -35,6 +36,8 @@ const Form: FC<FormProps> = ({setName}) => {
             //     body: JSON.stringify(val),
             // })
             client.emit('add user to listeners', val.login)
+            showChat(true)
+            dispatch(signUp({name: val.login, sex}))
             resetForm()
         }
     })
