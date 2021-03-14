@@ -1,8 +1,10 @@
 import { useFormik } from 'formik';
 import { FC } from 'react'
+import useSocket from './hooks/SocketHook';
 
 
 type sex = 'male' | 'female'
+
 interface FormValues {
     login: string,
     password: string,
@@ -14,6 +16,8 @@ interface FormProps {
 }
 
 const Form: FC<FormProps> = ({setName}) => {
+
+    const client = useSocket().client
 
     const forimk = useFormik<FormValues>({
         initialValues: {
@@ -30,6 +34,7 @@ const Form: FC<FormProps> = ({setName}) => {
             //     },
             //     body: JSON.stringify(val),
             // })
+            client.emit('add user to listeners', val.login)
             resetForm()
         }
     })
