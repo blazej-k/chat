@@ -6,27 +6,26 @@ interface ChatProps {
     name: string
 }
 
+const client = io('localhost:1000', {
+    transports: ['websocket'],
+    reconnection: false,
+    autoConnect: false
+})
+
 const Chat: FC<ChatProps> = ({ name }) => {
 
-
-    // const sendAccount = () => {
-
-    // }
     useEffect(() => {
-        console.log(name)
-        const client = io('localhost:1000', {
-            transports: ['websocket'],
-            autoConnect: false,
-        })
-        // client
-        //     .connect()
-        //     .emit('test', { name })
+        client
+            .connect()
+            .emit('test', { name })
+        return () => {
+            client.disconnect()
+        }
     }, [])
 
     return (
         <div className="chat">
             <p>Chat</p>
-            input
         </div>
     );
 }
