@@ -6,11 +6,6 @@ interface SignIn {
     payload: User
 }
 
-interface User {
-    name: string,
-    sex?: 'male' | 'female'
-}
-
 interface UserReducer {
     user: User,
     loading: boolean,
