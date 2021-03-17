@@ -1,10 +1,7 @@
 import { FC, useEffect } from "react"
-import useSocket from "./hooks/SocketHook";
 
 
 const Chat: FC = () => {
-
-    const client = useSocket().client
 
     // useEffect(() => {
     //     fetch('http://localhost:1000/signIn', {

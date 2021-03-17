@@ -13,18 +13,11 @@ const Page: FC = () => {
 
     const [showChat, setShowChat] = useState(false)
     const [nameOfUser, setNameOfuser] = useState('')
-    const client = useSocket().client
     const store = useSelector((store: Store) => store.userReducer)
     const [formType, setFormType] = useState<'signIn' | 'signUp'>('signIn')
     const [friend, setFriend] = useState('')
 
     const { user: { waitingFriends, login, friends } } = store
-
-    useEffect(() => {
-        return () => {
-            client.disconnect()
-        }
-    }, [])
 
     useEffect(() => {
         const { login } = store.user
@@ -99,6 +92,8 @@ const Page: FC = () => {
                         {friends.map(friend => (
                             <li key={friend._id}>
                                 {friend.name}
+                                <input type="text"/>
+                                <button>Send mess</button>
                             </li>
                         ))}
                     </ul>

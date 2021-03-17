@@ -1,4 +1,4 @@
-import React, { createContext, FC } from "react";
+import React, { createContext, FC, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import {Provider} from 'react-redux'
@@ -16,7 +16,12 @@ const SocketProvider: FC = ({children}) => {
         autoConnect: false
     })
 
-    client.connect()
+    useEffect(() => {
+        client.connect()
+        return () => {
+            client.disconnect()
+        }
+    }, [])
 
     return(
         <SocketContext.Provider value={{client}}>
