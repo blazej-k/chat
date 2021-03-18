@@ -9,6 +9,11 @@ interface Invite {
     to: string,
 }
 
+interface PrivateMess {
+    from: string,
+    mess: string
+}
+
 const Page: FC = () => {
 
     const [showChat, setShowChat] = useState(false)
@@ -16,6 +21,9 @@ const Page: FC = () => {
     const store = useSelector((store: Store) => store.userReducer)
     const [formType, setFormType] = useState<'signIn' | 'signUp'>('signIn')
     const [friend, setFriend] = useState('')
+    const [mess, setMess] = useState('')
+    const [res, setRes] = useState<PrivateMess[]>([] as PrivateMess[])
+    const client = useSocket().client
 
     const { user: { waitingFriends, login, friends } } = store
 
@@ -26,8 +34,21 @@ const Page: FC = () => {
         }
     }, [store])
 
+    useEffect(() => {
+        client.on('private message', (res: { from: string, mess: string }) => {
+            setRes(prev => [...prev, res])
+        })
+    }, [])
+
+    const handleMessInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setMess(e.currentTarget.value)
+    }
+
+    const handleSendButton = (to: string) => {
+        client.emit('send private message', { name: login, to, mess })
+    }
+
     const handleButton = () => {
-        console.log(friend)
         const invite: Invite = {
             from: store.user.login,
             to: friend
@@ -71,6 +92,9 @@ const Page: FC = () => {
             <button onClick={() => setFormType('signUp')}>SignUp</button>
             <Form showChat={setShowChat} formType={formType} />
             {showChat && <>
+                {res.length > 0 && res.map(obj => (
+                    <h1 key={obj.mess}>{obj.mess}</h1>
+                ))}
                 <Chat />
                 <input type="text" value={friend} placeholder='add friend' onChange={handleInput} />
                 <button onClick={handleButton}>Send</button>
@@ -92,8 +116,8 @@ const Page: FC = () => {
                         {friends.map(friend => (
                             <li key={friend._id}>
                                 {friend.name}
-                                <input type="text"/>
-                                <button>Send mess</button>
+                                <input type="text" value={mess} onChange={handleMessInputChange} />
+                                <button onClick={() => handleSendButton(friend.name)}>Send mess</button>
                             </li>
                         ))}
                     </ul>
