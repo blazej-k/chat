@@ -1,8 +1,9 @@
-// import { SIGNIN } from "../actions/UserActions";
 const SIGNUP = 'signup'
+const SIGNIN = 'signin'
 
-interface SignIn {
-    type: typeof SIGNUP
+
+interface UserAuth<T> {
+    type: T | typeof SIGNUP | typeof SIGNIN,
     payload: User
 }
 
@@ -16,4 +17,4 @@ interface Store {
     userReducer: UserReducer
 }
 
-type UserActionType = SignIn
+type UserActionType = UserAuth
