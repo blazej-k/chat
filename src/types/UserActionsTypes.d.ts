@@ -2,8 +2,8 @@ const SIGNUP = 'signup'
 const SIGNIN = 'signin'
 
 
-interface UserAuth<T> {
-    type: T | typeof SIGNUP | typeof SIGNIN,
+interface UserAuth<T = typeof SIGNUP | typeof SIGNIN> {
+    type: T,
     payload: User
 }
 

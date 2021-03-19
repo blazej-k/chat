@@ -32,17 +32,9 @@ const Form: FC<FormProps> = ({ showChat, formType }) => {
             if(formType === 'signIn'){
                 delete val.sex
             }
-            // fetch(`http://localhost:1000/${formType === 'signIn' ? 'signIn' : 'saveUser'}`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify(val),
-            // }).then(res => res.json())
-            // .then((res: any) => dispatch(signUp({...res, sex: 'male'})))
             client.emit('add user to listeners', val.login)
             showChat(true)
-            dispatch(signUp({login, password, sex: 'male'}))
+            dispatch(signUp(val))
             resetForm()
         }
     })

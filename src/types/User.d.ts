@@ -30,5 +30,5 @@ interface User {
 interface UserAuthInfo {
     login: string,
     password: string,
-    sex: 'male' | 'female'
+    sex?: 'male' | 'female'
 }
