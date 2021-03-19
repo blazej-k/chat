@@ -2,6 +2,7 @@ import { Dispatch } from "react"
 
 export const SIGNUP = 'signup'
 export const SIGNIN = 'signin'
+export const ERRORMESSAGE = 'errormessage'
 
 
 export const signUp = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
@@ -16,5 +17,12 @@ export const signUp = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<User
         body: JSON.stringify(userInfo),
     })
     .then(res => res.json())
-    .then((res: User) => dispatch({type: isUserExist ? SIGNIN : SIGNUP, payload: res}))
+    .then((res: User | {message: string}) => {
+        if('message' in res){
+            dispatch({type: ERRORMESSAGE, payload: res.message})
+        }
+        else{
+            dispatch({type: isUserExist ? SIGNIN : SIGNUP, payload: res})   
+        }
+    })
 } 

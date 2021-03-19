@@ -17,20 +17,24 @@ interface PrivateMess {
 const Page: FC = () => {
 
     const [showChat, setShowChat] = useState(false)
-    const [nameOfUser, setNameOfuser] = useState('')
     const store = useSelector((store: Store) => store.userReducer)
     const [formType, setFormType] = useState<'signIn' | 'signUp'>('signIn')
     const [friend, setFriend] = useState('')
     const [mess, setMess] = useState('')
+    const [errorMessage, setErrorMessage] = useState('')
     const [res, setRes] = useState<PrivateMess[]>([] as PrivateMess[])
     const client = useSocket().client
 
-    const { user: { waitingFriends, login, friends } } = store
+    const { user: { waitingFriends, login, friends }, error } = store
 
     useEffect(() => {
-        const { login } = store.user
-        if (nameOfUser !== login) {
-            setNameOfuser(login)
+        if(Object.entries(store.user).length > 0){
+            setShowChat(true)
+            errorMessage.length > 0 && setErrorMessage('')
+        }
+        else if(store.error.length > 0){
+            setErrorMessage(error)
+            showChat && setShowChat(false)
         }
     }, [store])
 
@@ -90,7 +94,8 @@ const Page: FC = () => {
             <h2>CHAT</h2>
             <button onClick={() => setFormType('signIn')}>SignIn</button>
             <button onClick={() => setFormType('signUp')}>SignUp</button>
-            <Form showChat={setShowChat} formType={formType} />
+            <Form formType={formType} />
+            {errorMessage.length > 0 && <h1>{errorMessage}</h1>}
             {showChat && <>
                 {res.length > 0 && res.map(obj => (
                     <h1 key={obj.mess}>{obj.mess}</h1>

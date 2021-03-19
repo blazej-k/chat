@@ -1,7 +1,7 @@
 import { useFormik } from 'formik';
 import { FC } from 'react'
 import useSocket from './hooks/SocketHook';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signUp } from '../actions/UserActions';
 
 type sex = 'male' | 'female'
@@ -13,11 +13,10 @@ interface FormValues {
 }
 
 interface FormProps {
-    showChat: (show: boolean) => void,
     formType: 'signIn' | 'signUp'
 }
 
-const Form: FC<FormProps> = ({ showChat, formType }) => {
+const Form: FC<FormProps> = ({ formType }) => {
 
     const client = useSocket().client
     const dispatch = useDispatch()
@@ -33,7 +32,6 @@ const Form: FC<FormProps> = ({ showChat, formType }) => {
                 delete val.sex
             }
             client.emit('add user to listeners', val.login)
-            showChat(true)
             dispatch(signUp(val))
             resetForm()
         }

@@ -1,4 +1,4 @@
-import {SIGNUP, SIGNIN} from '../actions/UserActions'
+import {SIGNUP, SIGNIN, ERRORMESSAGE} from '../actions/UserActions'
 const initState: UserReducer = {
     user: {} as User,
     loading: false,
@@ -11,6 +11,9 @@ export const UserReducer = (state = initState, action: UserActionType) => {
         case SIGNUP:
             const {login, sex, groups, conversations, waitingFriends, friends} = action.payload
             return state = {...state, user: {login, sex, groups, conversations, waitingFriends, friends}}
+        case ERRORMESSAGE:
+            console.log(action.payload) 
+            return state = {...state, user: {} as User, error: action.payload}
         default: 
             return state
     }
