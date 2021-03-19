@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
     entry: './src/index.tsx',
@@ -32,10 +33,17 @@ module.exports = {
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: './src/index.html'
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin()
     ],
     devServer: {
         compress: true,
         port: 8000,
+        hot: true,
+        overlay: true,
+        open: true,
+        contentBase: path.join(__dirname, 'src'),
+        compress: true,
+        historyApiFallback: true,
     }
 }
