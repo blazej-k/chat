@@ -5,7 +5,7 @@ export const SIGNIN = 'signin'
 export const ERRORMESSAGE = 'errormessage'
 
 
-export const signUp = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
+export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
     // dispatch({type: SENDREQUEST})
     const isUserExist = 'sex' in userInfo ? false : true
     const ENDPOINT = isUserExist ? process.env.SIGN_IN : process.env.SIGN_UP

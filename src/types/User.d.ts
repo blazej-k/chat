@@ -1,17 +1,12 @@
 interface User {
     login: string,
     sex: 'male' | 'female',
-    friends: {
+    waitingFriends: {
         name: string,
         date: date,
-        sex: string,
         _id: string
-    }[], 
-    groups: {
-        name: string,
-        members: number
     }[],
-    waitingFriends: {
+    waitingGroups: {
         name: string,
         date: date,
         _id: string

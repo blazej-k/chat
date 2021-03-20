@@ -45,7 +45,6 @@ module.exports = {
         overlay: true,
         open: true,
         contentBase: path.join(__dirname, 'src'),
-        compress: true,
         historyApiFallback: true,
     }
 }

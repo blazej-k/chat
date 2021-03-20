@@ -1,26 +1,29 @@
-import { FC, useEffect } from "react"
+import { ChangeEvent, FC, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { createGroup } from "../actions/CommunityActions"
 
 
 const Chat: FC = () => {
 
-    // useEffect(() => {
-    //     fetch('http://localhost:1000/signIn', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify({login: 'blazej', password: '12345'}),
-    //         }).then(res => res.json()).then(res => console.log(res))
-    //     return () => {
-    //         client.disconnect()
-    //     }
-    // }, [])
+    const [groupName, setGroupName] = useState('')
+
+    const dispatch = useDispatch()
+    const store = useSelector((store: Store) => store.userReducer)
+    const {user: {login, sex}} = store
+
+    const handleButton = () => {
+        dispatch(createGroup(groupName, login, sex))
+    }
+
+    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setGroupName(e.currentTarget.value)
+    }
 
     return (
         <div className="chat">
-            <p>Chat</p>
-            <input type="text" placeholder='To'/>
-            <input type="text" placeholder='Mess...'/>
+            <h1>Create group</h1>
+            <input type="text" placeholder='group name' value={groupName} onChange={handleInput}/>
+            <button onClick={handleButton}>Create!</button>
         </div>
     );
 }

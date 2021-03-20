@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import { FC } from 'react'
 import useSocket from './hooks/SocketHook';
 import { useDispatch, useSelector } from 'react-redux'
-import { signUp } from '../actions/UserActions';
+import { userAuth } from '../actions/UserActions';
 
 type sex = 'male' | 'female'
 
@@ -32,7 +32,7 @@ const Form: FC<FormProps> = ({ formType }) => {
                 delete val.sex
             }
             client.emit('add user to listeners', val.login)
-            dispatch(signUp(val))
+            dispatch(userAuth(val))
             resetForm()
         }
     })
