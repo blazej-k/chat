@@ -2,7 +2,7 @@ const CREATEGROUP = 'creategroup'
 
 interface Group {
     name: string,
-    id: string,
+    groupId: string,
     members: [
         {
             _id: string,

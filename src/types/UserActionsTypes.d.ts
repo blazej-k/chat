@@ -19,8 +19,4 @@ interface UserReducer {
     error: string
 }
 
-interface Store {
-    userReducer: UserReducer
-}
-
 type UserActionType = UserAuth | UserError
