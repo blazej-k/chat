@@ -13,13 +13,18 @@ interface User {
     }[],
     conversations: {
         login: string,
-        dialogues: [
-            {
-                date: date,
-                text: string
-            }
-        ]
-    }[]
+        dialogues: {
+            date: any, //to fix later
+            text: string
+        }[]
+    },
+    friends: {
+        name: string,
+        date: date,
+        sex: string,
+        _id: string
+    }[], 
+    groups: Group[],
 }
 
 interface UserAuthInfo {

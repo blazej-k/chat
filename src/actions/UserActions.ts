@@ -3,6 +3,7 @@ import { Dispatch } from "react"
 export const SIGNUP = 'signup'
 export const SIGNIN = 'signin'
 export const ERRORMESSAGE = 'errormessage'
+export const JOINTOGROUP = 'jointogroup'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
@@ -25,4 +26,12 @@ export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<Us
             dispatch({type: isUserExist ? SIGNIN : SIGNUP, payload: res})   
         }
     })
+} 
+
+export const joinToGroup = (group: Group): JoinToGroup => {
+    console.log(group)
+    return{
+        type: JOINTOGROUP,
+        payload: group
+    }
 } 

@@ -1,11 +1,17 @@
 const SIGNUP = 'signup'
 const SIGNIN = 'signin'
+const JOINTOGROUP = 'jointogroup'
 const ERRORMESSAGE = 'errormessage'
 
 
 interface UserAuth<T = typeof SIGNUP | typeof SIGNIN> {
     type: T,
     payload: User
+}
+
+interface JoinToGroup {
+    type: typeof JOINTOGROUP,
+    payload: Group
 }
 
 interface UserError {
@@ -19,4 +25,4 @@ interface UserReducer {
     error: string
 }
 
-type UserActionType = UserAuth | UserError
+type UserActionType = UserAuth | UserError | JoinToGroup

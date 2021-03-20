@@ -1,5 +1,5 @@
 interface Community {
-    friends: {
+    users: {
         name: string,
         date: date,
         sex: string,

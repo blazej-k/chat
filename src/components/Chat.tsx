@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { createGroup } from "../actions/CommunityActions"
+import { joinToGroup as join } from "../actions/UserActions"
 import useSocket from "./hooks/SocketHook"
 
 
@@ -16,14 +17,15 @@ const Chat: FC = () => {
     const client = useSocket().client
     const { user: { login, sex } } = userStore
 
+    console.log(userStore.user.groups)
+
     useEffect(() => {
         if (joinToGroup) {
             const { community: { groups } } = commStore
             setJoinToGroup(false)
             const { groupId } = groups[groups.length - 1]
             const { name } = groups[groups.length - 1]
-            console.log(login, groupId, name)
-            console.log(groups)
+            dispatch(join(groups[groups.length - 1]))
             client.emit('join to group', login, groupId, name)
         }
     }, [commStore])
