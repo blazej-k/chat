@@ -17,15 +17,13 @@ const Chat: FC = () => {
     const client = useSocket().client
     const { user: { login, sex } } = userStore
 
-    console.log(userStore.user.groups)
-
     useEffect(() => {
         if (joinToGroup) {
             const { community: { groups } } = commStore
             setJoinToGroup(false)
             const { groupId } = groups[groups.length - 1]
             const { name } = groups[groups.length - 1]
-            dispatch(join(groups[groups.length - 1]))
+            dispatch(join(groups[groups.length - 1], login))
             client.emit('join to group', login, groupId, name)
         }
     }, [commStore])

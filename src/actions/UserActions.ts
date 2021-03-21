@@ -28,10 +28,17 @@ export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<Us
     })
 } 
 
-export const joinToGroup = (group: Group): JoinToGroup => {
-    console.log(group)
-    return{
-        type: JOINTOGROUP,
-        payload: group
-    }
+export const joinToGroup = (group: Group, login: string) => async (dispatch: Dispatch<UserActionType>) => {
+    const ENDPOINT = process.env.JOIN_TO_GROUP
+    await fetch(ENDPOINT || '', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({group, login}),
+    })
+    .then(res => res.json())
+    .then((res: Group ) => {
+        dispatch({type: JOINTOGROUP, payload: res})   
+    })
 } 

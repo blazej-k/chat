@@ -25,7 +25,7 @@ const Page: FC = () => {
     const [res, setRes] = useState<PrivateMess[]>([] as PrivateMess[])
     const client = useSocket().client
 
-    const { user: { waitingFriends, waitingGroups, login }, error } = store
+    const { user: { waitingFriends, waitingGroups, login, groups }, error } = store
 
     useEffect(() => {
         if(Object.entries(store.user).length > 0){
@@ -140,6 +140,16 @@ const Page: FC = () => {
                         ))}
                     </ul>
                 </> : <h1>You haven't friends looser</h1>} */}
+                {groups && groups.length > 0 && <>
+                    <h1>Your groups</h1>
+                    <ul>
+                        {groups.map(group => (
+                            <li key={group.groupId}>
+                                <h2>{group.name}</h2><br />
+                            </li>
+                        ))}
+                    </ul>
+                </>}
             </>}
         </div>
     );
