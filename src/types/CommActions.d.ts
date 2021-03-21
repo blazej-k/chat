@@ -13,7 +13,7 @@ interface Group {
 }
 
 interface Friend {
-    name: string,
+    login: string,
     date: date,
     sex: 'male' | 'female',
 }

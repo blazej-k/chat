@@ -103,10 +103,10 @@ const Page: FC = () => {
                     <ul>
                         {waitingFriends.map(friend => (
                             <li key={friend._id as string}>
-                                <h2>{friend.name}</h2><br />
+                                <h2>{friend.login}</h2><br />
                                 {friend.date}
-                                <button onClick={() => handleFriendButton(friend.name, 'accept')}>OK</button>
-                                <button onClick={() => handleFriendButton(friend.name, 'reject')}>NO</button>
+                                <button onClick={() => handleFriendButton(friend.login, 'accept')}>OK</button>
+                                <button onClick={() => handleFriendButton(friend.login, 'reject')}>NO</button>
                             </li>
                         ))}
                     </ul>
@@ -116,10 +116,10 @@ const Page: FC = () => {
                     <ul>
                         {waitingGroups.map(group => (
                             <li key={group._id as string}>
-                                <h2>{group.name}</h2><br />
+                                <h2>{group.login}</h2><br />
                                 {group.date}
-                                <button onClick={() => handleFriendButton(group.name, 'accept')}>OK</button>
-                                <button onClick={() => handleFriendButton(group.name, 'reject')}>NO</button>
+                                <button onClick={() => handleFriendButton(group.login, 'accept')}>OK</button>
+                                <button onClick={() => handleFriendButton(group.login, 'reject')}>NO</button>
                             </li>
                         ))}
                     </ul>
@@ -128,9 +128,9 @@ const Page: FC = () => {
                     <ul>
                         {friends.map(friend => (
                             <li key={friend.date}>
-                                {friend.name}
+                                {friend.login}
                                 <input type="text" value={mess} onChange={handleMessInputChange} />
-                                <button onClick={() => handleSendButton(friend.name)}>Send mess</button>
+                                <button onClick={() => handleSendButton(friend.login)}>Send mess</button>
                             </li>
                         ))}
                     </ul>

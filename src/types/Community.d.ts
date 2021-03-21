@@ -1,6 +1,6 @@
 interface Community {
     users: {
-        name: string,
+        login: string,
         date: date,
         sex: string,
         _id: string
