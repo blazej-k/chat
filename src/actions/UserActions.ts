@@ -4,6 +4,8 @@ export const SIGNUP = 'signup'
 export const SIGNIN = 'signin'
 export const ERRORMESSAGE = 'errormessage'
 export const JOINTOGROUP = 'jointogroup'
+export const SENDINVITETOFRIEND = 'sendinvitetofriend'
+export const SENDINVITETOGROUP = 'sendinvitetogroup'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
@@ -41,4 +43,19 @@ export const joinToGroup = (group: Group, login: string) => async (dispatch: Dis
     .then((res: Group ) => {
         dispatch({type: JOINTOGROUP, payload: res})   
     })
+}
+
+export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
+    const ENDPOINT = type === 'friend' ? process.env.INVITE_FRIEND : process.env.INVITE_GROUP
+    await fetch(ENDPOINT || '', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({info}),
+    })
+    // .then(res => res.json())
+    // .then((res: Group ) => {
+    //     dispatch({type: JOINTOGROUP, payload: res})   
+    // })
 } 
