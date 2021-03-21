@@ -2,8 +2,8 @@ const SIGNUP = 'signup'
 const SIGNIN = 'signin'
 const SENDINVITETOFRIEND = 'sendinvitetofriend'
 const SENDINVITETOGROUP = 'sendinvitetogroup'
-const CONFIRMGROUPINVITE = 'confirmgroupinvite'
-const CONFIRMFRIENDINVITE= 'confirmfriendinvite'
+const CONFIRMGROUP = 'confirmgroupinvite'
+const CONFIRMFRIEND = 'confirmfriendinvite'
 const JOINTOGROUP = 'jointogroup'
 const ERRORMESSAGE = 'errormessage'
 
@@ -20,37 +20,37 @@ interface JoinToGroup {
 
 interface FriendInfo {
     sender: string
-    login: string
+    recipient: string
 }
 
 interface GroupInfo {
     sender: string,
-    login: string
-    name: string,
+    recipient: string
+    groupName: string,
     groupId: string
 }
 
 interface ConfirmFriend {
     waiter: string,
     recipient: string,
-    decission: 'accept' | 'reject'
+    decision: 'accept' | 'reject'
 }
 
 interface ConfirmGroup {
-    name: string,
+    groupName: string,
     groupId: string,
-    login: string
+    newMember: string
     decission: 'accept' | 'reject'
 }
 
-interface SendInvite<T = typeof SENDINVITETOFRIEND | typeof SENDINVITETOGROUP, K = GroupInfo | FriendInfo> {
-    type: T,
-    payload: K
+interface SendInvite {
+    type: typeof SENDINVITETOFRIEND | typeof SENDINVITETOGROUP,
+    payload: GroupInfo | FriendInfo
 }
 
-interface ConfirmInvite<T = typeof CONFIRMGROUPINVITE | typeof CONFIRMFRIENDINVITE, K = GroupInfo | FriendInfo> {
-    type: T,
-    payload: K
+interface ConfirmInvite {
+    type: typeof CONFIRMGROUP | typeof CONFIRMFRIEND,
+    payload: Friend | Group
 }
 
 interface UserError {
@@ -64,4 +64,4 @@ interface UserReducer {
     error: string
 }
 
-type UserActionType = UserAuth | UserError | JoinToGroup | SendInvite
+type UserActionType = UserAuth | UserError | JoinToGroup | SendInvite | ConfirmInvite

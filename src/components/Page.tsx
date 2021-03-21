@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { confirmInvite, sendInvite } from "../actions/UserActions";
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
@@ -20,23 +21,31 @@ const Page: FC = () => {
     const store = useSelector((store: Store) => store.userReducer)
     const [formType, setFormType] = useState<'signIn' | 'signUp'>('signIn')
     const [friend, setFriend] = useState('')
+    const [friends, setFriends] = useState<Friend[]>([])
     const [mess, setMess] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [res, setRes] = useState<PrivateMess[]>([] as PrivateMess[])
+
     const client = useSocket().client
 
-    const { user: { waitingFriends, waitingGroups, login, groups }, error } = store
+    const dispatch = useDispatch()
+
+    const { user: { waitingFriends, waitingGroups, login, groups }, error, user } = store
 
     useEffect(() => {
-        if(Object.entries(store.user).length > 0){
+        if(Object.entries(user).length > 0){
             setShowChat(true)
             errorMessage.length > 0 && setErrorMessage('')
         }
-        else if(store.error.length > 0){
+        else if(error.length > 0){
             setErrorMessage(error)
             showChat && setShowChat(false)
         }
-    }, [store])
+        console.log(user.friends)
+        if(user.friends !== friends){
+            setFriends(user.friends)
+        }
+    }, [user])
 
     useEffect(() => {
         client.on('private message', (res: { from: string, mess: string }) => {
@@ -53,19 +62,11 @@ const Page: FC = () => {
     }
 
     const handleButton = () => {
-        const invite: Invite = {
-            from: store.user.login,
-            to: friend
+        const invite: FriendInfo = {
+            sender: login,
+            recipient: friend
         }
-        if (friend.length > 0) {
-            fetch('http://localhost:1000/inviteFriend', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(invite),
-            })
-        }
+        dispatch(sendInvite('friend', invite))
     }
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -74,19 +75,13 @@ const Page: FC = () => {
 
     const handleFriendButton = (waiter: string, decision: 'accept' | 'reject') => {
 
-        const decisionObj = {
+        const confirm: ConfirmFriend = {
             waiter,
-            decision,
-            recipient: login
+            recipient: login,
+            decision
         }
 
-        fetch('http://localhost:1000/confirmFriend', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(decisionObj),
-        })
+        dispatch(confirmInvite('friend', confirm))
     }
 
     return (
@@ -129,17 +124,17 @@ const Page: FC = () => {
                         ))}
                     </ul>
                 </>}
-                {/* {friends && friends.length > 0 ? <><h1>Friends: </h1>
+                {friends && friends.length > 0 ? <><h1>Friends: </h1>
                     <ul>
                         {friends.map(friend => (
-                            <li key={friend._id}>
+                            <li key={friend.date}>
                                 {friend.name}
                                 <input type="text" value={mess} onChange={handleMessInputChange} />
                                 <button onClick={() => handleSendButton(friend.name)}>Send mess</button>
                             </li>
                         ))}
                     </ul>
-                </> : <h1>You haven't friends looser</h1>} */}
+                </> : <h1>You haven't friends looser</h1>}
                 {groups && groups.length > 0 && <>
                     <h1>Your groups</h1>
                     <ul>

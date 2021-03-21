@@ -1,4 +1,4 @@
-import { SIGNUP, SIGNIN, ERRORMESSAGE, JOINTOGROUP } from '../actions/UserActions'
+import { SIGNUP, SIGNIN, ERRORMESSAGE, JOINTOGROUP, CONFIRMFRIEND, CONFIRMGROUP } from '../actions/UserActions'
 const initState: UserReducer = {
     user: {} as User,
     loading: false,
@@ -15,8 +15,12 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             const { user } = state
             user.groups.push(action.payload)
             return state = { loading: false, error: '', user: { ...user, groups: user.groups } }
+        case CONFIRMFRIEND:
+            return state = {loading: false, error: '', user: {...user, friends: [...state.user.friends, action.payload as Friend]}}
+        case CONFIRMGROUP:
+            user.groups.push(action.payload as Group) 
+            return state = {loading: false, error: '', user: {...user, groups: user.groups}}
         case ERRORMESSAGE:
-            console.log(action.payload)
             return state = { ...state, user: {} as User, error: action.payload }
         default:
             return state

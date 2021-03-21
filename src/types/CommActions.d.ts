@@ -12,6 +12,12 @@ interface Group {
     ]
 }
 
+interface Friend {
+    name: string,
+    date: date,
+    sex: 'male' | 'female',
+}
+
 interface CreateGroup {
     type: typeof CREATEGROUP,
     payload: Group

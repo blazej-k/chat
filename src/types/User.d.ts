@@ -2,12 +2,12 @@ interface User {
     login: string,
     sex: 'male' | 'female',
     waitingFriends: {
-        name: string,
+        login: string,
         date: date,
         _id: string
     }[],
     waitingGroups: {
-        name: string,
+        login: string,
         date: date,
         _id: string
     }[],
@@ -18,12 +18,7 @@ interface User {
             text: string
         }[]
     },
-    friends: {
-        name: string,
-        date: date,
-        sex: string,
-        _id: string
-    }[], 
+    friends: Friend[], 
     groups: Group[],
 }
 

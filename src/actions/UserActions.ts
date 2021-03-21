@@ -6,6 +6,8 @@ export const ERRORMESSAGE = 'errormessage'
 export const JOINTOGROUP = 'jointogroup'
 export const SENDINVITETOFRIEND = 'sendinvitetofriend'
 export const SENDINVITETOGROUP = 'sendinvitetogroup'
+export const CONFIRMGROUP = 'confirmgroupinvite'
+export const CONFIRMFRIEND = 'confirmfriendinvite'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
@@ -54,8 +56,25 @@ export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInf
         },
         body: JSON.stringify({info}),
     })
-    // .then(res => res.json())
-    // .then((res: Group ) => {
-    //     dispatch({type: JOINTOGROUP, payload: res})   
-    // })
+} 
+
+export const confirmInvite = (type: 'friend' | 'group', info: ConfirmFriend | ConfirmGroup) => async (dispatch: Dispatch<UserActionType>) => {
+    const ENDPOINT = type === 'friend' ? process.env.CONFIRM_FRIEND : process.env.CONFIRM_GROUP
+    await fetch(ENDPOINT || '', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({info}),
+    })
+    .then(res => res.json())
+    .then((res: Friend | Group) => {
+        console.log(res)
+        if('sex' in res){
+            dispatch({type: CONFIRMFRIEND, payload: res})
+        }
+        else{
+            dispatch({type: CONFIRMGROUP, payload: res})
+        }
+    })
 } 
