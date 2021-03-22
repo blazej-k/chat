@@ -56,7 +56,8 @@ export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInf
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({info}),
-    })
+    }).then(res => res.json())
+    .catch(() => dispatch({type: ERRORMESSAGE, payload: 'We can\'t do this now'}))
 } 
 
 export const confirmInvite = (type: 'friend' | 'group', info: ConfirmFriend | ConfirmGroup) => async (dispatch: Dispatch<UserActionType>) => {
