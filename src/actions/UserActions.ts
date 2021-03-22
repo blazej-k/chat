@@ -8,6 +8,7 @@ export const SENDINVITETOFRIEND = 'sendinvitetofriend'
 export const SENDINVITETOGROUP = 'sendinvitetogroup'
 export const CONFIRMGROUP = 'confirmgroupinvite'
 export const CONFIRMFRIEND = 'confirmfriendinvite'
+export const REMOVEFRIENDINVITE = 'removefriendinvite'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
@@ -72,8 +73,15 @@ export const confirmInvite = (type: 'friend' | 'group', info: ConfirmFriend | Co
         if('sex' in res){
             dispatch({type: CONFIRMFRIEND, payload: res})
         }
-        else{
+        else{ 
             dispatch({type: CONFIRMGROUP, payload: res})
         }
     })
-} 
+}
+
+export const removeInvite = (login: string, type: 'friend' | 'group'): RemoveInvite => {
+    return {
+        type: REMOVEFRIENDINVITE,
+        payload: login
+    }
+}

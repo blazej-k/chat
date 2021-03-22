@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { confirmInvite, sendInvite } from "../actions/UserActions";
+import { confirmInvite, removeInvite, sendInvite } from "../actions/UserActions";
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
@@ -29,6 +29,7 @@ const Page: FC = () => {
     const client = useSocket().client
 
     const dispatch = useDispatch()
+
     console.log(store)
 
     const { user: { waitingFriends, waitingGroups, login, groups }, error, user } = store
@@ -42,7 +43,6 @@ const Page: FC = () => {
             setErrorMessage(error)
             showChat && setShowChat(false)
         }
-        console.log(user.friends)
         if(user.friends !== friends){
             setFriends(user.friends)
         }
@@ -76,14 +76,12 @@ const Page: FC = () => {
 
     const handleFriendButton = (waiter: string, decision: 'accept' | 'reject') => {
 
-
-        console.log(waiter)
         const confirm: ConfirmFriend = {
             waiter,
             recipient: login,
             decision
         }
-
+        dispatch(removeInvite(waiter, 'friend'))
         dispatch(confirmInvite('friend', confirm))
     }
 
