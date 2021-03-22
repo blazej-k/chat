@@ -29,6 +29,7 @@ const Page: FC = () => {
     const client = useSocket().client
 
     const dispatch = useDispatch()
+    console.log(store)
 
     const { user: { waitingFriends, waitingGroups, login, groups }, error, user } = store
 
@@ -75,6 +76,8 @@ const Page: FC = () => {
 
     const handleFriendButton = (waiter: string, decision: 'accept' | 'reject') => {
 
+
+        console.log(waiter)
         const confirm: ConfirmFriend = {
             waiter,
             recipient: login,
@@ -101,12 +104,12 @@ const Page: FC = () => {
                 {waitingFriends && waitingFriends.length > 0 && <>
                     <h1>Do you know them?</h1>
                     <ul>
-                        {waitingFriends.map(friend => (
-                            <li key={friend._id as string}>
-                                <h2>{friend.login}</h2><br />
-                                {friend.date}
-                                <button onClick={() => handleFriendButton(friend.login, 'accept')}>OK</button>
-                                <button onClick={() => handleFriendButton(friend.login, 'reject')}>NO</button>
+                        {waitingFriends.map(invite => (
+                            <li key={invite._id as string}>
+                                <h2>{invite.sender}</h2><br />
+                                {invite.date}
+                                <button onClick={() => handleFriendButton(invite.sender, 'accept')}>OK</button>
+                                <button onClick={() => handleFriendButton(invite.sender, 'reject')}>NO</button>
                             </li>
                         ))}
                     </ul>

@@ -2,7 +2,7 @@ interface User {
     login: string,
     sex: 'male' | 'female',
     waitingFriends: {
-        login: string,
+        sender: string,
         date: date,
         _id: string
     }[],

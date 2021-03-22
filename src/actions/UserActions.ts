@@ -69,7 +69,6 @@ export const confirmInvite = (type: 'friend' | 'group', info: ConfirmFriend | Co
     })
     .then(res => res.json())
     .then((res: Friend | Group) => {
-        console.log(res)
         if('sex' in res){
             dispatch({type: CONFIRMFRIEND, payload: res})
         }
