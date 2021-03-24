@@ -19,11 +19,12 @@ const Chat: FC = () => {
 
     useEffect(() => {
         if (joinToGroup) {
+            console.log(sex)
             const { community: { groups } } = commStore
             setJoinToGroup(false)
             const { groupId } = groups[groups.length - 1]
             const { name } = groups[groups.length - 1]
-            dispatch(join(groups[groups.length - 1], login))
+            dispatch(join(groups[groups.length - 1], login, sex))
             client.emit('join to group', login, groupId, name)
         }
     }, [commStore])

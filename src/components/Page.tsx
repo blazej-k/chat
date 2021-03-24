@@ -48,6 +48,8 @@ const Page: FC = () => {
         }
     }, [user])
 
+    console.log(user)
+
     useEffect(() => {
         client.on('private message', (res: { from: string, mess: string }) => {
             setRes(prev => [...prev, res])
@@ -142,6 +144,12 @@ const Page: FC = () => {
                         {groups.map(group => (
                             <li key={group.groupId}>
                                 <h2>{group.name}</h2><br />
+                                <h3>Members: </h3>
+                                <ul>
+                                    {group.members.map(member => (
+                                        <li key={member._id}>{member.login}</li>
+                                    ))}
+                                </ul>
                             </li>
                         ))}
                     </ul>
