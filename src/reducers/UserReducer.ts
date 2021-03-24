@@ -13,14 +13,14 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             return state = {
                 ...state,
                 user: {
-                    login, 
-                    sex, 
-                    conversations, 
-                    waitingFriends, 
-                    waitingGroups, 
-                    friends, 
+                    login,
+                    sex,
+                    conversations,
+                    waitingFriends,
+                    waitingGroups,
+                    friends,
                     groups
-                } 
+                }
             }
         case JOINTOGROUP:
             return state = {
@@ -31,13 +31,13 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     groups: [
                         ...state.user.groups,
                         action.payload
-                    ] 
+                    ]
                 }
             }
         case CONFIRMFRIEND:
             return state = {
                 loading: false,
-                error: '', 
+                error: '',
                 user: {
                     ...state.user,
                     friends: [
@@ -46,8 +46,6 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     ]
                 }
             }
-        case CONFIRMGROUP:
-            return state
         case REMOVEFRIENDINVITE:
             const updatedWaitingFriends = state.user.waitingFriends.filter(inivite => inivite.sender !== action.payload)
             return state = {

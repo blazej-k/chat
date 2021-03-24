@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { confirmInvite, removeInvite, sendInvite } from "../actions/UserActions";
+import { confirmFriendsInvite, removeInvite, sendInvite } from "../actions/UserActions";
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
@@ -30,8 +30,6 @@ const Page: FC = () => {
 
     const dispatch = useDispatch()
 
-    console.log(store)
-
     const { user: { waitingFriends, waitingGroups, login, groups }, error, user } = store
 
     useEffect(() => {
@@ -48,7 +46,6 @@ const Page: FC = () => {
         }
     }, [user])
 
-    console.log(user)
 
     useEffect(() => {
         client.on('private message', (res: { from: string, mess: string }) => {
@@ -84,7 +81,7 @@ const Page: FC = () => {
             decision
         }
         dispatch(removeInvite(waiter, 'friend'))
-        dispatch(confirmInvite('friend', confirm))
+        dispatch(confirmFriendsInvite(confirm))
     }
 
     return (

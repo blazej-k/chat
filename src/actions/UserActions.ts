@@ -60,8 +60,8 @@ export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInf
     .catch(() => dispatch({type: ERRORMESSAGE, payload: 'We can\'t do this now'}))
 } 
 
-export const confirmInvite = (type: 'friend' | 'group', info: ConfirmFriend | ConfirmGroup) => async (dispatch: Dispatch<UserActionType>) => {
-    const ENDPOINT = type === 'friend' ? process.env.CONFIRM_FRIEND : process.env.CONFIRM_GROUP
+export const confirmFriendsInvite = (info: ConfirmFriend) => async (dispatch: Dispatch<UserActionType>) => {
+    const ENDPOINT = process.env.CONFIRM_FRIEND
     await fetch(ENDPOINT || '', {
         method: 'POST',
         headers: {
@@ -70,14 +70,7 @@ export const confirmInvite = (type: 'friend' | 'group', info: ConfirmFriend | Co
         body: JSON.stringify({info}),
     })
     .then(res => res.json())
-    .then((res: Friend | Group) => {
-        if('sex' in res){
-            dispatch({type: CONFIRMFRIEND, payload: res})
-        }
-        else{ 
-            dispatch({type: CONFIRMGROUP, payload: res})
-        }
-    })
+    .then((res: Friend) => dispatch({type: CONFIRMFRIEND, payload: res}))
 }
 
 export const removeInvite = (login: string, type: 'friend' | 'group'): RemoveInvite => {

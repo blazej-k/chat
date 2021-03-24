@@ -2,7 +2,6 @@ const SIGNUP = 'signup'
 const SIGNIN = 'signin'
 const SENDINVITETOFRIEND = 'sendinvitetofriend'
 const SENDINVITETOGROUP = 'sendinvitetogroup'
-const CONFIRMGROUP = 'confirmgroupinvite'
 const CONFIRMFRIEND = 'confirmfriendinvite'
 const JOINTOGROUP = 'jointogroup'
 const REMOVEFRIENDINVITE = 'removefriendinvite'
@@ -49,9 +48,9 @@ interface SendInvite {
     payload: GroupInfo | FriendInfo
 }
 
-interface ConfirmInvite {
-    type: typeof CONFIRMGROUP | typeof CONFIRMFRIEND,
-    payload: Friend | Group
+interface ConfirmFriendsInvite {
+    type: typeof CONFIRMFRIEND,
+    payload: Friend
 }
 
 interface RemoveInvite {
@@ -70,4 +69,4 @@ interface UserReducer {
     error: string
 }
 
-type UserActionType = UserAuth | UserError | JoinToGroup | SendInvite | ConfirmInvite | RemoveInvite
+type UserActionType = UserAuth | UserError | JoinToGroup | SendInvite | ConfirmFriendsInvite | RemoveInvite

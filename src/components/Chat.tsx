@@ -19,7 +19,6 @@ const Chat: FC = () => {
 
     useEffect(() => {
         if (joinToGroup) {
-            console.log(sex)
             const { community: { groups } } = commStore
             setJoinToGroup(false)
             const { groupId } = groups[groups.length - 1]

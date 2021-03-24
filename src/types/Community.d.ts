@@ -7,3 +7,22 @@ interface Community {
     }[], 
     groups: Group[],
 }
+
+
+interface Group {
+    name: string,
+    groupId: string,
+    members: [
+        {
+            _id: string,
+            login: string,
+            sex: 'male' | 'female'
+        }
+    ]
+}
+
+interface Friend {
+    login: string,
+    date: date,
+    sex: 'male' | 'female',
+}
