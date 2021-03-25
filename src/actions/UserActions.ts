@@ -9,9 +9,10 @@ export const SENDINVITETOGROUP = 'sendinvitetogroup'
 export const CONFIRMGROUP = 'confirmgroupinvite'
 export const CONFIRMFRIEND = 'confirmfriendinvite'
 export const REMOVEFRIENDINVITE = 'removefriendinvite'
+export const REMOVEGROUPINVITE = 'removegroupinvite'
 
 
-export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => { 
+export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => {
     // dispatch({type: SENDREQUEST})
     const isUserExist = 'sex' in userInfo ? false : true
     const ENDPOINT = isUserExist ? process.env.SIGN_IN : process.env.SIGN_UP
@@ -22,30 +23,30 @@ export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<Us
         },
         body: JSON.stringify(userInfo),
     })
-    .then(res => res.json())
-    .then((res: User | {message: string}) => {
-        if('message' in res){
-            dispatch({type: ERRORMESSAGE, payload: res.message})
-        }
-        else{
-            dispatch({type: isUserExist ? SIGNIN : SIGNUP, payload: res})   
-        }
-    })
-} 
+        .then(res => res.json())
+        .then((res: User | { message: string }) => {
+            if ('message' in res) {
+                dispatch({ type: ERRORMESSAGE, payload: res.message })
+            }
+            else {
+                dispatch({ type: isUserExist ? SIGNIN : SIGNUP, payload: res })
+            }
+        })
+}
 
-export const joinToGroup = (group: Group, login: string, sex: 'male' | 'female') => async (dispatch: Dispatch<UserActionType>) => {
+export const joinToGroup = (group: Group, login: string, sex: 'male' | 'female', decision: 'accept' | 'reject') => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = process.env.JOIN_TO_GROUP
     await fetch(ENDPOINT || '', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({group, login, sex}),
+        body: JSON.stringify({ group, login, sex, decision }),
     })
-    .then(res => res.json())
-    .then((res: Group ) => {
-        dispatch({type: JOINTOGROUP, payload: res})   
-    })
+        .then(res => res.json())
+        .then((res: Group) => {
+            dispatch({ type: JOINTOGROUP, payload: res })
+        })
 }
 
 export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
@@ -55,10 +56,10 @@ export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInf
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({info}),
+        body: JSON.stringify({ info }),
     }).then(res => res.json())
-    .catch(() => dispatch({type: ERRORMESSAGE, payload: 'We can\'t do this now'}))
-} 
+        .catch(() => dispatch({ type: ERRORMESSAGE, payload: 'We can\'t do this now' }))
+}
 
 export const confirmFriendsInvite = (info: ConfirmFriend) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = process.env.CONFIRM_FRIEND
@@ -67,15 +68,23 @@ export const confirmFriendsInvite = (info: ConfirmFriend) => async (dispatch: Di
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({info}),
+        body: JSON.stringify({ info }),
     })
-    .then(res => res.json())
-    .then((res: Friend) => dispatch({type: CONFIRMFRIEND, payload: res}))
+        .then(res => res.json())
+        .then((res: Friend) => dispatch({ type: CONFIRMFRIEND, payload: res }))
 }
 
-export const removeInvite = (login: string, type: 'friend' | 'group'): RemoveInvite => {
-    return {
-        type: REMOVEFRIENDINVITE,
-        payload: login
+export const removeInvite = (selector: string, type: 'friend' | 'group'): RemoveInvite => {
+    if (type === 'friend') {
+        return {
+            type: REMOVEFRIENDINVITE,
+            payload: selector
+        }
+    }
+    else{
+        return {
+            type: REMOVEGROUPINVITE,
+            payload: selector
+        }
     }
 }

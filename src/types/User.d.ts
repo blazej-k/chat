@@ -7,7 +7,9 @@ interface User {
         _id: string
     }[],
     waitingGroups: {
-        login: string,
+        groupName: string,
+        groupId: string,
+        sender: string
         date: date,
         _id: string
     }[],

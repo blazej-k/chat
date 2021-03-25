@@ -1,6 +1,6 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { confirmFriendsInvite, removeInvite, sendInvite } from "../actions/UserActions";
+import { confirmFriendsInvite, joinToGroup, removeInvite, sendInvite } from "../actions/UserActions";
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
@@ -25,12 +25,15 @@ const Page: FC = () => {
     const [mess, setMess] = useState('')
     const [errorMessage, setErrorMessage] = useState('')
     const [res, setRes] = useState<PrivateMess[]>([] as PrivateMess[])
+    const [friendToGroup, setFriendToGroup] = useState('')
 
     const client = useSocket().client
 
     const dispatch = useDispatch()
 
-    const { user: { waitingFriends, waitingGroups, login, groups }, error, user } = store
+    const { user: { waitingFriends, waitingGroups, login, groups, sex }, error, user } = store
+
+    console.log(user)
 
     useEffect(() => {
         if(Object.entries(user).length > 0){
@@ -53,6 +56,22 @@ const Page: FC = () => {
         })
     }, [])
 
+    const handleInviteFriendToGroup = (groupName: string, groupId: string) => {
+        const infoObj = {
+            groupName,
+            groupId,
+            sender: login,
+            recipient: friendToGroup
+        }
+
+        dispatch(sendInvite('group', infoObj))
+
+    }
+
+    const handleIVTGInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setFriendToGroup(e.currentTarget.value)
+    }
+
     const handleMessInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setMess(e.currentTarget.value)
     }
@@ -71,6 +90,11 @@ const Page: FC = () => {
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setFriend(e.currentTarget.value)
+    }
+
+    const handleGroupButton = (group: any, decision: 'accept' | 'reject') => {
+        dispatch(removeInvite(group.groupId, 'group'))
+        dispatch(joinToGroup(group, login, sex, decision))
     }
 
     const handleFriendButton = (waiter: string, decision: 'accept' | 'reject') => {
@@ -116,10 +140,10 @@ const Page: FC = () => {
                     <ul>
                         {waitingGroups.map(group => (
                             <li key={group._id as string}>
-                                <h2>{group.login}</h2><br />
+                                <h2>{group.groupName}</h2><br />
                                 {group.date}
-                                <button onClick={() => handleFriendButton(group.login, 'accept')}>OK</button>
-                                <button onClick={() => handleFriendButton(group.login, 'reject')}>NO</button>
+                                <button onClick={() => handleGroupButton(group, 'accept')}>OK</button>
+                                <button onClick={() => handleGroupButton(group, 'reject')}>NO</button>
                             </li>
                         ))}
                     </ul>
@@ -140,13 +164,15 @@ const Page: FC = () => {
                     <ul>
                         {groups.map(group => (
                             <li key={group.groupId}>
-                                <h2>{group.name}</h2><br />
+                                <h2>{group.groupName}</h2><br />
                                 <h3>Members: </h3>
                                 <ul>
                                     {group.members.map(member => (
                                         <li key={member._id}>{member.login}</li>
                                     ))}
                                 </ul>
+                                <input type="text" value={friendToGroup} onChange={handleIVTGInput} placeholder='invite friend...'/>
+                                <button onClick={() => handleInviteFriendToGroup(group.groupName, group.groupId)}>Send invite</button>
                             </li>
                         ))}
                     </ul>

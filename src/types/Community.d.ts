@@ -10,7 +10,7 @@ interface Community {
 
 
 interface Group {
-    name: string,
+    groupName: string,
     groupId: string,
     members: [
         {

@@ -1,4 +1,4 @@
-import { SIGNUP, SIGNIN, ERRORMESSAGE, JOINTOGROUP, CONFIRMFRIEND, CONFIRMGROUP, REMOVEFRIENDINVITE } from '../actions/UserActions'
+import { SIGNUP, SIGNIN, ERRORMESSAGE, JOINTOGROUP, CONFIRMFRIEND, REMOVEFRIENDINVITE , REMOVEGROUPINVITE} from '../actions/UserActions'
 const initState: UserReducer = {
     user: {} as User,
     loading: false,
@@ -56,6 +56,16 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     waitingFriends: updatedWaitingFriends
                 }
             }
+            case REMOVEGROUPINVITE:
+                const updatedWaitingGroups = state.user.waitingGroups.filter(inivite => inivite.groupId !== action.payload)
+                return state = {
+                    loading: false,
+                    error: '',
+                    user: {
+                        ...state.user,
+                        waitingGroups: updatedWaitingGroups
+                    }
+                }
         case ERRORMESSAGE:
             return state = { ...state, user: {} as User, error: action.payload }
         default:

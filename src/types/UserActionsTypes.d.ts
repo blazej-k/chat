@@ -5,6 +5,7 @@ const SENDINVITETOGROUP = 'sendinvitetogroup'
 const CONFIRMFRIEND = 'confirmfriendinvite'
 const JOINTOGROUP = 'jointogroup'
 const REMOVEFRIENDINVITE = 'removefriendinvite'
+const REMOVEGROUPINVITE = 'removegroupinvite'
 const ERRORMESSAGE = 'errormessage'
 
 
@@ -54,7 +55,7 @@ interface ConfirmFriendsInvite {
 }
 
 interface RemoveInvite {
-    type: typeof REMOVEFRIENDINVITE,
+    type: typeof REMOVEFRIENDINVITE | typeof REMOVEGROUPINVITE,
     payload: string
 }
 
