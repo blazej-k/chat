@@ -36,15 +36,15 @@ const Page: FC = () => {
     console.log(user)
 
     useEffect(() => {
-        if(Object.entries(user).length > 0){
+        if (Object.entries(user).length > 0) {
             setShowChat(true)
             errorMessage.length > 0 && setErrorMessage('')
         }
-        else if(error.length > 0){
+        else if (error.length > 0) {
             setErrorMessage(error)
             showChat && setShowChat(false)
         }
-        if(user.friends !== friends){
+        if (user.friends !== friends) {
             setFriends(user.friends)
         }
     }, [user])
@@ -56,12 +56,13 @@ const Page: FC = () => {
         })
     }, [])
 
-    const handleInviteFriendToGroup = (groupName: string, groupId: string) => {
+    const handleInviteFriendToGroup = (groupName: string, groupId: string, members: GroupMembers[]) => {
         const infoObj = {
             groupName,
             groupId,
             sender: login,
-            recipient: friendToGroup
+            recipient: friendToGroup,
+            members
         }
 
         dispatch(sendInvite('group', infoObj))
@@ -92,9 +93,15 @@ const Page: FC = () => {
         setFriend(e.currentTarget.value)
     }
 
-    const handleGroupButton = (group: any, decision: 'accept' | 'reject') => {
+    const handleGroupButton = (group: GroupInfo, decision: 'accept' | 'reject') => {
+        const { groupId, groupName, members } = group
+        const newGroup: Group = {
+            groupId,
+            groupName,
+            members: [...members]
+        }
         dispatch(removeInvite(group.groupId, 'group'))
-        dispatch(joinToGroup(group, login, sex, decision))
+        dispatch(joinToGroup(newGroup, login, sex, decision))
     }
 
     const handleFriendButton = (waiter: string, decision: 'accept' | 'reject') => {
@@ -106,6 +113,8 @@ const Page: FC = () => {
         }
         dispatch(removeInvite(waiter, 'friend'))
         dispatch(confirmFriendsInvite(confirm))
+
+        console.log(user)
     }
 
     return (
@@ -171,8 +180,8 @@ const Page: FC = () => {
                                         <li key={member._id}>{member.login}</li>
                                     ))}
                                 </ul>
-                                <input type="text" value={friendToGroup} onChange={handleIVTGInput} placeholder='invite friend...'/>
-                                <button onClick={() => handleInviteFriendToGroup(group.groupName, group.groupId)}>Send invite</button>
+                                <input type="text" value={friendToGroup} onChange={handleIVTGInput} placeholder='invite friend...' />
+                                <button onClick={() => handleInviteFriendToGroup(group.groupName, group.groupId, group.members)}>Send invite</button>
                             </li>
                         ))}
                     </ul>

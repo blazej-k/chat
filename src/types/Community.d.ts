@@ -4,7 +4,7 @@ interface Community {
         date: date,
         sex: string,
         _id: string
-    }[], 
+    }[],
     groups: Group[],
 }
 
@@ -12,13 +12,14 @@ interface Community {
 interface Group {
     groupName: string,
     groupId: string,
-    members: [
-        {
-            _id: string,
-            login: string,
-            sex: 'male' | 'female'
-        }
-    ]
+    members: GroupMembers[],
+    _id?: string
+}
+
+interface GroupMembers {
+    _id: string,
+    login: string,
+    sex: 'male' | 'female'
 }
 
 interface Friend {

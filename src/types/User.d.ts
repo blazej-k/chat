@@ -10,7 +10,8 @@ interface User {
         groupName: string,
         groupId: string,
         sender: string
-        date: date,
+        date: any,
+        members: GroupMembers[],
         _id: string
     }[],
     conversations: {
@@ -20,7 +21,7 @@ interface User {
             text: string
         }[]
     },
-    friends: Friend[], 
+    friends: Friend[],
     groups: Group[],
 }
 

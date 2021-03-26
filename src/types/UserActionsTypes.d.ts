@@ -26,9 +26,10 @@ interface FriendInfo {
 
 interface GroupInfo {
     sender: string,
-    recipient: string
     groupName: string,
-    groupId: string
+    groupId: string,
+    date: any,
+    members: GroupMembers[]
 }
 
 interface ConfirmFriend {
