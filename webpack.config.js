@@ -2,6 +2,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
+
 
 module.exports = {
     entry: './src/index.tsx',
@@ -12,6 +14,7 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
+    devtool: 'cheap-module-source-map',
     module: {
         rules: [
             {
@@ -36,7 +39,8 @@ module.exports = {
             template: './src/index.html'
         }),
         new webpack.HotModuleReplacementPlugin(),
-        new Dotenv()
+        new Dotenv(),
+        new ErrorOverlayPlugin()
     ],
     devServer: {
         compress: true,

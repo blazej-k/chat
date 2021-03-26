@@ -33,8 +33,6 @@ const Page: FC = () => {
 
     const { user: { waitingFriends, waitingGroups, login, groups, sex }, error, user } = store
 
-    console.log(user)
-
     useEffect(() => {
         if (Object.entries(user).length > 0) {
             setShowChat(true)
@@ -113,8 +111,6 @@ const Page: FC = () => {
         }
         dispatch(removeInvite(waiter, 'friend'))
         dispatch(confirmFriendsInvite(confirm))
-
-        console.log(user)
     }
 
     return (
