@@ -24,7 +24,7 @@ const Chat: FC = () => {
             const { groupId } = groups[groups.length - 1]
             const { groupName } = groups[groups.length - 1]
             dispatch(join(groups[groups.length - 1], login, sex, 'accept'))
-            client.emit('join to group', login, groupId, groupName)
+            client.emit('join to group', groupId)
         }
     }, [commStore])
 
