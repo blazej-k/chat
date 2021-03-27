@@ -1,6 +1,6 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { confirmFriendsInvite, joinToGroup, removeInvite, sendInvite } from "../actions/UserActions";
+import { confirmFriendsInvite, joinToGroup, removeInvite, sendInvite, newGroupMessage as sendNewGroupMessage } from "../actions/UserActions";
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
@@ -9,6 +9,7 @@ interface PrivateMess {
     from: string,
     mess: string
 }
+
 
 const Page: FC = () => {
 
@@ -22,7 +23,6 @@ const Page: FC = () => {
     const [res, setRes] = useState<PrivateMess[]>([] as PrivateMess[])
     const [friendToGroup, setFriendToGroup] = useState('')
     const [newGroupMessage, setNewGroupMessage] = useState('')
-    const [groupMessages, setGroupMessages] = useState<string[]>([])
 
     const client = useSocket().client
 
@@ -34,8 +34,9 @@ const Page: FC = () => {
         if (Object.entries(user).length > 0) {
             setShowChat(true)
             errorMessage.length > 0 && setErrorMessage('')
-            for(const group in user.groups){
-                client.emit('join to group', user.groups[group].groupId)
+            for (const group in user.groups) {
+                const { groupId, groupName } = user.groups[group]
+                client.emit('join to group', groupId)
             }
         }
         else if (error.length > 0) {
@@ -52,9 +53,10 @@ const Page: FC = () => {
         client.on('private message', (res: { from: string, mess: string }) => {
             setRes(prev => [...prev, res])
         })
-        client.on('group message', (res: string) => {
-            setGroupMessages(prev => [...prev, res])
-        })
+            client.on('group message', (res: { text: string, date: any, sender: string }, groupId: string) => {
+                const { text, sender } = res
+                dispatch(sendNewGroupMessage(groupId, text, sender))
+            })
     }, [])
 
     const handleInviteFriendToGroup = (groupName: string, groupId: string, members: GroupMembers[]) => {
@@ -65,9 +67,7 @@ const Page: FC = () => {
             recipient: friendToGroup,
             members
         }
-
         dispatch(sendInvite('group', infoObj))
-
     }
 
     const handleIVTGInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -87,8 +87,8 @@ const Page: FC = () => {
     }
 
     const handleSendGroupMessageButton = (groupId: string) => {
-        client.emit('send group message', groupId, newGroupMessage)
-        setGroupMessages(prev => [...prev, newGroupMessage])
+        client.emit('send group message', groupId, newGroupMessage, login)
+        dispatch(sendNewGroupMessage(groupId, newGroupMessage, login))
     }
 
     const handleButton = () => {
@@ -108,7 +108,8 @@ const Page: FC = () => {
         const newGroup: Group = {
             groupId,
             groupName,
-            members: [...members]
+            members: [...members],
+            dialogues: []
         }
         dispatch(removeInvite(group.groupId, 'group'))
         dispatch(joinToGroup(newGroup, login, sex, decision))
@@ -192,11 +193,11 @@ const Page: FC = () => {
                                 <button onClick={() => handleInviteFriendToGroup(group.groupName, group.groupId, group.members)}>Send invite</button>
                                 <h3>Messages: </h3>
                                 <ul>
-                                    {groupMessages.map(mess => (
-                                        <li key={mess}>{mess}</li>
+                                    {group.dialogues.map(group => (
+                                        <li key={group.date}>{group.login} - {group.text}</li>
                                     ))}
                                 </ul>
-                                <input type="text" placeholder='message...' value={newGroupMessage} onChange={handleGroupMessageInput}/>
+                                <input type="text" placeholder='message...' value={newGroupMessage} onChange={handleGroupMessageInput} />
                                 <button onClick={() => handleSendGroupMessageButton(group.groupId)}>Send</button>
                             </li>
                         ))}

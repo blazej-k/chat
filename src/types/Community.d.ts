@@ -13,6 +13,11 @@ interface Group {
     groupName: string,
     groupId: string,
     members: GroupMembers[],
+    dialogues: {
+        login: string,
+        date: any,
+        text: string
+    }[]
     _id?: string
 }
 

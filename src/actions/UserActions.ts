@@ -10,6 +10,7 @@ export const CONFIRMGROUP = 'confirmgroupinvite'
 export const CONFIRMFRIEND = 'confirmfriendinvite'
 export const REMOVEFRIENDINVITE = 'removefriendinvite'
 export const REMOVEGROUPINVITE = 'removegroupinvite'
+export const NEWGROUPMESSAGE = 'newgroupmessage'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => {
@@ -85,6 +86,17 @@ export const removeInvite = (selector: string, type: 'friend' | 'group'): Remove
         return {
             type: REMOVEGROUPINVITE,
             payload: selector
+        }
+    }
+}
+
+export const newGroupMessage = (groupId: string, text: string, login: string): NewGroupMessage => {
+    return {
+        type: NEWGROUPMESSAGE,
+        payload: {
+            groupId,
+            text,
+            login
         }
     }
 }
