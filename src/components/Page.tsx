@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmFriendsInvite, joinToGroup, removeInvite, sendInvite, newGroupMessage as sendNewGroupMessage } from "../actions/UserActions";
 import Chat from "./Chat";
@@ -33,6 +33,7 @@ const Page: FC = () => {
     const { user: { waitingFriends, waitingGroups, login, groups, sex }, error, user } = store
 
     useEffect(() => {
+        console.log(store, error)
         if (Object.entries(user).length > 0) {
             setShowChat(true)
             errorMessage.length > 0 && setErrorMessage('')
@@ -44,14 +45,13 @@ const Page: FC = () => {
                 }
             }
         }
-        else if (error.length > 0) {
+        if (error.length > 0) {
             setErrorMessage(error)
-            showChat && setShowChat(false)
         }
         if (user.friends !== friends) {
             setFriends(user.friends)
         }
-    }, [user])
+    }, [store])
 
 
     useEffect(() => {

@@ -105,6 +105,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                 }
             }
         case ERRORMESSAGE:
+            console.log(action.payload)
             return state = { ...state, loading: false, error: action.payload }
         default:
             return state

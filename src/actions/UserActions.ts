@@ -45,9 +45,7 @@ export const joinToGroup = (group: Group, login: string, sex: 'male' | 'female',
         body: JSON.stringify({ group, login, sex, decision }),
     })
         .then(res => res.json())
-        .then((res: Group) => {
-            dispatch({ type: JOINTOGROUP, payload: res })
-        })
+        .then((res: Group) =>  dispatch({ type: JOINTOGROUP, payload: res }))
 }
 
 export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
@@ -58,7 +56,13 @@ export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInf
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ info }),
-    }).then(res => res.json())
+    })
+        .then(res => res.json())
+        .then((res: {message: string} | true) => {
+            if(typeof res !== 'boolean'){
+                dispatch({ type: ERRORMESSAGE, payload: res.message })
+            }
+        })
         .catch(() => dispatch({ type: ERRORMESSAGE, payload: 'We can\'t do this now' }))
 }
 
@@ -82,7 +86,7 @@ export const removeInvite = (selector: string, type: 'friend' | 'group'): Remove
             payload: selector
         }
     }
-    else{
+    else {
         return {
             type: REMOVEGROUPINVITE,
             payload: selector
