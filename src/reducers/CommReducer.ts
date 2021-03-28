@@ -2,7 +2,7 @@ import {CREATEGROUP} from '../actions/CommunityActions'
 
 const initState: CommunityReducer = {
     community: {
-        groups: [] as Group[],
+        groups: [],
         users: []
     } ,
     loading: false,
@@ -17,5 +17,5 @@ export const CommunityReducer = (state = initState, action: CommunityActionType)
             return state
         default:
             return state
-    }
+    } 
 } 

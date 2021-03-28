@@ -2,7 +2,7 @@ const CREATEGROUP = 'creategroup'
 
 interface CreateGroup {
     type: typeof CREATEGROUP,
-    payload: Group
+    payload: CommunityGroup
 }
 
 interface CommunityReducer {

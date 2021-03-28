@@ -1,13 +1,17 @@
-interface Community {
-    users: {
-        login: string,
-        date: date,
-        sex: string,
-        _id: string
-    }[],
-    groups: Group[],
+interface GroupInfo {
+    sender: string,
+    groupName: string,
+    groupId: string,
+    date: any,
+    members: GroupMembers[]
 }
 
+interface ConfirmGroup {
+    groupName: string,
+    groupId: string,
+    newMember: string
+    decission: 'accept' | 'reject'
+}
 
 interface Group {
     groupName: string,
@@ -25,10 +29,4 @@ interface GroupMembers {
     _id: string,
     login: string,
     sex: 'male' | 'female'
-}
-
-interface Friend {
-    login: string,
-    date: date,
-    sex: 'male' | 'female',
 }

@@ -10,40 +10,14 @@ const NEWGROUPMESSAGE = 'newgroupmessage'
 const ERRORMESSAGE = 'errormessage'
 
 
-interface UserAuth<T = typeof SIGNUP | typeof SIGNIN> {
-    type: T,
+interface UserAuth {
+    type: typeof SIGNUP | typeof SIGNIN,
     payload: User
 }
 
 interface JoinToGroup {
     type: typeof JOINTOGROUP,
     payload: Group
-}
-
-interface FriendInfo {
-    sender: string
-    recipient: string
-}
-
-interface GroupInfo {
-    sender: string,
-    groupName: string,
-    groupId: string,
-    date: any,
-    members: GroupMembers[]
-}
-
-interface ConfirmFriend {
-    waiter: string,
-    recipient: string,
-    decision: 'accept' | 'reject'
-}
-
-interface ConfirmGroup {
-    groupName: string,
-    groupId: string,
-    newMember: string
-    decission: 'accept' | 'reject'
 }
 
 interface SendInvite {

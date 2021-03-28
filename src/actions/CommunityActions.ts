@@ -13,7 +13,7 @@ export const createGroup = (groupInfo: {groupName: string, login: string, sex: '
         body: JSON.stringify({groupInfo})
     })
     .then(res => res.json())
-    .then((res: Group) => {
+    .then((res: CommunityGroup) => {
         dispatch({type: CREATEGROUP, payload: res})
     })
 }
