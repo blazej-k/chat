@@ -10,9 +10,9 @@ const Home: FC = () => {
 
     useLayoutEffect(() => {
         const result: string[] = []
-        for(let i = 0; i < 3;){
-            const number = Math.floor(Math.random() * 4) 
-            if(result.indexOf(colors[number]) === -1){
+        for (let i = 0; i < 3;) {
+            const number = Math.floor(Math.random() * 4)
+            if (result.indexOf(colors[number]) === -1) {
                 result.push(colors[number])
                 i++
             }
@@ -29,7 +29,7 @@ const Home: FC = () => {
             <div className="header">
                 <h1><span className={randomColors[0]}>Chat</span><span className={randomColors[1]}>Zilla</span></h1>
             </div>
-            <div className="home-info"> 
+            <div className="home-info">
                 <div className="home-info-des">
                     <h2>Join to us and write to friends</h2>
                     <div className="des">
@@ -40,12 +40,18 @@ const Home: FC = () => {
                             With ChatZilla you'll keep best relationships!
                         </p>
                     </div>
-                    <button onMouseLeave={() => handleButtonHover(false)} onMouseOver={() => handleButtonHover(true)} className={randomColors[2]}>try on!</button>
+                    <button
+                        onMouseLeave={() => handleButtonHover(false)}
+                        onMouseOver={() => handleButtonHover(true)}
+                        className={randomColors[2]}
+                    >
+                        try on!
+                    </button>
                     {showInfoSpan && <span id='span-slider' className={randomColors[2]}>Are you ready?</span>}
                 </div>
                 <div className="home-info-slider">
                     <div className="slider-wrapper">
-                        <Slider/>
+                        <Slider />
                     </div>
                 </div>
             </div>
