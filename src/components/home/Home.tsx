@@ -1,10 +1,11 @@
-import { FC, useLayoutEffect, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import '../../style/Home.scss'
 
 const Home: FC = () => {
 
     const colors = ['red', 'green', 'blue', 'orange']
     const [randomColors, setRandomColors] = useState<string[]>([])
+    const [showInfoSpan, setShowInfoSpan] = useState(false)
 
     useLayoutEffect(() => {
         const result: string[] = []
@@ -17,6 +18,10 @@ const Home: FC = () => {
         }
         setRandomColors(result)
     }, [])
+
+    const handleButtonHover = (show: boolean) => {
+        setShowInfoSpan(show)
+    }
 
     return (
         <div className="home">
@@ -34,7 +39,8 @@ const Home: FC = () => {
                             With ChatZilla you'll keep best relationships!
                         </p>
                     </div>
-                    <button className={randomColors[2]}>Try on</button>
+                    <button onMouseLeave={() => handleButtonHover(false)} onMouseOver={() => handleButtonHover(true)} className={randomColors[2]}>try on!</button>
+                    {showInfoSpan && <span id='span-slider'>Are you ready?</span>}
                 </div>
                 <div className="home-info-galery">
                     <div className="galery-example"></div>
