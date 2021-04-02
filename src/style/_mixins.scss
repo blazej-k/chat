@@ -1,0 +1,50 @@
+@import "colors";
+
+// @function getColor($colorName) {
+//     @if $colorName == 'red' {
+//         @return $red;
+//     }
+//     @else if $colorName == 'blue' {
+//         @return $blue;
+//     }
+//     @else if $colorName == 'green' {
+//         @return $green;
+//     }
+//     @else if $colorName == 'orange' {
+//         @return $orange;
+//     }
+//     @else {
+//         @return 'firebrick';
+//     }
+// }
+
+@mixin multiColors($type) {
+    @if ($type == "bgcolor") {
+        &.red {
+            background-color: $red;
+        }
+        &.green {
+            background-color: $green;
+        }
+        &.blue {
+            background-color: $blue;
+        }
+        &.orange {
+            background-color: $orange;
+        }
+    }
+    @else if($type == 'color'){
+        &.red {
+            color: $red;
+        }
+        &.green {
+            color: $green;
+        }
+        &.blue {
+            color: $blue;
+        }
+        &.orange {
+            color: $orange;
+        }
+    }
+}

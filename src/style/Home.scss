@@ -1,11 +1,56 @@
-.home{
+@import "colors";
+@import "mixins";
+
+.home {
     margin: 0 auto;
-    .header > h1{
-        font-size: 250%;
+    padding: 5px 10px;
+    .header > h1 {
+        font-size: 350%;
+        margin: 0;
+        span {
+            @include multiColors('color');
+        }
     }
-    .galery-example{
-        height: 300px;
-        width: 30%;
-        // box-shadow: blue 0px 0px 0px 2px inset, rgb(255, 255, 255) 10px -10px 0px -3px, rgb(31, 193, 27) 10px -10px, rgb(255, 255, 255) 20px -20px 0px -3px, rgb(255, 217, 19) 20px -20px, rgb(255, 255, 255) 30px -30px 0px -3px, rgb(255, 156, 85) 30px -30px, rgb(255, 255, 255) 40px -40px 0px -3px, rgb(255, 85, 85) 40px -40px;
+    .home-info {
+        display: flex;
+        flex-wrap: wrap;
+        width: 95%;
+        margin: 90px auto;
+        &-des {
+            width: 40%;
+            h2{
+                font-size: 280%;
+                margin: 0;
+                color: rgba(48, 47, 47, 0.932)
+            }
+            .des{
+                font-size: 180%;
+                color: $gray;
+            }
+            button{
+                @include multiColors('bgcolor');
+                color: white;
+                font-size: 150%;
+                margin-right: 20px;
+                cursor: pointer;
+                border-radius: 5px;
+                border: 2px none black;
+                padding: 7px 25px;
+                transition: 0.4s;
+                &:hover{
+                    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+                                }
+            }
+        }
+        &-galery {
+            width: 60%;
+            .galery-example {
+                height: 300px;
+                width: 90%;
+                margin: auto;
+                background-color: red;
+                // box-shadow: blue 0px 0px 0px 2px inset, rgb(255, 255, 255) 10px -10px 0px -3px, rgb(31, 193, 27) 10px -10px, rgb(255, 255, 255) 20px -20px 0px -3px, rgb(255, 217, 19) 20px -20px, rgb(255, 255, 255) 30px -30px 0px -3px, rgb(255, 156, 85) 30px -30px, rgb(255, 255, 255) 40px -40px 0px -3px, rgb(255, 85, 85) 40px -40px;
+            }
+        }
     }
 }
