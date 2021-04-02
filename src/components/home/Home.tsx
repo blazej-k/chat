@@ -1,4 +1,5 @@
 import { FC, useEffect, useLayoutEffect, useState } from 'react';
+import Slider from './Slider'
 import '../../style/Home.scss'
 
 const Home: FC = () => {
@@ -40,10 +41,12 @@ const Home: FC = () => {
                         </p>
                     </div>
                     <button onMouseLeave={() => handleButtonHover(false)} onMouseOver={() => handleButtonHover(true)} className={randomColors[2]}>try on!</button>
-                    {showInfoSpan && <span id='span-slider'>Are you ready?</span>}
+                    {showInfoSpan && <span id='span-slider' className={randomColors[2]}>Are you ready?</span>}
                 </div>
-                <div className="home-info-galery">
-                    <div className="galery-example"></div>
+                <div className="home-info-slider">
+                    <div className="slider-wrapper">
+                        <Slider/>
+                    </div>
                 </div>
             </div>
         </div>
