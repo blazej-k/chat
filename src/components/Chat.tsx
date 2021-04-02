@@ -26,7 +26,7 @@ const Chat: FC = () => {
             const group = {
                 groupId,
                 groupName,
-                members: [] as GroupMembers[],
+                members: [],
                 dialogues: []
             }
             dispatch(join(group, login, sex, 'accept'))

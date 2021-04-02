@@ -33,7 +33,6 @@ const Page: FC = () => {
     const { user: { waitingFriends, waitingGroups, login, groups, sex }, error, user } = store
 
     useEffect(() => {
-        console.log(store, error)
         if (Object.entries(user).length > 0) {
             setShowChat(true)
             errorMessage.length > 0 && setErrorMessage('')
@@ -132,6 +131,8 @@ const Page: FC = () => {
     }
 
     return (
+        <>
+
         <div className="page">
             <h2>CHAT</h2>
             <button onClick={() => setFormType('signIn')}>SignIn</button>
@@ -212,6 +213,7 @@ const Page: FC = () => {
                 </>}
             </>}
         </div>
+        </>
     );
 }
 

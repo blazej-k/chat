@@ -1,13 +1,14 @@
 import { FC } from 'react'
 import ReactDOM from 'react-dom'
-import Page from './components/Page'
+import Page2 from './components/Page2'
 import SocketProvider from './components/context/SocketContext';
+import './style/index.scss'
 
 const App: FC = () => {
 
     return (
         <SocketProvider>
-            <Page/>
+            <Page2/>
         </SocketProvider>
     );
 }
