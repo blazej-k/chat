@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useState } from 'react';
+import { FC, useLayoutEffect, useRef, useState } from 'react';
 import Slider from './Slider'
 import '../../style/Home.scss'
 import { Link } from 'react-router-dom';
@@ -10,6 +10,8 @@ const Home: FC = () => {
     const [randomColors, setRandomColors] = useState<string[]>([])
     const [showInfoSpan, setShowInfoSpan] = useState(false)
 
+    const ref = useRef<HTMLHeadingElement>(null)
+
     useLayoutEffect(() => {
         const result: string[] = []
         for (let i = 0; i < 3;) {
@@ -20,6 +22,22 @@ const Home: FC = () => {
             }
         }
         setRandomColors(result)
+        if (ref && ref.current) {
+            const { current } = ref
+            const text = current.textContent?.split("") || []
+            current.textContent = ''
+            let i = 0
+            text.forEach((element) => {
+                current.innerHTML += `<span>${element}</span>`
+            });
+            const timer = setInterval(() => {
+                current.children[i].classList.add('fade-text', i > 3 ? result[0] : result[1])
+                if(i === text.length - 1){
+                    clearInterval(timer)
+                }
+                i++
+            }, 60)
+        }
     }, [])
 
     const handleButtonHover = (show: boolean) => {
@@ -29,18 +47,18 @@ const Home: FC = () => {
     const animations = {
         in: {
             opacity: 1,
-            transition: {duration: 1 },
+            transition: { duration: 1 },
         },
         out: {
             opacity: 0,
-            transition: {duration: 1 },
+            transition: { duration: 1 },
         }
     }
 
     return (
         <motion.div className="home" variants={animations} initial='out' animate='in'>
             <div className="header">
-                <h1><span className={randomColors[0]}>Chat</span><span className={randomColors[1]}>Zilla</span></h1>
+                <h1 ref={ref}>ChatZilla</h1>
             </div>
             <div className="home-info">
                 <div className="home-info-des">

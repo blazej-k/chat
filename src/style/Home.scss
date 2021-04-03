@@ -5,10 +5,18 @@
     margin: 0 auto;
     padding: 5px 10px;
     .header > h1 {
-        font-size: 350%;
+        font-size: 180%;
         margin: 0;
         span {
+            opacity: 0;
+            transition: .3s ease-in;
+            transform: translateX(40px);
+            display: inline-block;
             @include multiColors("color");
+        }
+        span.fade-text{
+            opacity: 1;
+            transform: translateX(0px);
         }
     }
     .home-info {
