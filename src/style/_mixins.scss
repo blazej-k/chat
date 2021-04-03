@@ -1,6 +1,14 @@
 @import "colors";
 
-@mixin buttonShadow {
+@mixin buttonStyle {
+    @include multiColors("bgcolor");
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    transition: 0.4s;
+    text-transform: uppercase;
+    outline: none;
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
     }

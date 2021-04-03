@@ -11,18 +11,10 @@
             width: 70%;
             text-align: right;
             button{
-                color: white;
-                @include multiColors("bgcolor");
                 font-size: 95%;
-                border: none;
-                border-radius: 5px;
                 margin: 4px 10px;
-                text-transform: uppercase;
-                padding: 10px 15px;
-                cursor: pointer;
-                transition-duration: .4s;
-                outline: none;
-                @include buttonShadow
+                padding: 10px 20px;
+                @include buttonStyle;
             }
         }
         h1 {
@@ -59,18 +51,10 @@
                 color: $gray;
             }
             button {
-                @include multiColors("bgcolor");
-                color: white;
+                padding: 10px 35px;
                 font-size: 150%;
                 margin-right: 20px;
-                cursor: pointer;
-                border-radius: 5px;
-                border: 2px none black;
-                padding: 10px 35px;
-                transition: 0.4s;
-                text-transform: uppercase;
-                outline: none;
-                @include buttonShadow
+                @include buttonStyle;
             }
             #span-slider {
                 position: relative;
