@@ -9,7 +9,7 @@ const Slider: FC = () => {
     const getPhoto = async () => {
         const result: {original: string}[] = []
         for(let i = 1; i <= 6; i++){
-            await import(`../../assets/img${1}.jpg`).then(res => result.push({original: res.default}))
+            await import(`../../assets/img${i}.jpg`).then(res => result.push({original: res.default}))
         }
         setImages(result)
     }

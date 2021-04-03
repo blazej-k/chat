@@ -12,7 +12,7 @@
             transition: .3s ease-in;
             transform: translateX(40px);
             display: inline-block;
-            @include multiColors("color");
+            @include multiColors("color"); 
         }
         span.fade-text{
             opacity: 1;
