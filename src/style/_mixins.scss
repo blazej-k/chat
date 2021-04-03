@@ -1,22 +1,10 @@
 @import "colors";
 
-// @function getColor($colorName) {
-//     @if $colorName == 'red' {
-//         @return $red;
-//     }
-//     @else if $colorName == 'blue' {
-//         @return $blue;
-//     }
-//     @else if $colorName == 'green' {
-//         @return $green;
-//     }
-//     @else if $colorName == 'orange' {
-//         @return $orange;
-//     }
-//     @else {
-//         @return 'firebrick';
-//     }
-// }
+@mixin buttonShadow {
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    }
+}
 
 @mixin multiColors($type) {
     @if ($type == "bgcolor") {

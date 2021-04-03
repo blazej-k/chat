@@ -4,19 +4,42 @@
 .home {
     margin: 0 auto;
     padding: 5px 10px;
-    .header > h1 {
-        font-size: 230%;
-        margin: 0;
-        span {
-            opacity: 0;
-            transition: .3s ease-in;
-            transform: translateX(40px);
-            display: inline-block;
-            @include multiColors("color"); 
+    .header {
+        display: flex;
+        flex-wrap: nowrap;
+        .actions{
+            width: 70%;
+            text-align: right;
+            button{
+                color: white;
+                @include multiColors("bgcolor");
+                font-size: 95%;
+                border: none;
+                border-radius: 5px;
+                margin: 4px 10px;
+                text-transform: uppercase;
+                padding: 10px 15px;
+                cursor: pointer;
+                transition-duration: .4s;
+                outline: none;
+                @include buttonShadow
+            }
         }
-        span.fade-text{
-            opacity: 1;
-            transform: translateX(0px);
+        h1 {
+            width: 30%;
+            font-size: 230%;
+            margin: 0;
+            span {
+                opacity: 0;
+                transition: 0.3s ease-in;
+                transform: translateX(40px);
+                display: inline-block;
+                @include multiColors("color");
+            }
+            span.fade-text {
+                opacity: 1;
+                transform: translateX(0px);
+            }
         }
     }
     .home-info {
@@ -46,9 +69,8 @@
                 padding: 10px 35px;
                 transition: 0.4s;
                 text-transform: uppercase;
-                &:hover {
-                    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-                }
+                outline: none;
+                @include buttonShadow
             }
             #span-slider {
                 position: relative;

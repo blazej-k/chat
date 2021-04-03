@@ -59,6 +59,11 @@ const Home: FC = () => {
         <motion.div className="home" variants={animations} initial='out' animate='in'>
             <div className="header">
                 <h1 ref={ref}>ChatZilla</h1>
+                <div className="actions">
+                    <button className={randomColors[1]}>Support</button>
+                    <button className={randomColors[2]}>Work with us</button>
+                    <button className={randomColors[0]}>Sign In</button>
+                </div>
             </div>
             <div className="home-info">
                 <div className="home-info-des">
