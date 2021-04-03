@@ -1,0 +1,45 @@
+@import "colors";
+
+.footer-wrapper{
+    width: 95%;
+    margin: auto;
+    footer{
+        width: 100%;
+        margin: auto;
+        border-top: 1px solid black;
+        .flex-wrapper{
+            display: flex;
+            flex-wrap: nowrap;
+            margin: auto 20px;
+            h1{
+                width: 10%;
+                color: $gray;
+                margin: 10px 0;
+            }
+            .info{
+                width: 50%;
+                ul{
+                    list-style-type: none;
+                    width: 100%;
+                    margin-top: 15px;
+                    li{
+                        display: inline-block;
+                        width: 15%;
+                        h2{
+                            margin: 0;
+                            color: $gray;
+                        }
+                    }
+                }
+            }
+            .copyright{
+                width: 40%;
+                text-align: right;
+                h2{
+                color: $gray;
+                margin-top: 15px;
+                text-align: right;
+            }
+        }
+    }}
+}
