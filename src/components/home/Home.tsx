@@ -1,6 +1,8 @@
 import { FC, useEffect, useLayoutEffect, useState } from 'react';
 import Slider from './Slider'
 import '../../style/Home.scss'
+import { Link } from 'react-router-dom';
+import { motion } from "framer-motion"
 
 const Home: FC = () => {
 
@@ -24,14 +26,26 @@ const Home: FC = () => {
         setShowInfoSpan(show)
     }
 
+    const animations = {
+        in: {
+            opacity: 1,
+            transition: {duration: 1 },
+        },
+        out: {
+            opacity: 0,
+            transition: {duration: 1 },
+        }
+    }
+
     return (
-        <div className="home">
+        <motion.div className="home" variants={animations} initial='out' animate='in'>
             <div className="header">
                 <h1><span className={randomColors[0]}>Chat</span><span className={randomColors[1]}>Zilla</span></h1>
             </div>
             <div className="home-info">
                 <div className="home-info-des">
                     <h2>Join to us and write to friends</h2>
+                    <Link to='/fsdf'>ff</Link>
                     <div className="des">
                         <p>
                             Make groups, invite friends and meet new people!
@@ -55,7 +69,7 @@ const Home: FC = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }
 

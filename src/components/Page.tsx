@@ -4,6 +4,8 @@ import { confirmFriendsInvite, joinToGroup, removeInvite, sendInvite, newGroupMe
 import Chat from "./Chat";
 import Form from "./Form";
 import useSocket from "./hooks/SocketHook";
+import { Link } from 'react-router-dom';
+import { motion } from "framer-motion";
 
 interface PrivateMess {
     from: string,
@@ -129,11 +131,19 @@ const Page: FC = () => {
         dispatch(removeInvite(waiter, 'friend'))
         dispatch(confirmFriendsInvite(confirm))
     }
+    const animations = {
+        in: {
+            opacity: 1,
+        },
+        out: {
+            opacity: 0,
+        }
+    }
 
     return (
         <>
-
-        <div className="page">
+        <motion.div className="page" variants={animations} initial='out' animate='in'>
+            <Link to='/'>Back</Link>
             <h2>CHAT</h2>
             <button onClick={() => setFormType('signIn')}>SignIn</button>
             <button onClick={() => setFormType('signUp')}>SignUp</button>
@@ -212,7 +222,7 @@ const Page: FC = () => {
                     </ul>
                 </>}
             </>}
-        </div>
+        </motion.div>
         </>
     );
 }
