@@ -19,46 +19,49 @@
         border-radius: 10px;
         transform: translate(-50%, -50%);
         background-color: white;
-        padding: 10px;
+        padding: 30px 30px 10px 30px;
         h1 {
-            margin: 0;
-            margin-bottom: 20px;
+            margin: 0 0 20px 10px;
         }
-        label {
-            font-size: 190%;
             input {
                 outline: none;
                 color: $black;
-                font-size: 90%;
+                font-size: 110%;
                 width: 60%;
                 border: 0.5px solid $black;
                 border-radius: 6px;
-                padding: 8px;
+                padding: 15px;
                 margin: 10px 0 10px 10px;
+                &[type='checkbox']{
+                    width: 4%;
+                }
             }
-            // input[type="password"] {
-            //     border-color: $red;
-            // }
-        }
         .buttons-wrapper {
             border-top: 0.5px solid $black;
             padding: 10px 0;
             margin-top: 20px;
+            margin: 20px 10px auto 10px;
             .buttons {
-                width: 80%;
+                width: 100%;
                 margin: auto;
                 text-align: center;
+                overflow: auto;
                 button {
-                    color: $red;
-                    font-size: 150%;
+                    background-color: $red;
+                    outline: none;
+                    font-size: 80%;
                     border: none;
                     cursor: pointer;
                     text-transform: uppercase;
-                    background-color: white;
+                    width: 30%;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 2px;
                     float: left;
                     &:nth-child(2n){
+                        background-color: $green;
                         float: right;
-                        color: $green;
+                        border-radius: 2px;
                     }
                 }
             }

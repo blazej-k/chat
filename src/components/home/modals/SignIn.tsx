@@ -20,17 +20,12 @@ const SignIn: FC<SignInProps> = ({ closeModal }) => {
         <div className="modal-wrapper">
             <div className="modal sign-in-modal">
                 <h1>Sign In</h1>
-                <label>
-                    Login:
-                    <input type="text" />
-                </label><br />
-                <label>
-                    Password:
-                    <input type="password" />
-                </label>
+                    <input type="text" placeholder='Username'/><br/>
+                    <input type="password" placeholder='Password'/><br/>
+                    <input type="checkbox" name="keep-login" id="keepl-login"/>Keep me log in
                 <div className="buttons-wrapper">
                     <div className="buttons">
-                        <button>cancel</button>
+                        <button onClick={() => closeModal(false)}>cancel</button>
                         <button>ready</button>
                     </div>
                 </div>

@@ -3,6 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import { Provider } from 'react-redux'
 import { store } from "../../reducers/store";
+import AOS from 'aos'
 
 interface Context {
     client: Socket<DefaultEventsMap, DefaultEventsMap>
@@ -17,6 +18,7 @@ const SocketProvider: FC = ({ children }) => {
     })
 
     useEffect(() => {
+        AOS.init()
         client.connect()
         return () => {
             client.disconnect()
