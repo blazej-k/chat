@@ -5,12 +5,12 @@ interface SignInProps {
 }
 
 
-const SignIn: FC<SignInProps> = ({closeModal}) => {
+const SignIn: FC<SignInProps> = ({ closeModal }) => {
 
     useEffect(() => {
         document.addEventListener('click', (e) => {
-            const {className} = e.target as Element
-            if(className === 'modal-wrapper'){
+            const { className } = e.target as Element
+            if (className === 'modal-wrapper') {
                 closeModal(false)
             }
         })
@@ -19,8 +19,21 @@ const SignIn: FC<SignInProps> = ({closeModal}) => {
     return (
         <div className="modal-wrapper">
             <div className="modal sign-in-modal">
-                <input type="text" placeholder='Login' />
-                <input type="text" placeholder='Password' />
+                <h1>Sign In</h1>
+                <label>
+                    Login:
+                    <input type="text" />
+                </label><br />
+                <label>
+                    Password:
+                    <input type="password" />
+                </label>
+                <div className="buttons-wrapper">
+                    <div className="buttons">
+                        <button>cancel</button>
+                        <button>ready</button>
+                    </div>
+                </div>
             </div>
         </div>
     );

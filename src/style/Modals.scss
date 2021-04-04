@@ -1,21 +1,67 @@
-@import 'colors';
-.modal-wrapper{
+@import "colors";
+.modal-wrapper {
     width: 100vw;
     top: 0;
     position: fixed;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
     z-index: 1;
     height: 100vh;
     margin: 0;
     padding: 0;
-    .modal{
+    .modal {
+        color: $black !important;
         position: absolute;
         width: 40%;
-        top: 15%;
+        top: 25%;
         left: 50%;
         margin: auto;
-        border: 1px solid $gray;
+        border: 1px solid $black;
+        border-radius: 10px;
         transform: translate(-50%, -50%);
         background-color: white;
+        padding: 10px;
+        h1 {
+            margin: 0;
+            margin-bottom: 20px;
+        }
+        label {
+            font-size: 190%;
+            input {
+                outline: none;
+                color: $black;
+                font-size: 90%;
+                width: 60%;
+                border: 0.5px solid $black;
+                border-radius: 6px;
+                padding: 8px;
+                margin: 10px 0 10px 10px;
+            }
+            // input[type="password"] {
+            //     border-color: $red;
+            // }
+        }
+        .buttons-wrapper {
+            border-top: 0.5px solid $black;
+            padding: 10px 0;
+            margin-top: 20px;
+            .buttons {
+                width: 80%;
+                margin: auto;
+                text-align: center;
+                button {
+                    color: $red;
+                    font-size: 150%;
+                    border: none;
+                    cursor: pointer;
+                    text-transform: uppercase;
+                    background-color: white;
+                    float: left;
+                    &:nth-child(2n){
+                        float: right;
+                        color: $green;
+                    }
+                }
+            }
+        }
     }
 }
