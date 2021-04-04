@@ -1,5 +1,6 @@
 @import "colors";
 @import "mixins";
+@import "keyframes";
 
 .home-wrapper {
     width: 100%;
@@ -90,15 +91,5 @@
                 }
             }
         }
-    }
-}
-@keyframes slide {
-    0% {
-        opacity: 0;
-        left: 30%;
-    }
-    100% {
-        left: 0;
-        opacity: 1;
     }
 }

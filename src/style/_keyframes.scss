@@ -1,0 +1,50 @@
+@keyframes fadeModal {
+    from {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes backgroundShadow {
+    from{
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+@keyframes closeModal {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+}
+
+@keyframes removeBackgroundShadow {
+    from{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    to{
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+@keyframes slide {
+    0% {
+        opacity: 0;
+        left: 30%;
+    }
+    100% {
+        left: 0;
+        opacity: 1;
+    }
+}
