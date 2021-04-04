@@ -1,7 +1,20 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+
+interface SignInProps {
+    closeModal: (value: false) => void
+}
 
 
-const SignIn: FC = () => {
+const SignIn: FC<SignInProps> = ({closeModal}) => {
+
+    useEffect(() => {
+        document.addEventListener('click', (e) => {
+            const {className} = e.target as Element
+            if(className === 'modal-wrapper'){
+                closeModal(false)
+            }
+        })
+    }, [])
 
     return (
         <div className="modal-wrapper">

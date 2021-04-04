@@ -55,13 +55,10 @@ const Home: FC = () => {
                 console.log('work clicked')
                 break;
             default:
-                console.log('ok')
                 setShowSignInModal(true)
                 break;
         }
     }
-
-    console.log(showSignInModal)
 
     return (
         <div className="home-wrapper">
@@ -104,7 +101,7 @@ const Home: FC = () => {
             </motion.div>
             {(showSignInModal || showSignUpModal) &&
                 <div className='modal'>
-                    {showSignInModal ? <SignIn /> : <h1>Second modal</h1>}
+                    {showSignInModal ? <SignIn closeModal={setShowSignInModal}/> : <h1>Second modal</h1>}
                 </div>
             }
         </div>
