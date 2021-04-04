@@ -8,6 +8,7 @@ const Slider: FC = () => {
 
     const getPhoto = async () => {
         const result: {original: string}[] = []
+        //add one to 6 when there'll be new photo
         for(let i = 1; i <= 6; i++){
             await import(`../../assets/img${i}.jpg`).then(res => result.push({original: res.default}))
         }
@@ -15,7 +16,6 @@ const Slider: FC = () => {
     }
 
     useEffect(() => {
-        //add one when there'll be new photo
         getPhoto()
     }, []) 
 

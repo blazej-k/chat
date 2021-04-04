@@ -3,6 +3,7 @@ import Slider from './Slider'
 import '../../style/Home.scss'
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
+import HeaderAnimation from '../helpers/HeaderAnimation';
 
 const Home: FC = () => {
 
@@ -22,22 +23,7 @@ const Home: FC = () => {
             }
         }
         setRandomColors(result)
-        if (ref && ref.current) {
-            const { current } = ref
-            const text = current.textContent?.split("") || []
-            current.textContent = ''
-            let i = 0
-            text.forEach((element) => {
-                current.innerHTML += `<span>${element}</span>`
-            });
-            const timer = setInterval(() => {
-                current.children[i].classList.add('fade-text', i > 3 ? result[0] : result[1])
-                if(i === text.length - 1){
-                    clearInterval(timer)
-                }
-                i++
-            }, 60)
-        }
+        if(ref && ref.current) HeaderAnimation(ref.current, result)
     }, [])
 
     const handleButtonHover = (show: boolean) => {
