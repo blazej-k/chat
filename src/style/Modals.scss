@@ -1,28 +1,33 @@
 @import "colors";
+
 .modal-wrapper {
     width: 100vw;
     top: 0;
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: backgroundShadow .3s;
     z-index: 1;
     height: 100vh;
     margin: 0;
     padding: 0;
-    .modal {
-        color: $black !important;
+    .modal-box {
         position: absolute;
         width: 40%;
         top: 25%;
         left: 50%;
         margin: auto;
-        border: 1px solid $black;
-        border-radius: 10px;
         transform: translate(-50%, -50%);
-        background-color: white;
-        padding: 30px 30px 10px 30px;
-        h1 {
-            margin: 0 0 20px 10px;
-        }
+        .modal {
+            color: $black !important;
+            border: 1px solid $black;
+            width: 100%;
+            border-radius: 10px;
+            background-color: white;
+            padding: 30px 30px 10px 30px;
+            animation: fadeModal 0.3s;
+            h1 {
+                margin: 0 0 20px 10px;
+            }
             input {
                 outline: none;
                 color: $black;
@@ -32,39 +37,92 @@
                 border-radius: 6px;
                 padding: 15px;
                 margin: 10px 0 10px 10px;
-                &[type='checkbox']{
+                &[type="checkbox"] {
                     width: 4%;
                 }
             }
-        .buttons-wrapper {
-            border-top: 0.5px solid $black;
-            padding: 10px 0;
-            margin-top: 20px;
-            margin: 20px 10px auto 10px;
-            .buttons {
-                width: 100%;
-                margin: auto;
-                text-align: center;
-                overflow: auto;
-                button {
-                    background-color: $red;
-                    outline: none;
-                    font-size: 80%;
-                    border: none;
-                    cursor: pointer;
-                    text-transform: uppercase;
-                    width: 30%;
-                    color: white;
-                    padding: 10px;
-                    border-radius: 2px;
-                    float: left;
-                    &:nth-child(2n){
-                        background-color: $green;
-                        float: right;
+            .buttons-wrapper {
+                border-top: 0.5px solid $black;
+                padding: 10px 0;
+                margin-top: 20px;
+                margin: 20px 10px auto 10px;
+                .buttons {
+                    width: 100%;
+                    margin: auto;
+                    text-align: center;
+                    overflow: auto;
+                    button {
+                        background-color: $red;
+                        outline: none;
+                        font-size: 80%;
+                        border: none;
+                        cursor: pointer;
+                        text-transform: uppercase;
+                        width: 30%;
+                        color: white;
+                        padding: 10px;
                         border-radius: 2px;
+                        float: left;
+                        &:nth-child(2n) {
+                            background-color: $green;
+                            float: right;
+                            border-radius: 2px;
+                        }
                     }
                 }
             }
         }
     }
 }
+
+//when modal is closing
+#modal-wrapper-close {
+    animation: removeBackgroundShadow  .3s;
+    #modal-close{
+        animation: closeModal .3s;
+        opacity: 1;
+    }
+}
+
+
+@keyframes fadeModal {
+    from {
+        transform: translateY(50%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+@keyframes backgroundShadow {
+    from{
+        background-color: rgba(0, 0, 0, 0);
+    }
+    to{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+}
+
+@keyframes closeModal {
+    from {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+}
+
+@keyframes removeBackgroundShadow {
+    from{
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    to{
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+
