@@ -1,94 +1,97 @@
 @import "colors";
 @import "mixins";
 
-.home {
-    margin: 0 auto;
-    padding: 5px 10px;
-    .header {
-        display: flex;
-        flex-wrap: nowrap;
-        .actions{
-            width: 70%;
-            text-align: right;
-            button{
-                font-size: 95%;
-                margin: 4px 10px;
-                padding: 10px 20px;
-                @include buttonStyle;
+.home-wrapper {
+    width: 100%;
+    margin: auto;
+    .home {
+        margin: 0 auto;
+        padding: 5px 10px;
+        .header {
+            display: flex;
+            flex-wrap: nowrap;
+            .actions {
+                width: 70%;
+                text-align: right;
+                button {
+                    font-size: 95%;
+                    margin: 4px 10px;
+                    padding: 10px 20px;
+                    @include buttonStyle;
+                }
             }
-        }
-        h1 {
-            width: 30%;
-            font-size: 230%;
-            margin: 0;
-            span {
-                opacity: 0;
-                transition: 0.3s ease-in;
-                transform: translateX(40px);
-                display: inline-block;
-                @include multiColors("color");
-            }
-            span.fade-text {
-                opacity: 1;
-                transform: translateX(0px);
-            }
-        }
-    }
-    .home-info {
-        display: flex;
-        flex-wrap: wrap;
-        width: 95%;
-        margin: 90px auto;
-        &-des {
-            width: 40%;
-            h2 {
-                font-size: 280%;
+            h1 {
+                width: 30%;
+                font-size: 230%;
                 margin: 0;
-                color: rgba(48, 47, 47, 0.932);
-            }
-            .des {
-                font-size: 180%;
-                color: $gray;
-            }
-            button {
-                padding: 10px 35px;
-                font-size: 150%;
-                margin-right: 20px;
-                @include buttonStyle;
-            }
-            #span-slider {
-                position: relative;
-                animation: slide 0.2s;
-            }
-            span {
-                @include multiColors("color");
+                span {
+                    opacity: 0;
+                    transition: 0.3s ease-in;
+                    transform: translateX(40px);
+                    display: inline-block;
+                    @include multiColors("color");
+                }
+                span.fade-text {
+                    opacity: 1;
+                    transform: translateX(0px);
+                }
             }
         }
-        &-slider {
-            width: 60%;
-            border-radius: 10px;
-            .slider {
-                height: 300px;
-                width: 90%;
-                margin: auto;
-                .image-gallery {
-                    border-radius: 10px;
-                    overflow: hidden;
-                    -webkit-backface-visibility: hidden;
-                    -moz-backface-visibility: hidden;
-                    -webkit-transform: translate3d(0, 0, 0);
-                    -moz-transform: translate3d(0, 0, 0);
-                    transform: translate3d(0, 0, 0);
-                    backface-visibility: hidden;
-                    box-shadow: $blue 0px 0px 0px 2px inset, white 10px -10px 0px -3px, $green 10px -10px,
-                        white 20px -20px 0px -3px, $orange 20px -20px, white 30px -30px 0px -3px, $red 30px -30px,
-                        white 40px -40px 0px -3px, $blue 40px -40px;
+        .home-info {
+            display: flex;
+            flex-wrap: wrap;
+            width: 95%;
+            margin: 90px auto;
+            &-des {
+                width: 40%;
+                h2 {
+                    font-size: 280%;
+                    margin: 0;
+                    color: rgba(48, 47, 47, 0.932);
+                }
+                .des {
+                    font-size: 180%;
+                    color: $gray;
+                }
+                button {
+                    padding: 10px 35px;
+                    font-size: 150%;
+                    margin-right: 20px;
+                    @include buttonStyle;
+                }
+                #span-slider {
+                    position: relative;
+                    animation: slide 0.2s;
+                }
+                span {
+                    @include multiColors("color");
+                }
+            }
+            &-slider {
+                width: 60%;
+                border-radius: 10px;
+                .slider {
+                    height: 300px;
+                    width: 90%;
+                    margin: auto;
+                    .image-gallery {
+                        border-radius: 10px;
+                        overflow: hidden;
+                        -webkit-backface-visibility: hidden;
+                        -moz-backface-visibility: hidden;
+                        -webkit-transform: translate3d(0, 0, 0);
+                        -moz-transform: translate3d(0, 0, 0);
+                        transform: translate3d(0, 0, 0);
+                        backface-visibility: hidden;
+                        box-shadow: $blue 0px 0px 0px 2px inset, white 10px -10px 0px -3px, $green 10px -10px,
+                            white 20px -20px 0px -3px, $orange 20px -20px, white 30px -30px 0px -3px, $red 30px -30px,
+                            white 40px -40px 0px -3px, $blue 40px -40px;
+                    }
                 }
             }
         }
     }
 }
-
 @keyframes slide {
     0% {
         opacity: 0;

@@ -1,0 +1,21 @@
+@import 'colors';
+.modal-wrapper{
+    width: 100vw;
+    top: 0;
+    position: fixed;
+    background-color: rgba(0,0,0,0.2);
+    z-index: 1;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    .modal{
+        position: absolute;
+        width: 40%;
+        top: 15%;
+        left: 50%;
+        margin: auto;
+        border: 1px solid $gray;
+        transform: translate(-50%, -50%);
+        background-color: white;
+    }
+}

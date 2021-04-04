@@ -4,12 +4,15 @@ import '../../style/Home.scss'
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
 import HeaderAnimation from '../helpers/HeaderAnimation';
+import SignIn from './modals/SignIn';
 
 const Home: FC = () => {
 
     const colors = ['red', 'green', 'blue', 'orange']
     const [randomColors, setRandomColors] = useState<string[]>([])
     const [showInfoSpan, setShowInfoSpan] = useState(false)
+    const [showSignInModal, setShowSignInModal] = useState(false)
+    const [showSignUpModal, setShowSignUpModal] = useState(false)
 
     const ref = useRef<HTMLHeadingElement>(null)
 
@@ -23,7 +26,7 @@ const Home: FC = () => {
             }
         }
         setRandomColors(result)
-        if(ref && ref.current) HeaderAnimation(ref.current, result)
+        if (ref && ref.current) HeaderAnimation(ref.current, result)
     }, [])
 
     const handleButtonHover = (show: boolean) => {
@@ -41,44 +44,70 @@ const Home: FC = () => {
         }
     }
 
+    const handleButtonClick = (type: 'support' | 'work' | 'signin') => {
+        switch (type) {
+            case 'support':
+                //to do
+                console.log('support clicked')
+                break;
+            case 'work':
+                //to do
+                console.log('work clicked')
+                break;
+            default:
+                console.log('ok')
+                setShowSignInModal(true)
+                break;
+        }
+    }
+
+    console.log(showSignInModal)
+
     return (
-        <motion.div className="home" variants={animations} initial='out' animate='in'>
-            <div className="header">
-                <h1 ref={ref}>ChatZilla</h1>
-                <div className="actions">
-                    <button className={randomColors[1]}>Support</button>
-                    <button className={randomColors[2]}>Work with us</button>
-                    <button className={randomColors[0]}>Sign In</button>
+        <div className="home-wrapper">
+            <motion.div className="home" variants={animations} initial='out' animate='in'>
+                <div className="header">
+                    <h1 ref={ref}>ChatZilla</h1>
+                    <div className="actions">
+                        <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
+                        <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
+                        <button className={randomColors[0]} onClick={() => handleButtonClick('signin')}>Sign In</button>
+                    </div>
                 </div>
-            </div>
-            <div className="home-info">
-                <div className="home-info-des">
-                    <h2>Join to us and write to friends</h2>
-                    <Link to='/fsdf'>ff</Link>
-                    <div className="des">
-                        <p>
-                            Make groups, invite friends and meet new people!
+                <div className="home-info">
+                    <div className="home-info-des">
+                        <h2>Join to us and write to friends</h2>
+                        <Link to='/fsdf'>ff</Link>
+                        <div className="des">
+                            <p>
+                                Make groups, invite friends and meet new people!
                             Create free account and join to world. Everyone're waiting for you!</p>
-                        <p>
-                            With ChatZilla you'll keep best relationships!
+                            <p>
+                                With ChatZilla you'll keep best relationships!
                         </p>
-                    </div>
-                    <button
-                        onMouseLeave={() => handleButtonHover(false)}
-                        onMouseOver={() => handleButtonHover(true)}
-                        className={randomColors[2]}
-                    >
-                        try on!
+                        </div>
+                        <button
+                            onMouseLeave={() => handleButtonHover(false)}
+                            onMouseOver={() => handleButtonHover(true)}
+                            className={randomColors[2]}
+                        >
+                            try on!
                     </button>
-                    {showInfoSpan && <span id='span-slider' className={randomColors[2]}>Are you ready?</span>}
-                </div>
-                <div className="home-info-slider">
-                    <div className="slider-wrapper">
-                        <Slider />
+                        {showInfoSpan && <span id='span-slider' className={randomColors[2]}>Are you ready?</span>}
+                    </div>
+                    <div className="home-info-slider">
+                        <div className="slider-wrapper">
+                            <Slider />
+                        </div>
                     </div>
                 </div>
-            </div>
-        </motion.div>
+            </motion.div>
+            {(showSignInModal || showSignUpModal) &&
+                <div className='modal'>
+                    {showSignInModal ? <SignIn /> : <h1>Second modal</h1>}
+                </div>
+            }
+        </div>
     );
 }
 
