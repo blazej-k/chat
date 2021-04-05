@@ -1,16 +1,17 @@
 import { FC, useLayoutEffect, useRef, useState } from 'react';
 import Slider from './Slider'
 import '../../style/Home.scss'
-import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
 import HeaderAnimation from '../helpers/HeaderAnimation';
 import Modal from './Modal'
+import HomeDescription from './HomeDescription';
 
 const Home: FC = () => {
 
     const colors = ['red', 'green', 'blue', 'orange']
+    
     const [randomColors, setRandomColors] = useState<string[]>([])
-    const [showInfoSpan, setShowInfoSpan] = useState(false)
+    const [showSpanInfo, setShowSpanInfo] = useState(false)
     const [showSignInModal, setShowSignInModal] = useState(false)
     const [showSignUpModal, setShowSignUpModal] = useState(false)
 
@@ -30,7 +31,7 @@ const Home: FC = () => {
     }, [])
 
     const handleButtonHover = (show: boolean) => {
-        setShowInfoSpan(show)
+        setShowSpanInfo(show)
     }
 
     const animations = {
@@ -80,32 +81,14 @@ const Home: FC = () => {
                     </div>
                 </div>
                 <div className="home-info">
-                    <div className="home-info-des">
-                        <h2>Join to us and write to friends</h2>
-                        <Link to='/fsdf'>ff</Link>
-                        <div className="des">
-                            <p>
-                                Make groups, invite friends and meet new people!
-                                Create free account and join to world. Everyone're waiting for you!
-                            </p>
-                            <p>
-                                With ChatZilla you'll keep best relationships!
-                            </p>
-                        </div>
-                        <button
-                            onMouseLeave={() => handleButtonHover(false)}
-                            onMouseOver={() => handleButtonHover(true)}
-                            onClick={() => handleButtonClick('newuser')}
-                            className={randomColors[2]}
-                        >
-                            try on!
-                    </button>
-                        {showInfoSpan && <span id='span-slider' className={randomColors[2]}>Are you ready?</span>}
-                    </div>
+                    <HomeDescription 
+                        buttonClick={handleButtonClick}
+                        buttonHover={handleButtonHover}
+                        colors={randomColors}
+                        showSpanInfo={showSpanInfo}    
+                    />
                     <div className="home-info-slider">
-                        <div className="slider-wrapper">
-                            <Slider />
-                        </div>
+                        <Slider />
                     </div>
                 </div>
             </motion.div>
