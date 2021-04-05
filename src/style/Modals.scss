@@ -6,7 +6,7 @@
     top: 0;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.5);
-    animation: backgroundShadow .3s;
+    animation: backgroundShadow 0.3s;
     z-index: 1;
     height: 100vh;
     margin: 0;
@@ -41,6 +41,21 @@
                 &[type="checkbox"] {
                     width: 4%;
                 }
+            }
+            .sex {
+                margin-bottom: 10px;
+                label {
+                    input {
+                        width: 4%;
+                    }
+                }
+            }
+            .redirect{
+                padding: 15px 15px 0;
+                // margin-top: 20px;
+                display: inline-block;
+                color: $blue;
+                cursor: pointer;
             }
             .buttons-wrapper {
                 border-top: 0.5px solid $black;
@@ -78,13 +93,9 @@
 
 //when modal is closing
 #modal-wrapper-close {
-    animation: removeBackgroundShadow  .3s;
-    #modal-close{
-        animation: closeModal .3s;
+    animation: removeBackgroundShadow 0.3s;
+    #modal-close {
+        animation: closeModal 0.3s;
         opacity: 1;
     }
 }
-
-
-
-

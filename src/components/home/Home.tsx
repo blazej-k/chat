@@ -4,7 +4,7 @@ import '../../style/Home.scss'
 import { Link } from 'react-router-dom';
 import { motion } from "framer-motion"
 import HeaderAnimation from '../helpers/HeaderAnimation';
-import SignIn from './modals/SignIn';
+import Modal from './Modal'
 
 const Home: FC = () => {
 
@@ -44,7 +44,7 @@ const Home: FC = () => {
         }
     }
 
-    const handleButtonClick = (type: 'support' | 'work' | 'signin') => {
+    const handleButtonClick = (type: 'support' | 'work' | 'signin' | 'newuser') => {
         switch (type) {
             case 'support':
                 //to do
@@ -54,10 +54,18 @@ const Home: FC = () => {
                 //to do
                 console.log('work clicked')
                 break;
+            case 'newuser':
+                setShowSignUpModal(true)
+                break;
             default:
                 setShowSignInModal(true)
                 break;
         }
+    }
+
+    const redirectModal = () => {
+        setShowSignInModal(false)
+        setShowSignUpModal(true)
     }
 
     return (
@@ -78,14 +86,16 @@ const Home: FC = () => {
                         <div className="des">
                             <p>
                                 Make groups, invite friends and meet new people!
-                            Create free account and join to world. Everyone're waiting for you!</p>
+                                Create free account and join to world. Everyone're waiting for you!
+                            </p>
                             <p>
                                 With ChatZilla you'll keep best relationships!
-                        </p>
+                            </p>
                         </div>
                         <button
                             onMouseLeave={() => handleButtonHover(false)}
                             onMouseOver={() => handleButtonHover(true)}
+                            onClick={() => handleButtonClick('newuser')}
                             className={randomColors[2]}
                         >
                             try on!
@@ -101,7 +111,15 @@ const Home: FC = () => {
             </motion.div>
             {(showSignInModal || showSignUpModal) &&
                 <div className='modal'>
-                    {showSignInModal ? <SignIn isModalOpen={setShowSignInModal}/> : <h1>Second modal</h1>}
+                    {showSignInModal ? <Modal 
+                        isModalOpen={setShowSignInModal} 
+                        redirectModal={redirectModal} 
+                        type='signin'
+                    /> : 
+                    <Modal 
+                        isModalOpen={setShowSignUpModal} 
+                        type='signup'
+                    />}
                 </div>
             }
         </div>
