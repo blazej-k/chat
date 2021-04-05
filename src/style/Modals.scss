@@ -14,7 +14,7 @@
     .modal-box {
         position: absolute;
         width: 40%;
-        top: 25%;
+        top: 30%;
         left: 50%;
         margin: auto;
         transform: translate(-50%, -50%);
@@ -27,62 +27,64 @@
             padding: 30px 30px 10px 30px;
             animation: fadeModal 0.3s;
             h1 {
-                margin: 0 0 20px 10px;
+                margin: 0 0 20px 0;
             }
-            input {
-                outline: none;
-                color: $black;
-                font-size: 110%;
-                width: 60%;
-                border: 0.5px solid $black;
-                border-radius: 6px;
-                padding: 15px;
-                margin: 10px 0 10px 10px;
-                &[type="checkbox"] {
-                    width: 4%;
-                }
-            }
-            .sex {
-                margin-bottom: 10px;
-                label {
-                    input {
-                        width: 4%;
+            form {
+                input {
+                    outline: none;
+                    color: $black;
+                    font-size: 110%;
+                    width: 60%;
+                    border: 0.5px solid $black;
+                    border-radius: 6px;
+                    padding: 15px;
+                    margin: 10px 0;
+                    &[type="checkbox"] {
+                        width: 3.5%;
+                        position: relative;
+                        right: 0.8%;
                     }
                 }
-            }
-            .redirect{
-                padding: 15px 15px 0;
-                // margin-top: 20px;
-                display: inline-block;
-                color: $blue;
-                cursor: pointer;
-            }
-            .buttons-wrapper {
-                border-top: 0.5px solid $black;
-                padding: 10px 0;
-                margin-top: 20px;
-                margin: 20px 10px auto 10px;
-                .buttons {
+                .sex {
+                    margin-bottom: 10px;
+                    input {
+                        width: auto;
+                        margin-right: 7px;
+                    }
+                }
+                .redirect {
+                    display: inline-block;
+                    color: $blue;
+                    cursor: pointer;
+                    margin-top: 20px;
+                }
+                .buttons-wrapper {
+                    border-top: 0.5px solid $black;
+                    padding: 10px 0;
                     width: 100%;
-                    margin: auto;
-                    text-align: center;
-                    overflow: auto;
-                    button {
-                        background-color: $red;
-                        outline: none;
-                        font-size: 80%;
-                        border: none;
-                        cursor: pointer;
-                        text-transform: uppercase;
-                        width: 30%;
-                        color: white;
-                        padding: 10px;
-                        border-radius: 2px;
-                        float: left;
-                        &:nth-child(2n) {
-                            background-color: $green;
-                            float: right;
+                    margin-top: 35px;
+                    .buttons {
+                        width: 100%;
+                        margin: auto;
+                        text-align: center;
+                        overflow: auto;
+                        button {
+                            background-color: $red;
+                            outline: none;
+                            font-size: 80%;
+                            border: none;
+                            cursor: pointer;
+                            text-transform: uppercase;
+                            width: 30%;
+                            color: white;
+                            padding: 10px;
                             border-radius: 2px;
+                            float: left;
+                            &:nth-child(2n) {
+                                background-color: $green;
+                                float: right;
+                                border-radius: 2px;
+                            }
                         }
                     }
                 }

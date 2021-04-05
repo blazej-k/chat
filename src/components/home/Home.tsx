@@ -9,7 +9,7 @@ import HomeDescription from './HomeDescription';
 const Home: FC = () => {
 
     const colors = ['red', 'green', 'blue', 'orange']
-    
+
     const [randomColors, setRandomColors] = useState<string[]>([])
     const [showSpanInfo, setShowSpanInfo] = useState(false)
     const [showSignInModal, setShowSignInModal] = useState(false)
@@ -30,10 +30,6 @@ const Home: FC = () => {
         if (ref && ref.current) HeaderAnimation(ref.current, result)
     }, [])
 
-    const handleButtonHover = (show: boolean) => {
-        setShowSpanInfo(show)
-    }
-
     const animations = {
         in: {
             opacity: 1,
@@ -43,6 +39,10 @@ const Home: FC = () => {
             opacity: 0,
             transition: { duration: 1 },
         }
+    }
+
+    const handleButtonHover = (show: boolean) => {
+        setShowSpanInfo(show)
     }
 
     const handleButtonClick = (type: 'support' | 'work' | 'signin' | 'newuser') => {
