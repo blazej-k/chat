@@ -29,6 +29,12 @@
             h1 {
                 margin: 0 0 20px 0;
             }
+            .user-auth-error{
+                color: $red;
+                display: block;
+                margin-top: 10px;
+                font-size: 130%;
+            }
             form {
                 input {
                     outline: none;

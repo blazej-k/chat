@@ -3,6 +3,7 @@ import { Dispatch } from "react"
 export const SIGNUP = 'signup'
 export const SIGNIN = 'signin'
 export const ERRORMESSAGE = 'errormessage'
+export const REMOVEERRORMESSAGE = 'removeerrormessage'
 export const JOINTOGROUP = 'jointogroup'
 export const SENDINVITETOFRIEND = 'sendinvitetofriend'
 export const SENDINVITETOGROUP = 'sendinvitetogroup'
@@ -91,6 +92,13 @@ export const removeInvite = (selector: string, type: 'friend' | 'group'): Remove
             type: REMOVEGROUPINVITE,
             payload: selector
         }
+    }
+}
+
+export const removeUserError = (err: string) => {
+    return {
+        type: REMOVEERRORMESSAGE,
+        payload: err
     }
 }
 

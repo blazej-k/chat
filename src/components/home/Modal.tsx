@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { userAuth } from "../../actions/UserActions";
+import { removeUserError, userAuth } from "../../actions/UserActions";
 
 
 interface ModalProps {
@@ -26,6 +26,7 @@ interface FormikErrors {
 const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const [showModal, setShowModal] = useState(true)
+    const [userAuthError, setUserAuthError] = useState('')
 
     const dispatch = useDispatch()
     const store = useSelector((store: Store) => store.userReducer)
@@ -38,21 +39,21 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
             keepLogIn: false,
         },
         validate: (values) => {
-            const {login, password, sex} = values
+            const { login, password, sex } = values
             const errors: FormikErrors = {} as FormikErrors
-            if(login.length === 0){
+            if (login.length === 0) {
                 errors.login = true
             }
-            if(password.length === 0){
-               errors.password = true
+            if (password.length === 0) {
+                errors.password = true
             }
-            if(sex?.length === 0 && type === 'signup'){
+            if (sex?.length === 0 && type === 'signup') {
                 errors.sex = true
             }
             return errors
         },
         onSubmit: values => {
-            if(type === 'signin'){
+            if (type === 'signin') {
                 delete values.sex
             }
             const form: UserAuthInfo = values
@@ -64,8 +65,15 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         document.addEventListener('click', changeModalClass)
         return () => {
             document.removeEventListener('click', changeModalClass)
+            dispatch(removeUserError(store.error))
         }
     }, [])
+
+    useEffect(() => {
+        if (store.error && store.error !== userAuthError) {
+            setUserAuthError(store.error)
+        }
+    }, [store])
 
     const closeModal = () => {
         setShowModal(false)
@@ -94,6 +102,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
             <div className="modal-box">
                 <div className='modal sign-in-modal' id={!showModal ? 'modal-close' : ''}>
                     <h1>{type === 'signup' ? 'Create your new account' : 'Sign In'}</h1>
+                    {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
