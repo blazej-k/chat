@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserError, userAuth } from "../../actions/UserActions";
 import validate from '../helpers/FormikValidate'
+import Loader from "react-loader-spinner";
+
 
 
 interface ModalProps {
@@ -77,7 +79,9 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
             <div className="modal-box">
                 <div className='modal sign-in-modal' id={!showModal ? 'modal-close' : ''}>
-                    <h1>{type === 'signup' ? 'Create your new account' : 'Sign In'}, {store.loading && 'Loading'}</h1>
+                    <h1>
+                        {type === 'signup' ? 'Create your new account' : 'Sign In'}
+                    </h1>
                     {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
                     <form onSubmit={handleSubmit}>
                         <input
@@ -124,6 +128,9 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         />
                         <label htmlFor="keep-login">Keep me log in</label><br />
                         {type === 'signin' && <span className='redirect' onClick={redirectToSecondModal}>Create new acount!</span>}
+                        <div className="loader">
+                            <Loader type='Watch' color='black' visible={store.loading} width='40px' />
+                        </div>
                         <div className="buttons-wrapper">
                             <div className="buttons">
                                 <button onClick={closeModal}>cancel</button>
