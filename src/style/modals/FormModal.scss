@@ -1,0 +1,65 @@
+@import "../keyframes";
+@import "../colors";
+
+.modal {
+    color: $black !important;
+    border: 1px solid $black;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 30px 10px 30px;
+    animation: fadeModal 0.3s;
+    h1 {
+        margin: 0 0 20px 0;
+    }
+    .user-auth-error{
+        color: $red;
+        display: block;
+        margin-top: 10px;
+        font-size: 130%;
+    }
+    form {
+        input {
+            outline: none;
+            color: $black;
+            font-size: 110%;
+            width: 60%;
+            border: 0.5px solid $black;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            &[type="checkbox"] {
+                //fix
+                width: 3.5%;
+                position: relative;
+                right: 0.8%;
+            }
+        }
+        .form-validate{
+            color: rgb(139, 139, 139);
+            margin-left: 10px;
+        }
+        .form-validate-sex{
+            color: rgb(139, 139, 139);
+        }
+        .sex {
+            margin-bottom: 10px;
+            label{
+                margin-right: 10px;
+            }
+            input {
+                width: auto;
+                margin-right: 5px;
+            }
+        }
+        .redirect {
+            display: inline-block;
+            color: $blue;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .loader{
+            float: right;
+        }
+    }
+}

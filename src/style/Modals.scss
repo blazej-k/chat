@@ -1,5 +1,5 @@
-@import "colors";
 @import "keyframes";
+@import "colors";
 
 .modal-wrapper {
     width: 100vw;
@@ -18,96 +18,33 @@
         left: 50%;
         margin: auto;
         transform: translate(-50%, -50%);
-        .modal {
-            color: $black !important;
-            border: 1px solid $black;
+        @import "./modals/FormModal";
+        @import "./modals/InfoModal";
+        .buttons-wrapper {
+            border-top: 0.5px solid $black;
+            padding: 10px 0;
             width: 100%;
-            border-radius: 10px;
-            background-color: white;
-            padding: 30px 30px 10px 30px;
-            animation: fadeModal 0.3s;
-            h1 {
-                margin: 0 0 20px 0;
-            }
-            .user-auth-error{
-                color: $red;
-                display: block;
-                margin-top: 10px;
-                font-size: 130%;
-            }
-            form {
-                input {
+            margin-top: 35px;
+            .buttons {
+                width: 100%;
+                margin: auto;
+                text-align: center;
+                overflow: auto;
+                button {
                     outline: none;
-                    color: $black;
-                    font-size: 110%;
-                    width: 60%;
-                    border: 0.5px solid $black;
-                    border-radius: 6px;
-                    padding: 15px;
-                    margin: 10px 0;
-                    &[type="checkbox"] {
-                        //fix
-                        width: 3.5%;
-                        position: relative;
-                        right: 0.8%;
-                    }
-                }
-                .form-validate{
-                    // display: block;
-                    color: rgb(139, 139, 139);
-                    margin-left: 10px;
-                }
-                .form-validate-sex{
-                    color: rgb(139, 139, 139);
-                    // display: block;
-                }
-                .sex {
-                    margin-bottom: 10px;
-                    label{
-                        margin-right: 10px;
-                    }
-                    input {
-                        width: auto;
-                        margin-right: 5px;
-                    }
-                }
-                .redirect {
-                    display: inline-block;
-                    color: $blue;
+                    @include multiColors('bgcolor');
+                    font-size: 80%;
+                    border: none;
                     cursor: pointer;
-                    margin-top: 20px;
-                }
-                .loader{
-                    float: right;
-                }
-                .buttons-wrapper {
-                    border-top: 0.5px solid $black;
-                    padding: 10px 0;
-                    width: 100%;
-                    margin-top: 35px;
-                    .buttons {
-                        width: 100%;
-                        margin: auto;
-                        text-align: center;
-                        overflow: auto;
-                        button {
-                            background-color: $red;
-                            outline: none;
-                            font-size: 80%;
-                            border: none;
-                            cursor: pointer;
-                            text-transform: uppercase;
-                            width: 30%;
-                            color: white;
-                            padding: 10px;
-                            border-radius: 2px;
-                            float: left;
-                            &:nth-child(2n) {
-                                background-color: $green;
-                                float: right;
-                                border-radius: 2px;
-                            }
-                        }
+                    text-transform: uppercase;
+                    width: 30%;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 2px;
+                    float: left;
+                    &:nth-child(2n) {
+                        float: right;
+                        border-radius: 2px;
                     }
                 }
             }

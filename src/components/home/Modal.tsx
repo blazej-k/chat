@@ -133,8 +133,8 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         </div>
                         <div className="buttons-wrapper">
                             <div className="buttons">
-                                <button onClick={closeModal} type='button'>cancel</button>
-                                <button type='submit'>{type === 'signin' ? 'go' : 'save'}</button>
+                                <button onClick={closeModal} className='red' type='button'>cancel</button>
+                                <button type='submit' className='green'>{type === 'signin' ? 'go' : 'save'}</button>
                             </div>
                         </div>
                     </form>

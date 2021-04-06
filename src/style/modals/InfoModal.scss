@@ -1,0 +1,44 @@
+@import "../keyframes";
+
+
+.modal-welcome {
+    color: $black !important;
+    border: 1px solid $black;
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    padding: 30px 30px 10px 30px;
+    animation: fadeModal 0.3s;
+    h1 {
+        margin: 0 0 20px 0;
+    }
+    .description{
+        font-size: 120%;
+        line-height: 160%;
+    }
+    .nav{
+        display: flex;
+        width: 15%;
+        align-items: baseline;
+        margin: auto;
+        margin-top: 40px;
+        .circle-wrapper{
+            border: 1px solid black;
+            width: 10px;
+            border-radius: 50%;
+            height: 10px;
+            margin: auto;
+            padding: 3px;
+            cursor: pointer;
+            .active{
+                width: 100%;
+                height: 100%;
+                background-color: $blue;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+.buttons-wrapper{
+    margin-top: 5px !important;
+}
