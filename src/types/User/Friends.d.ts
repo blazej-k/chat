@@ -6,7 +6,7 @@ interface FriendInfo {
 interface ConfirmFriend {
     waiter: string,
     recipient: string,
-    decision: 'accept' | 'reject'
+    decision: Decission
 }
 
 interface Friend {

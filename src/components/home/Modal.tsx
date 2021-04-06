@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { userAuth } from "../../actions/UserActions";
 
 
 interface ModalProps {
@@ -8,27 +10,53 @@ interface ModalProps {
     redirectModal?: () => void
 }
 
-// interface FormValues {
-//     username: string,
-//     password: string,
-//     sex?: 'male'
-// }
+interface FormValues {
+    login: string,
+    password: string,
+    sex?: Sex,
+    keepLogIn: boolean
+}
+
+interface FormikErrors {
+    login: boolean,
+    password: boolean,
+    sex: boolean,
+}
 
 const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const [showModal, setShowModal] = useState(true)
 
-    const formik = useFormik({
+    const dispatch = useDispatch()
+    const store = useSelector((store: Store) => store.userReducer)
+
+    const formik = useFormik<FormValues>({
         initialValues: {
-            username: '',
+            login: '',
             password: '',
-            sex: '',
-            keepLogIn: false
+            sex: '' as Sex,
+            keepLogIn: false,
+        },
+        validate: (values) => {
+            const {login, password, sex} = values
+            const errors: FormikErrors = {} as FormikErrors
+            if(login.length === 0){
+                errors.login = true
+            }
+            if(password.length === 0){
+               errors.password = true
+            }
+            if(sex?.length === 0 && type === 'signup'){
+                errors.sex = true
+            }
+            return errors
         },
         onSubmit: values => {
-            // if(type === 'signin'){
-            //     delete values.sex
-            // }
+            if(type === 'signin'){
+                delete values.sex
+            }
+            const form: UserAuthInfo = values
+            dispatch(userAuth(form))
         }
     })
 
@@ -59,7 +87,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         }
     }
 
-    const { handleSubmit, handleChange, values: { username, password } } = formik
+    const { handleSubmit, handleChange, values: { login, password }, errors } = formik
 
     return (
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
@@ -69,18 +97,22 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                     <form onSubmit={handleSubmit}>
                         <input
                             type="text"
-                            name='username'
+                            name='login'
                             placeholder='Username'
-                            value={username}
+                            value={login}
                             onChange={handleChange}
-                        /><br />
+                        />
+                        {errors.login && <span className='form-validate'>Required</span>}
+                        <br />
                         <input
                             type="password"
                             name='password'
                             placeholder='Password'
                             value={password}
                             onChange={handleChange}
-                        /><br />
+                        />
+                        {errors.password && <span className='form-validate'>Required</span>}
+                        <br />
                         {type === 'signup' &&
                             <div className="sex">
                                 <input
@@ -89,7 +121,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                                     value='male'
                                     onChange={handleChange}
                                 />
-                                <label htmlFor='sex'>Male</label><br />
+                                <label htmlFor='sex'>Male</label>
                                 <input
                                     type="radio"
                                     name="sex"
@@ -97,6 +129,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                                     onChange={handleChange}
                                 />
                                 <label htmlFor='sex'>Female</label>
+                                {errors.sex && <span className='form-validate-sex'>Required</span>}
                             </div>
                         }
                         <input

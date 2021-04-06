@@ -46,11 +46,23 @@
                         right: 0.8%;
                     }
                 }
+                .form-validate{
+                    // display: block;
+                    color: rgb(139, 139, 139);
+                    margin-left: 10px;
+                }
+                .form-validate-sex{
+                    color: rgb(139, 139, 139);
+                    // display: block;
+                }
                 .sex {
                     margin-bottom: 10px;
+                    label{
+                        margin-right: 10px;
+                    }
                     input {
                         width: auto;
-                        margin-right: 7px;
+                        margin-right: 5px;
                     }
                 }
                 .redirect {
