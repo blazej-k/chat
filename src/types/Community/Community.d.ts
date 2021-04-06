@@ -2,7 +2,7 @@ interface Community {
     users: {
         login: string,
         date: date,
-        sex: string,
+        sex: Sex,
         _id: string
     }[],
     groups: CommunityGroup[],
@@ -14,4 +14,6 @@ interface CommunityGroup {
     groupId: string,
     _id: string
 }
+
+type Decission = 'accept' | 'reject'
 

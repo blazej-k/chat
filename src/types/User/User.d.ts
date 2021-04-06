@@ -1,6 +1,6 @@
 interface User {
     login: string,
-    sex: 'male' | 'female',
+    sex: Sex,
     waitingFriends: {
         sender: string,
         date: date,
@@ -28,5 +28,7 @@ interface User {
 interface UserAuthInfo {
     login: string,
     password: string,
-    sex?: 'male' | 'female'
+    sex?: Sex
 }
+
+type Sex = 'male' | 'female'

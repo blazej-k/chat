@@ -10,7 +10,7 @@ interface ConfirmGroup {
     groupName: string,
     groupId: string,
     newMember: string
-    decission: 'accept' | 'reject'
+    decission: Decission
 }
 
 interface Group {
@@ -28,5 +28,5 @@ interface Group {
 interface GroupMembers {
     _id: string,
     login: string,
-    sex: 'male' | 'female'
+    sex: Sex
 }

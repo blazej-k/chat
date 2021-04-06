@@ -8,6 +8,12 @@ interface ModalProps {
     redirectModal?: () => void
 }
 
+// interface FormValues {
+//     username: string,
+//     password: string,
+//     sex?: 'male'
+// }
+
 const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const [showModal, setShowModal] = useState(true)
@@ -20,7 +26,9 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
             keepLogIn: false
         },
         onSubmit: values => {
-            console.log(values)
+            // if(type === 'signin'){
+            //     delete values.sex
+            // }
         }
     })
 
@@ -33,6 +41,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const closeModal = () => {
         setShowModal(false)
+        //after 0.3s because it's time of scss aniamtion 
         setTimeout(() => isModalOpen(false), 300)
     }
 
@@ -50,7 +59,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         }
     }
 
-    const { handleSubmit, handleChange, values: { username, password, keepLogIn } } = formik
+    const { handleSubmit, handleChange, values: { username, password } } = formik
 
     return (
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
@@ -100,7 +109,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         <div className="buttons-wrapper">
                             <div className="buttons">
                                 <button onClick={closeModal}>cancel</button>
-                                <button type='submit'>ready</button>
+                                <button type='submit'>{type === 'signin' ? 'go' : 'save'}</button>
                             </div>
                         </div>
                     </form>

@@ -12,5 +12,5 @@ interface ConfirmFriend {
 interface Friend {
     login: string,
     date: date,
-    sex: 'male' | 'female',
+    sex: Sex,
 }
