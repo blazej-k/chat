@@ -2,6 +2,7 @@ import { Dispatch } from "react"
 
 export const SIGNUP = 'signup'
 export const SIGNIN = 'signin'
+export const USERLOADING = 'userloading'
 export const ERRORMESSAGE = 'errormessage'
 export const REMOVEERRORMESSAGE = 'removeerrormessage'
 export const JOINTOGROUP = 'jointogroup'
@@ -15,7 +16,7 @@ export const NEWGROUPMESSAGE = 'newgroupmessage'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => {
-    // dispatch({type: SENDREQUEST})
+    dispatch({type: USERLOADING})
     const isUserExist = 'sex' in userInfo ? false : true
     const ENDPOINT = isUserExist ? process.env.SIGN_IN : process.env.SIGN_UP
     await fetch(ENDPOINT || '', {

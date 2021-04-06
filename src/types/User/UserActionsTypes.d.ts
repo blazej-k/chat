@@ -1,5 +1,6 @@
 const SIGNUP = 'signup'
 const SIGNIN = 'signin'
+const USERLOADING = 'userloading'
 const SENDINVITETOFRIEND = 'sendinvitetofriend'
 const SENDINVITETOGROUP = 'sendinvitetogroup'
 const CONFIRMFRIEND = 'confirmfriendinvite'
@@ -14,6 +15,10 @@ const REMOVEERRORMESSAGE = 'removeerrormessage'
 interface UserAuth {
     type: typeof SIGNUP | typeof SIGNIN,
     payload: User
+}
+
+interface UserLoading {
+    type: typeof USERLOADING
 }
 
 interface JoinToGroup {
@@ -60,5 +65,5 @@ interface UserReducer {
     error: string
 }
 
-type UserActionType = UserAuth | UserError | JoinToGroup | SendInvite | ConfirmFriendsInvite |
+type UserActionType = UserAuth | UserLoading | UserError | JoinToGroup | SendInvite | ConfirmFriendsInvite |
 NewGroupMessage | RemoveInvite | RemoveUserError

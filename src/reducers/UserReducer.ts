@@ -1,6 +1,7 @@
 import {
     SIGNUP,
     SIGNIN,
+    USERLOADING,
     ERRORMESSAGE,
     JOINTOGROUP,
     CONFIRMFRIEND,
@@ -18,11 +19,14 @@ const initState: UserReducer = {
 
 export const UserReducer = (state = initState, action: UserActionType) => {
     switch (action.type) {
+        case USERLOADING:
+            return state = {...state, loading: true, error: ''}
         case SIGNIN:
         case SIGNUP:
             const { login, sex, conversations, waitingFriends, waitingGroups, friends, groups } = action.payload
             return state = {
-                ...state,
+                loading: false,
+                error: '',
                 user: {
                     login,
                     sex,
@@ -106,7 +110,6 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                 }
             }
         case ERRORMESSAGE:
-            console.log(action.payload)
             return state = { ...state, loading: false, error: action.payload }
         case REMOVEERRORMESSAGE:
             return state = {...state, error: ''}

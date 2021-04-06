@@ -14,7 +14,6 @@ const HomeDescription: FC<HomeDescriptionProps> = ({buttonHover, buttonClick, co
     return (
         <div className="home-info-des">
             <h2>Join to us and write to friends</h2>
-            <Link to='/fsdf'>ff</Link>
             <div className="des">
                 <p>
                     Make groups, invite friends and meet new people!

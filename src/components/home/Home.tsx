@@ -5,6 +5,9 @@ import { motion } from "framer-motion"
 import HeaderAnimation from '../helpers/HeaderAnimation';
 import Modal from './Modal'
 import HomeDescription from './HomeDescription';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router';
+import { userAuth } from '../../actions/UserActions';
 
 const Home: FC = () => {
 
@@ -16,6 +19,8 @@ const Home: FC = () => {
     const [showSignUpModal, setShowSignUpModal] = useState(false)
 
     const ref = useRef<HTMLHeadingElement>(null)
+
+    const store = useSelector((store: Store) => store.userReducer)
 
     useLayoutEffect(() => {
         const result: string[] = []
@@ -71,6 +76,7 @@ const Home: FC = () => {
 
     return (
         <div className="home-wrapper">
+            {store.user.login && <Redirect to='/sdf'/>}
             <motion.div className="home" variants={animations} initial='out' animate='in'>
                 <div className="header">
                     <h1 ref={ref}>ChatZilla</h1>

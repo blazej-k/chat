@@ -45,6 +45,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
     }, [])
 
     useEffect(() => {
+        console.log(store.loading)
         if (store.error && store.error !== userAuthError) {
             setUserAuthError(store.error)
         }
@@ -76,7 +77,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
             <div className="modal-box">
                 <div className='modal sign-in-modal' id={!showModal ? 'modal-close' : ''}>
-                    <h1>{type === 'signup' ? 'Create your new account' : 'Sign In'}</h1>
+                    <h1>{type === 'signup' ? 'Create your new account' : 'Sign In'}, {store.loading && 'Loading'}</h1>
                     {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
                     <form onSubmit={handleSubmit}>
                         <input
