@@ -1,8 +1,8 @@
 import { useFormik } from 'formik';
 import { FC } from 'react'
-import useSocket from './hooks/SocketHook';
+import useSocket from '../hooks/SocketHook';
 import { useDispatch, useSelector } from 'react-redux'
-import { userAuth } from '../actions/UserActions';
+import { userAuth } from '../../actions/UserActions';
 
 type sex = 'male' | 'female'
 

@@ -1,8 +1,8 @@
 import { ChangeEvent, FC, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { createGroup } from "../actions/CommunityActions"
-import { joinToGroup as join } from "../actions/UserActions"
-import useSocket from "./hooks/SocketHook"
+import { createGroup } from "../../actions/CommunityActions"
+import { joinToGroup as join } from "../../actions/UserActions"
+import useSocket from "../hooks/SocketHook"
 
 
 const Chat: FC = () => {

@@ -76,7 +76,7 @@ const Home: FC = () => {
 
     return (
         <div className="home-wrapper">
-            {store.user.login && <Redirect to='/sdf'/>}
+            {store.user.login && <Redirect to='/chat'/>}
             <motion.div className="home" variants={animations} initial='out' animate='in'>
                 <div className="header">
                     <h1 ref={ref}>ChatZilla</h1>
