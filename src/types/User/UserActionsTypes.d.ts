@@ -52,7 +52,6 @@ interface UserError {
 
 interface RemoveUserError {
     type: typeof REMOVEERRORMESSAGE
-    payload: string
 }
 
 interface UserReducer {

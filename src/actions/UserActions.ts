@@ -95,10 +95,9 @@ export const removeInvite = (selector: string, type: 'friend' | 'group'): Remove
     }
 }
 
-export const removeUserError = (err: string) => {
+export const removeUserError = () => {
     return {
         type: REMOVEERRORMESSAGE,
-        payload: err
     }
 }
 

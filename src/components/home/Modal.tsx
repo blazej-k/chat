@@ -2,25 +2,13 @@ import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserError, userAuth } from "../../actions/UserActions";
+import validate from '../helpers/FormikValidate'
 
 
 interface ModalProps {
     isModalOpen: (value: false) => void,
     type: 'signup' | 'signin'
     redirectModal?: () => void
-}
-
-interface FormValues {
-    login: string,
-    password: string,
-    sex?: Sex,
-    keepLogIn: boolean
-}
-
-interface FormikErrors {
-    login: boolean,
-    password: boolean,
-    sex: boolean,
 }
 
 const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
@@ -38,20 +26,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
             sex: '' as Sex,
             keepLogIn: false,
         },
-        validate: (values) => {
-            const { login, password, sex } = values
-            const errors: FormikErrors = {} as FormikErrors
-            if (login.length === 0) {
-                errors.login = true
-            }
-            if (password.length === 0) {
-                errors.password = true
-            }
-            if (sex?.length === 0 && type === 'signup') {
-                errors.sex = true
-            }
-            return errors
-        },
+        validate: values => validate(values, type),
         onSubmit: values => {
             if (type === 'signin') {
                 delete values.sex
@@ -65,7 +40,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         document.addEventListener('click', changeModalClass)
         return () => {
             document.removeEventListener('click', changeModalClass)
-            dispatch(removeUserError(store.error))
+            dispatch(removeUserError())
         }
     }, [])
 
