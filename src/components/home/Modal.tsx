@@ -9,7 +9,7 @@ import Loader from "react-loader-spinner";
 
 interface ModalProps {
     isModalOpen: (value: false) => void,
-    type: 'signup' | 'signin'
+    type: 'signup' | 'signin',
     redirectModal?: () => void
 }
 
@@ -133,7 +133,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         </div>
                         <div className="buttons-wrapper">
                             <div className="buttons">
-                                <button onClick={closeModal}>cancel</button>
+                                <button onClick={closeModal} type='button'>cancel</button>
                                 <button type='submit'>{type === 'signin' ? 'go' : 'save'}</button>
                             </div>
                         </div>

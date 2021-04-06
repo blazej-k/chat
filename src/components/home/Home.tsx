@@ -1,4 +1,4 @@
-import { FC, useLayoutEffect, useRef, useState } from 'react';
+import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Slider from './Slider'
 import '../../style/Home.scss'
 import { motion } from "framer-motion"
@@ -7,7 +7,6 @@ import Modal from './Modal'
 import HomeDescription from './HomeDescription';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
-import { userAuth } from '../../actions/UserActions';
 
 const Home: FC = () => {
 
@@ -17,6 +16,7 @@ const Home: FC = () => {
     const [showSpanInfo, setShowSpanInfo] = useState(false)
     const [showSignInModal, setShowSignInModal] = useState(false)
     const [showSignUpModal, setShowSignUpModal] = useState(false)
+    const [newUser, setNewUser] = useState(false)
 
     const ref = useRef<HTMLHeadingElement>(null)
 
@@ -34,6 +34,15 @@ const Home: FC = () => {
         setRandomColors(result)
         if (ref && ref.current) HeaderAnimation(ref.current, result)
     }, [])
+
+    useEffect(() => {
+        if(showSignUpModal && !newUser){
+            setNewUser(true)
+        }
+        else if(!showSignUpModal && newUser){
+            setNewUser(false)
+        }
+    }, [showSignUpModal])
 
     const animations = {
         in: {
@@ -76,7 +85,7 @@ const Home: FC = () => {
 
     return (
         <div className="home-wrapper">
-            {store.user.login && <Redirect to='/chat'/>}
+            {store.user.login && <Redirect to={`/chat/${newUser}`}/>}
             <motion.div className="home" variants={animations} initial='out' animate='in'>
                 <div className="header">
                     <h1 ref={ref}>ChatZilla</h1>

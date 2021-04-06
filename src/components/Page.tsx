@@ -6,7 +6,7 @@ import Footer from "./footer/Footer";
 import { AnimatePresence } from "framer-motion"
 
 
-const Page2: FC = () => {
+const Page: FC = () => {
     return (
         <>
             <div className="content">
@@ -14,7 +14,7 @@ const Page2: FC = () => {
                     <AnimatePresence>
                         <Switch>
                             <Route path='/' exact component={Home} />
-                            <Route path='/chat' exact component={Chat} />
+                            <Route path='/chat/:isNew' exact component={Chat} />
                         </Switch>
                     </AnimatePresence>
                 </Router>
@@ -24,4 +24,4 @@ const Page2: FC = () => {
     );
 }
 
-export default Page2;
+export default Page;
