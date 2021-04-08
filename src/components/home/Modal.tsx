@@ -47,7 +47,6 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
     }, [])
 
     useEffect(() => {
-        console.log(store.loading)
         if (store.error && store.error !== userAuthError) {
             setUserAuthError(store.error)
         }

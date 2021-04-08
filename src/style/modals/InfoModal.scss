@@ -9,12 +9,46 @@
     background-color: white;
     padding: 30px 30px 10px 30px;
     animation: fadeModal 0.3s;
+    margin: auto;
+    overflow-x: hidden;
     h1 {
         margin: 0 0 20px 0;
     }
     .description{
         font-size: 120%;
         line-height: 160%;
+    }
+    .slide{
+        &-to-left{
+            animation: slideToLeft .4s;
+            transform: translateX(0%);
+        }
+        &-to-right{
+            animation: slideToRight .4s;
+            transform: translateX(0%);
+        }
+    }
+
+    @keyframes slideToLeft {
+        from{
+            opacity: 0;
+            transform: translateX(50%);
+        }
+        to{
+            opacity: 1;
+            transform: translateX(0%);
+            animation-iteration-count: 1;
+        }
+    }
+    @keyframes slideToRight {
+        from{
+            opacity: 0;
+            transform: translateX(-50%);
+        }
+        to{
+            opacity: 1;
+            transform: translateX(0%);
+        }
     }
     .nav{
         display: flex;

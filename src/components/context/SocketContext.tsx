@@ -4,6 +4,7 @@ import { DefaultEventsMap } from "socket.io-client/build/typed-events";
 import { Provider } from 'react-redux'
 import { store } from "../../reducers/store";
 import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 interface Context {
     client: Socket<DefaultEventsMap, DefaultEventsMap>

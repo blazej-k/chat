@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC, useEffect, useRef, useState, MouseEvent } from 'react';
 
-export interface ModalProps {
+interface ModalProps {
     login: string
 }
 
@@ -16,7 +16,7 @@ const Modal: FC<ModalProps> = ({ login }) => {
     const slides = [
         <div>Slide 1</div>,
         <div>Slide 2</div>,
-        <div>Slide 3</div>
+        <div>Slide 3</div>,
     ]
 
     useEffect(() => {
@@ -26,12 +26,13 @@ const Modal: FC<ModalProps> = ({ login }) => {
         return () => {
             refs.forEach(ref => {
                 ref.removeEventListener('click', changeModalSlide)
-            })
+            }) 
         }
     }, [slideIndex])
 
     const changeModalSlide = (e: globalThis.MouseEvent | MouseEvent<HTMLButtonElement>) => {
         const target = (e.target as Element)
+        const slideElement = (slideRef.current as HTMLDivElement)
         if (target.tagName.toLowerCase() === 'button') {
             refs.forEach(ref => {
                 if (ref.firstElementChild?.className === 'circle active') {
@@ -46,10 +47,11 @@ const Modal: FC<ModalProps> = ({ login }) => {
                 setSlideIndex(prev => prev + 1)
                 navRef.current?.children[slideIndex + 1].firstElementChild?.classList.add('active')
             }
-            if(slideRef && slideRef.current){
-                slideRef.current.className = ''
-                slideRef.current.classList.add('slide', 'slide-to-left')
-            }
+            slideElement.className = '';
+            slideElement.classList.add('slide', 'slide-to-left')
+            setTimeout(() => {
+                slideElement.className = 'slide'
+            }, 400)
         }
         if (target.id) {
             refs.forEach((ref, index) => {
@@ -58,15 +60,16 @@ const Modal: FC<ModalProps> = ({ login }) => {
                 }
                 if (ref === target) {
                     setSlideIndex(index)
-                    if(slideRef && slideRef.current){
-                        slideRef.current.className = ''
-                        index < slideIndex ? slideRef.current.classList.add('slide', 'slide-to-right') :
-                        slideRef.current.classList.add('slide', 'slide-to-left')
-                    }
+                    slideElement.className = ''
+                    index < slideIndex ? slideElement.classList.add('slide', 'slide-to-right') :
+                        slideElement.classList.add('slide', 'slide-to-left')
+                    setTimeout(() => {
+                        slideElement.className = 'slide'
+                    }, 400)
                 }
             })
-            target.firstElementChild?.classList.add('active')
         }
+        target.firstElementChild?.classList.add('active')
     }
 
     return (
@@ -98,7 +101,7 @@ const Modal: FC<ModalProps> = ({ login }) => {
                                 <>
                                     <button className='orange' type='button'>skip</button>
                                     <button className='blue' onClick={changeModalSlide} type='button'>next</button>
-                                </> : 
+                                </> :
                                 <button className='blue' type='button'>finish</button>
                             }
                         </div>
