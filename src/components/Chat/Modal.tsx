@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState, MouseEvent } from 'react';
 
 export interface ModalProps {
     login: string
@@ -10,6 +10,7 @@ const Modal: FC<ModalProps> = ({ login }) => {
     const [slideIndex, setSlideIndex] = useState(0)
 
     const navRef = useRef<HTMLDivElement>(null)
+    const slideRef = useRef<HTMLDivElement>(null)
 
     const refs: HTMLDivElement[] = []
     const slides = [
@@ -29,32 +30,42 @@ const Modal: FC<ModalProps> = ({ login }) => {
         }
     }, [slideIndex])
 
-    const changeModalSlide = (e: globalThis.MouseEvent) => {
+    const changeModalSlide = (e: globalThis.MouseEvent | MouseEvent<HTMLButtonElement>) => {
         const target = (e.target as Element)
-        console.log(slideIndex)
-        if (target.id) {
+        if (target.tagName.toLowerCase() === 'button') {
             refs.forEach(ref => {
-                if (ref.children[0].className === 'circle active') {
+                if (ref.firstElementChild?.className === 'circle active') {
                     ref.children[0].className = 'circle'
                 }
             })
-            target.children[0].classList.add('active')
-
-            if (navRef && navRef.current) {
-                const { children } = navRef.current
-                for (let i = 0; i < children.length; i++) {
-                    if (children[i].id === target.id) {
-                        if (i > slideIndex) {
-                            target.classList.add('animation-to-left')
-                        }
-                        else {
-                            target.classList.add('animation-to-right')
-                        }
-                        navRef.current.children[slideIndex].className = 'circle-wrapper'
-                        setSlideIndex(i)
+            if (slideIndex + 1 > 2) {
+                setSlideIndex(0)
+                navRef.current?.firstElementChild?.firstElementChild?.classList.add('active')
+            }
+            else {
+                setSlideIndex(prev => prev + 1)
+                navRef.current?.children[slideIndex + 1].firstElementChild?.classList.add('active')
+            }
+            if(slideRef && slideRef.current){
+                slideRef.current.className = ''
+                slideRef.current.classList.add('slide', 'slide-to-left')
+            }
+        }
+        if (target.id) {
+            refs.forEach((ref, index) => {
+                if (ref.firstElementChild?.className === 'circle active') {
+                    ref.children[0].className = 'circle'
+                }
+                if (ref === target) {
+                    setSlideIndex(index)
+                    if(slideRef && slideRef.current){
+                        slideRef.current.className = ''
+                        index < slideIndex ? slideRef.current.classList.add('slide', 'slide-to-right') :
+                        slideRef.current.classList.add('slide', 'slide-to-left')
                     }
                 }
-            }
+            })
+            target.firstElementChild?.classList.add('active')
         }
     }
 
@@ -66,8 +77,10 @@ const Modal: FC<ModalProps> = ({ login }) => {
                     <div className="description">
                         We're very happy that you've joined to our community! Follow the rules and
                         write with our friends. Here's some good advice to you. If you want you can skip this tutorial.
-                   </div>
-                    {slides[slideIndex]}
+                    </div>
+                    <div className="slide" ref={slideRef}>
+                        {slides[slideIndex]}
+                    </div>
                     <div className="nav" ref={navRef}>
                         <div className="circle-wrapper" id='circle1' ref={el => el && refs.push(el)}>
                             <div className="circle active"></div>
@@ -81,8 +94,13 @@ const Modal: FC<ModalProps> = ({ login }) => {
                     </div>
                     <div className="buttons-wrapper">
                         <div className="buttons">
-                            <button className='orange' type='button'>skip</button>
-                            <button className='blue' type='button'>next</button>
+                            {slideIndex < 2 ?
+                                <>
+                                    <button className='orange' type='button'>skip</button>
+                                    <button className='blue' onClick={changeModalSlide} type='button'>next</button>
+                                </> : 
+                                <button className='blue' type='button'>finish</button>
+                            }
                         </div>
                     </div>
                 </div>
