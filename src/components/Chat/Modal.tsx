@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { FC, useEffect, useRef, useState, MouseEvent } from 'react';
+import ModalSlideDes from './ModalSlideDes';
+
 
 interface ModalProps {
     login: string
@@ -13,11 +15,6 @@ const Modal: FC<ModalProps> = ({ login }) => {
     const slideRef = useRef<HTMLDivElement>(null)
 
     const refs: HTMLDivElement[] = []
-    const slides = [
-        <div>Slide 1</div>,
-        <div>Slide 2</div>,
-        <div>Slide 3</div>,
-    ]
 
     useEffect(() => {
         refs.forEach(ref => {
@@ -26,7 +23,7 @@ const Modal: FC<ModalProps> = ({ login }) => {
         return () => {
             refs.forEach(ref => {
                 ref.removeEventListener('click', changeModalSlide)
-            }) 
+            })
         }
     }, [slideIndex])
 
@@ -77,12 +74,10 @@ const Modal: FC<ModalProps> = ({ login }) => {
             <div className="modal-box">
                 <div className="modal-welcome">
                     <h1>Welcome {login}!</h1>
-                    <div className="description">
-                        We're very happy that you've joined to our community! Follow the rules and
-                        write with our friends. Here's some good advice to you. If you want you can skip this tutorial.
-                    </div>
                     <div className="slide" ref={slideRef}>
-                        {slides[slideIndex]}
+                        <div className="description">
+                           <ModalSlideDes index={slideIndex}/>
+                        </div>
                     </div>
                     <div className="nav" ref={navRef}>
                         <div className="circle-wrapper" id='circle1' ref={el => el && refs.push(el)}>

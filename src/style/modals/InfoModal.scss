@@ -14,10 +14,6 @@
     h1 {
         margin: 0 0 20px 0;
     }
-    .description{
-        font-size: 120%;
-        line-height: 160%;
-    }
     .slide{
         &-to-left{
             animation: slideToLeft .4s;
@@ -26,6 +22,10 @@
         &-to-right{
             animation: slideToRight .4s;
             transform: translateX(0%);
+        }
+        .description{
+            font-size: 120%;
+            line-height: 160%;
         }
     }
 
