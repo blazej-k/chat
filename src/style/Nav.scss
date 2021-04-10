@@ -1,0 +1,32 @@
+.nav-wrapper {
+    position: fixed;
+    height: 100vh;
+    border-right: 0.5px solid $black;
+    width: 20%;
+    .nav {
+        width: 100%;
+        ul {
+            list-style-type: none;
+            li {
+                margin: 30px 0;
+                font-size: 200%;
+                cursor: pointer;
+                display: inline-block;
+                svg {
+                    position: relative;
+                    top: 6px;
+                    transition: 0.5s;
+                    display: inline;
+                }
+                &.collection-open {
+                    svg {
+                        transform: rotate(90deg) !important;
+                    }
+                }
+            }
+            li:last-child {
+                color: $red;
+            }
+        }
+    }
+}

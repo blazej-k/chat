@@ -8,7 +8,7 @@
     "module": "CommonJS",
     "esModuleInterop": true,
     "removeComments": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,

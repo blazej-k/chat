@@ -4,10 +4,11 @@ import ModalSlideDes from './ModalSlideDes';
 
 
 interface ModalProps {
-    login: string
+    login: string,
+    showModal: (value: false) => void
 }
 
-const Modal: FC<ModalProps> = ({ login }) => {
+const Modal: FC<ModalProps> = ({ login, showModal }) => {
 
     const [slideIndex, setSlideIndex] = useState(0)
 
@@ -94,10 +95,10 @@ const Modal: FC<ModalProps> = ({ login }) => {
                         <div className="buttons">
                             {slideIndex < 2 ?
                                 <>
-                                    <button className='orange' type='button'>skip</button>
+                                    <button className='orange' onClick={() => showModal(false)} type='button'>skip</button>
                                     <button className='blue' onClick={changeModalSlide} type='button'>next</button>
                                 </> :
-                                <button className='blue' type='button'>finish</button>
+                                <button className='blue' type='button' onClick={() => showModal(false)}>finish</button>
                             }
                         </div>
                     </div>
