@@ -16,7 +16,6 @@ const Nav: FC<NavProps> = () => {
         }
         else if(className === 'collection-open'){
             (e.target as Element).className = 'collection-close'
-            // console.log(className)
         }
     }
 
