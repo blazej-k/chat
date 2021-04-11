@@ -51,9 +51,9 @@
 
 @keyframes slideDown {
     from{
-        transform: translateX(-50%);
+        transform: scaleY(0);
     }
     to{
-        transform: translateX(0%);
+        transform: scaleY(1);
     }
 }

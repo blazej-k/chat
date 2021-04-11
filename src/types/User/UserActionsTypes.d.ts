@@ -10,6 +10,7 @@ const REMOVEGROUPINVITE = 'removegroupinvite'
 const NEWGROUPMESSAGE = 'newgroupmessage'
 const ERRORMESSAGE = 'errormessage'
 const REMOVEERRORMESSAGE = 'removeerrormessage'
+const LOGOUT = 'logout'
 
 
 interface UserAuth {
@@ -59,6 +60,10 @@ interface RemoveUserError {
     type: typeof REMOVEERRORMESSAGE
 }
 
+interface LogOut {
+    type: typeof LOGOUT
+}
+
 interface UserReducer {
     user: User,
     loading: boolean,
@@ -66,4 +71,4 @@ interface UserReducer {
 }
 
 type UserActionType = UserAuth | UserLoading | UserError | JoinToGroup | SendInvite | ConfirmFriendsInvite |
-NewGroupMessage | RemoveInvite | RemoveUserError
+NewGroupMessage | RemoveInvite | RemoveUserError | LogOut

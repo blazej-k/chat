@@ -9,12 +9,15 @@
         width: 100%;
         > ul {
             list-style-type: none;
+            transition-duration: .5s;
             > li {
-                margin: 30px 0;
+                margin: 20px 0;
                 font-size: 200%;
-                display: inline-block;
+                transition-duration: .5s;
+                clear: both;
                 span {
                     cursor: pointer;
+                    transition-duration: .5s;
                 }
                 svg {
                     position: relative;
@@ -28,8 +31,9 @@
                     }
                     > ul {
                         animation: slideDown .5s;
-                        transform: translateX(0%);
+                        transform: scaleY(1);
                         list-style-type: disc;
+                        transform-origin: top;
                         li {
                             font-size: 80%;
                             margin: 20px 0;
@@ -37,8 +41,9 @@
                     }
                 }
             }
-            > li:last-child {
+            > li:last-child > span {
                 color: $red;
+                cursor: pointer;
             }
         }
     }

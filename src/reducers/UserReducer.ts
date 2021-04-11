@@ -8,7 +8,8 @@ import {
     REMOVEFRIENDINVITE,
     REMOVEGROUPINVITE,
     NEWGROUPMESSAGE,
-    REMOVEERRORMESSAGE
+    REMOVEERRORMESSAGE,
+    LOGOUT
 } from '../actions/UserActions'
 
 const initState: UserReducer = {
@@ -113,6 +114,8 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             return state = { ...state, loading: false, error: action.payload }
         case REMOVEERRORMESSAGE:
             return state = {...state, error: ''}
+        case LOGOUT: 
+            return state = {loading: false, error: '', user: {} as User}
         default:
             return state
     }

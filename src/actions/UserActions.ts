@@ -13,6 +13,7 @@ export const CONFIRMFRIEND = 'confirmfriendinvite'
 export const REMOVEFRIENDINVITE = 'removefriendinvite'
 export const REMOVEGROUPINVITE = 'removegroupinvite'
 export const NEWGROUPMESSAGE = 'newgroupmessage'
+export const LOGOUT = 'logout'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => {
@@ -112,3 +113,9 @@ export const newGroupMessage = (groupId: string, text: string, login: string): N
         }
     }
 }
+
+export const logOut = (): LogOut => {
+    return {
+        type: LOGOUT
+    }
+} 
