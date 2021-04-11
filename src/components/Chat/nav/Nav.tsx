@@ -4,71 +4,89 @@ import { RiArrowRightSLine } from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../../actions/UserActions'
 
-interface NavProps {
-
+interface NavListProps<T, N> {
+    friends: T | N,
+    groups: T | N,
+    waitingFriends: T | N,
+    waitingGroups: T | N
 }
 
-const Nav: FC<NavProps> = () => {
+const Nav: FC = () => {
 
-    const [friendsClassName, setFriendsClassName] = useState('collection-close')
-    const [groupsClassName, setGroupsClassName] = useState('collection-close')
+    const [listsStatus, setListsStatus] = useState<NavListProps<'collection-close', 'collection-open'>>({
+        friends: 'collection-close',
+        groups: 'collection-close',
+        waitingFriends: 'collection-close',
+        waitingGroups: 'collection-close'
+    })
 
     const store = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
 
-    const handleFriendsLiClick = (e: MouseEvent<HTMLSpanElement>) => {
-        const { parentElement } = (e.target as Element)
+    const handleListStatus = (e: MouseEvent<HTMLSpanElement>) => {
+        const {parentElement} = e.target as Element
         if (parentElement?.className === 'collection-close') {
-            setFriendsClassName('collection-open')
+            setListsStatus(prev => {
+                return {
+                    ...prev,
+                    [parentElement.id]: 'collection-open'
+                }
+            })
         }
         else if (parentElement?.className === 'collection-open') {
-            setFriendsClassName('collection-close')
-        }
-    }
-
-    const handleGroupsLiClick = (e: MouseEvent<HTMLSpanElement>) => {
-        const { parentElement } = (e.target as Element)
-        if (parentElement?.className === 'collection-close') {
-            setGroupsClassName('collection-open')
-        }
-        else if (parentElement?.className === 'collection-open') {
-            setGroupsClassName('collection-to-close')
+            setListsStatus(prev => {
+                return {
+                    ...prev,
+                    [parentElement.id]: 'collection-close'
+                }
+            })
         }
     }
 
     const handleLogOut = () => dispatch(logOut())
 
-    const { user: { friends, groups } } = store
+    const { user: { friends, groups, waitingFriends, waitingGroups } } = store
 
 
     return (
         <div className="nav">
             <ul>
-                <li className={friendsClassName}>
-                    <span onClick={(e) => handleFriendsLiClick(e)}>Friends</span>
+                <li className={listsStatus.friends} id='friends'>
+                    <span onClick={(e) => handleListStatus(e)}>Friends</span>
                     <RiArrowRightSLine />
-                    {friends.length && friendsClassName === 'collection-open' &&
+                    {friends.length && listsStatus.friends === 'collection-open' &&
                         <ul>
                             {friends.map(({ date, login }) => (
                                 <li key={date}>{login}</li>
                             ))}
                         </ul>
                     }
-                </li><br />
-                <li className={groupsClassName}>
-                    <span onClick={(e) => handleGroupsLiClick(e)}>Groups</span>
+                </li>
+                <li className={listsStatus.groups} id='groups'>
+                    <span onClick={(e) => handleListStatus(e)}>Groups</span>
                     <RiArrowRightSLine />
-                    {groups.length > 0 && groupsClassName === 'collection-open' &&
+                    {groups.length > 0 && listsStatus.groups === 'collection-open' &&
                         <ul>
                             {groups.map(({ groupName, groupId }) => (
                                 <li key={groupId}>{groupName}</li>
                             ))}
                         </ul>
                     }
-                </li><br />
+                </li>
+                <li className={listsStatus.waitingFriends} id='waitingFriends'>
+                    <span onClick={(e) => handleListStatus(e)}>Waiting groups</span>
+                    <RiArrowRightSLine />
+                    {waitingFriends.length > 0 && listsStatus.waitingFriends === 'collection-open' &&
+                        <ul>
+                            {waitingFriends.map(({ sender, date }) => (
+                                <li key={date}>{sender}</li>
+                            ))}
+                        </ul>
+                    }
+                </li>
                 <li>
                     Preferences
-                </li><br />
+                </li>
                 <li>
                     <span onClick={handleLogOut}>Log out</span>
                 </li>
