@@ -61,6 +61,13 @@
             > li:last-child > span {
                 color: $red;
                 cursor: pointer;
+                &.log-out-warning{
+                    font-size: 50%;
+                    position: relative;
+                    animation: slide .2s;
+                    display: block;
+                    margin-top: 10px;
+                }
             }
         }
     }

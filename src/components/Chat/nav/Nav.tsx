@@ -19,6 +19,7 @@ const Nav: FC = () => {
         waitingFriends: 'collection-close',
         waitingGroups: 'collection-close'
     })
+    const [showSpanWarning, setShowSpanWarning] = useState(false)
 
     const store = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
@@ -44,6 +45,8 @@ const Nav: FC = () => {
     }
 
     const handleLogOut = () => dispatch(logOut())
+
+    const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
 
     const { user: { login, friends, groups, waitingFriends, waitingGroups } } = store
 
@@ -132,7 +135,14 @@ const Nav: FC = () => {
                     Preferences
                 </li>
                 <li>
-                    <span onClick={handleLogOut}>Log out</span>
+                    <span
+                        onMouseOver={() => handleSpanMouseHover(true)} 
+                        onMouseLeave={() => handleSpanMouseHover(false)}
+                        onClick={handleLogOut}
+                    >
+                        Log out
+                    </span>
+                    {showSpanWarning && <span className='log-out-warning'>Are you sure to leave?</span>}
                 </li>
             </ul>
         </div>
