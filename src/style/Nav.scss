@@ -10,22 +10,17 @@
             > li {
                 margin: 30px 0;
                 font-size: 200%;
-                cursor: pointer;
                 display: inline-block;
+                span{
+                    cursor: pointer;
+                }
                 svg {
                     position: relative;
                     top: 6px;
                     transition: 0.5s;
                     display: inline;
                 }
-                li{
-                    opacity: 0;
-                    transition-duration: 1s;
-                }
                 &.collection-open {
-                    li{
-                        opacity: 1 !important;
-                    }
                     svg {
                         transform: rotate(90deg) !important;
                     }
@@ -35,6 +30,8 @@
                     list-style-type: disc;
                     li {
                         font-size: 80%;
+                        cursor: auto;
+                        margin: 20px 0;
                     }
                 }
             }

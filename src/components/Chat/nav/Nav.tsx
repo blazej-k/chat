@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { useMemo, useRef } from 'react';
-import { useState } from 'react';
-import { FC, MouseEvent } from 'react';
-
+import { FC, MouseEvent, useState } from 'react';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
 
@@ -17,25 +14,22 @@ const Nav: FC<NavProps> = () => {
 
     const store = useSelector((store: Store) => store.userReducer)
 
-    const friendsRef = useRef<HTMLLIElement>(null)
-    const groupsRef = useRef<HTMLLIElement>(null)
-
-    const handleFriendsLiClick = (e: MouseEvent<HTMLLIElement>) => {
-        let {className} = (e.target as Element) 
-        if(className === 'collection-close'){
+    const handleFriendsLiClick = (e: MouseEvent<HTMLSpanElement>) => {
+        const {parentElement} = (e.target as Element)
+        if(parentElement?.className === 'collection-close'){
             setFriendsClassName('collection-open')
         }
-        else if(className === 'collection-open'){
+        else if(parentElement?.className === 'collection-open'){
             setFriendsClassName('collection-close')
         }
     }
 
-    const handleGroupsLiClick = (e: MouseEvent<HTMLLIElement>) => {
-        let {className} = (e.target as Element) 
-        if(className === 'collection-close'){
+    const handleGroupsLiClick = (e: MouseEvent<HTMLSpanElement>) => {
+        const {parentElement} = (e.target as Element)
+        if(parentElement?.className === 'collection-close'){
             setGroupsClassName('collection-open')
         }
-        else if(className === 'collection-open'){
+        else if(parentElement?.className === 'collection-open'){
             setGroupsClassName('collection-close')
         }
     }
@@ -46,8 +40,8 @@ const Nav: FC<NavProps> = () => {
     return (
         <div className="nav">
             <ul>
-                <li className={friendsClassName} id="friends" ref={friendsRef} onClick={(e) => handleFriendsLiClick(e)}>
-                    Friends
+                <li className={friendsClassName}>
+                    <span onClick={(e) => handleFriendsLiClick(e)}>Friends</span> 
                     <RiArrowRightSLine/>
                     {friends.length && friendsClassName === 'collection-open' && 
                         <ul>
@@ -57,8 +51,8 @@ const Nav: FC<NavProps> = () => {
                         </ul>
                     }
                 </li><br/>
-                <li className={groupsClassName} id="groups" ref={groupsRef} onClick={(e) => handleGroupsLiClick(e)}>
-                    Groups
+                <li className={groupsClassName}>
+                    <span  onClick={(e) => handleGroupsLiClick(e)}>Groups</span>
                     <RiArrowRightSLine/>
                     {groups.length > 0 && groupsClassName === 'collection-open' && 
                         <ul>
