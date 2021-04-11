@@ -5,9 +5,9 @@
     width: 20%;
     .nav {
         width: 100%;
-        ul {
+        > ul {
             list-style-type: none;
-            li {
+            > li {
                 margin: 30px 0;
                 font-size: 200%;
                 cursor: pointer;
@@ -18,13 +18,27 @@
                     transition: 0.5s;
                     display: inline;
                 }
+                li{
+                    opacity: 0;
+                    transition-duration: 1s;
+                }
                 &.collection-open {
+                    li{
+                        opacity: 1 !important;
+                    }
                     svg {
                         transform: rotate(90deg) !important;
                     }
                 }
+                > ul {
+                    margin-top: 25px;
+                    list-style-type: disc;
+                    li {
+                        font-size: 80%;
+                    }
+                }
             }
-            li:last-child {
+            > li:last-child {
                 color: $red;
             }
         }

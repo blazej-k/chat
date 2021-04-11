@@ -31,15 +31,18 @@ const Chat: FC<ChatProps> = () => {
 
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
-            {!store.user.login && <Redirect to='/'/>}
-            {isNew === 'true' && 
-                <div className="modal-full-screen">
-                    {showModal && <Modal login={store.user.login} showModal={setShowModal}/>}
-                </div>
+            {!store.user.login ? <Redirect to='/' /> : 
+                <>
+                    {isNew === 'true' &&
+                        <div className="modal-full-screen">
+                            {showModal && <Modal login={store.user.login} showModal={setShowModal} />}
+                        </div>
+                    }
+                    <div className="nav-wrapper">
+                        <Nav />
+                    </div>
+                </>
             }
-            <div className="nav-wrapper">
-                <Nav/>
-            </div>
         </motion.div>
     );
 }
