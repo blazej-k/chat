@@ -1,3 +1,5 @@
+@import "keyframes";
+
 .nav-wrapper {
     position: fixed;
     height: 100vh;
@@ -11,7 +13,7 @@
                 margin: 30px 0;
                 font-size: 200%;
                 display: inline-block;
-                span{
+                span {
                     cursor: pointer;
                 }
                 svg {
@@ -24,14 +26,14 @@
                     svg {
                         transform: rotate(90deg) !important;
                     }
-                }
-                > ul {
-                    margin-top: 25px;
-                    list-style-type: disc;
-                    li {
-                        font-size: 80%;
-                        cursor: auto;
-                        margin: 20px 0;
+                    > ul {
+                        animation: slideDown .5s;
+                        transform: translateX(0%);
+                        list-style-type: disc;
+                        li {
+                            font-size: 80%;
+                            margin: 20px 0;
+                        }
                     }
                 }
             }

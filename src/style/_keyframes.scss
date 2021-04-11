@@ -48,3 +48,12 @@
         opacity: 1;
     }
 }
+
+@keyframes slideDown {
+    from{
+        transform: translateX(-50%);
+    }
+    to{
+        transform: translateX(0%);
+    }
+}
