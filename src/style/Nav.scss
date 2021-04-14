@@ -1,18 +1,19 @@
 @import "keyframes";
 @import "colors";
 
+
 .nav-wrapper {
     position: fixed;
     height: 100vh;
-    border-right: 0.5px solid $black;
-    width: 20%;
+    border-right: .5px solid $black;
+    width: 15%;
     color: $black;
     .nav {
         width: 100%;
         h1{
             margin: 0 auto;
             padding: 10px 0;
-            font-size: 300%; 
+            font-size: 250%; 
             width: 100%;
             text-align: center;
             border-bottom: 0.5px solid $black;
@@ -22,7 +23,7 @@
             transition-duration: .5s;
             > li {
                 margin: 40px 0; 
-                font-size: 180%;
+                font-size: 130%;
                 transition-duration: .5s;
                 clear: both;
                 span {
@@ -35,7 +36,7 @@
                 }
                 svg {
                     position: relative;
-                    top: 6px;
+                    top: 4.5px;
                     transition: 0.5s;
                     display: inline;
                     &.empty-list{
@@ -58,11 +59,15 @@
                     }
                 }
             }
+            > li:first-child > svg {
+                cursor: pointer;
+                font-size: 130%;
+            }
             > li:last-child > span {
                 color: $red;
                 cursor: pointer;
                 &.log-out-warning{
-                    font-size: 50%;
+                    font-size: 70%;
                     position: relative;
                     animation: slide .2s;
                     display: block;
