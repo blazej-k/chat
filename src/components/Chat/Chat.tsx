@@ -1,11 +1,12 @@
-import { motion } from 'framer-motion';
 import * as React from 'react';
+import { motion } from 'framer-motion';
 import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
 import ChatContent from './ChatHome/Home'
+import ColorProvider from '../context/ColorContext';
 
 interface ChatProps {
 
@@ -32,21 +33,23 @@ const Chat: FC<ChatProps> = () => {
 
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
-            {!store.user.login ? <Redirect to='/' /> : 
-                <>
-                    {isNew === 'true' &&
-                        <div className="chat-modal">
-                            {showModal && <Modal login={store.user.login} showModal={setShowModal} />}
+            <ColorProvider>
+                {!store.user.login ? <Redirect to='/' /> :
+                    <>
+                        {isNew === 'true' &&
+                            <div className="chat-modal">
+                                {showModal && <Modal login={store.user.login} showModal={setShowModal} />}
+                            </div>
+                        }
+                        <div className="nav-wrapper">
+                            <Nav />
                         </div>
-                    }
-                    <div className="nav-wrapper">
-                        <Nav />
-                    </div>
-                    <div className="chat-content-wrapper">
-                        <ChatContent isNew={isNew}/>
-                    </div>
-                </>
-            }
+                        <div className="chat-content-wrapper">
+                            <ChatContent isNew={isNew} />
+                        </div>
+                    </>
+                }
+            </ColorProvider>
         </motion.div>
     );
 }
