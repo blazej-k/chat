@@ -14,3 +14,9 @@ interface Friend {
     date: date,
     sex: Sex,
 }
+
+interface WaitingFriend {
+    sender: string,
+    date: date,
+    _id: string
+}

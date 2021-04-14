@@ -1,19 +1,8 @@
 interface User {
     login: string,
     sex: Sex,
-    waitingFriends: {
-        sender: string,
-        date: date,
-        _id: string
-    }[],
-    waitingGroups: {
-        groupName: string,
-        groupId: string,
-        sender: string
-        date: any,
-        members: GroupMembers[],
-        _id: string
-    }[],
+    waitingFriends: WaitingFriend[],
+    waitingGroups: WaitingGroup[],
     conversations: {
         login: string,
         dialogues: {

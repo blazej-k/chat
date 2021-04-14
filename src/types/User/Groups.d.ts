@@ -30,3 +30,12 @@ interface GroupMembers {
     login: string,
     sex: Sex
 }
+
+interface WaitingGroup {
+    groupName: string,
+    groupId: string,
+    sender: string
+    date: any,
+    members: GroupMembers[],
+    _id: string
+}
