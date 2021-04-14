@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
-import ChatContent from './ChatContent'
+import ChatContent from './ChatHome/Home'
 
 interface ChatProps {
 
@@ -35,7 +35,7 @@ const Chat: FC<ChatProps> = () => {
             {!store.user.login ? <Redirect to='/' /> : 
                 <>
                     {isNew === 'true' &&
-                        <div className="modal-full-screen">
+                        <div className="chat-modal">
                             {showModal && <Modal login={store.user.login} showModal={setShowModal} />}
                         </div>
                     }

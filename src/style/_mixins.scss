@@ -28,8 +28,8 @@
         &.orange {
             background-color: $orange;
         }
-    }
-    @else if($type == 'color'){
+    } 
+    @else if($type == "color") {
         &.red {
             color: $red;
         }
@@ -41,6 +41,39 @@
         }
         &.orange {
             color: $orange;
+        }
+    }
+    @else if($type == 'gradient'){
+        &.red {
+            background-image: linear-gradient(147deg, #ff723b 0%, #FF2525 74%);
+        }
+        &.green {
+            background-image: linear-gradient(0deg, #08ea38 0%, #2AF598 100%);
+        }
+        &.blue {
+            background-image: linear-gradient(160deg, #0093E9 0%, #3ca1e0 100%);
+        }
+        &.orange {
+            background-image: linear-gradient(90deg, #f78531 0%, #F76B1C 100%);
+        }
+    }
+}
+
+@mixin inputs {
+    input {
+        outline: none;
+        color: $black;
+        font-size: 110%;
+        width: 60%;
+        border: 0.5px solid $black;
+        border-radius: 6px;
+        padding: 15px;
+        margin: 10px 0;
+        &[type="checkbox"] {
+            //fix
+            width: 3.5%;
+            position: relative;
+            right: 0.8%;
         }
     }
 }
