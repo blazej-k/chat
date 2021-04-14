@@ -59,9 +59,11 @@
                     }
                 }
             }
-            > li:first-child > svg {
+            > li:first-child{
                 cursor: pointer;
                 font-size: 130%;
+                display: inline-block;
+                margin: 40px 0 0 0;
             }
             > li:last-child > span {
                 color: $red;

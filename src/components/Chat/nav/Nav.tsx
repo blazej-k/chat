@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { FC, MouseEvent, useState } from 'react';
-import { AiOutlineHome } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../../../actions/UserActions'
 import List from './List';
@@ -51,13 +50,11 @@ const Nav: FC = () => {
 
     const { user: { login, friends, groups, waitingFriends, waitingGroups } } = store
 
-    const f = friends.map(({date, login}) => <li key={date}>{login}</li>)
-
     return (
         <div className="nav">
             <h1>{login}</h1>
             <ul>
-                <li><AiOutlineHome/></li>
+                <li><b>Home</b></li>
                 <List  
                     type='friends' 
                     list={friends} 

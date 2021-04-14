@@ -14,15 +14,20 @@ interface ListProps {
 
 const List: FC<ListProps> = ({ type, list, listsStatus, elements, handleListStatus }) => {
 
+    const getListName = (type: 'friends' | 'groups' | 'waitingFriends' | 'waitingGroups') => {
+        if(type[0] === 'w') return `${type[0].toUpperCase()}${type.slice(1, 7)} ${type.slice(7)}`
+        return `${type[0].toUpperCase()}${type.slice(1)}`
+    }
+
     return (
         <li className={listsStatus[type]} id={type}>
             {list.length > 0 ?
                 <>
-                    <span onClick={(e) => handleListStatus(e)}>{type[0].toUpperCase()}{type.slice(1)}</span>
+                    <span onClick={(e) => handleListStatus(e)}>{getListName(type)}</span>
                     <RiArrowRightSLine />
                 </> :
                 <>
-                    <span className='empty-list'>{type[0].toUpperCase()}{type.slice(1)}</span>
+                    <span className='empty-list'>{getListName(type)}</span>
                     <RiArrowRightSLine className='empty-list' />
                 </>
             }

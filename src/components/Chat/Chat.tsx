@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
+import ChatContent from './ChatContent'
 
 interface ChatProps {
 
@@ -40,6 +41,9 @@ const Chat: FC<ChatProps> = () => {
                     }
                     <div className="nav-wrapper">
                         <Nav />
+                    </div>
+                    <div className="chat-content-wrapper">
+                        <ChatContent isNew={isNew}/>
                     </div>
                 </>
             }
