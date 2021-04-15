@@ -21,7 +21,7 @@ const Chat: FC = () => {
 
     const dispatch = useDispatch()
 
-    const {user: {groups, login}} = useSelector((store: Store) => store.userReducer)
+    const {userReducer: {user: {login, groups}}, commReducer} = useSelector((store: Store) => store)
 
     useEffect(() => {
         client.emit('add user to listeners', login)
@@ -31,8 +31,10 @@ const Chat: FC = () => {
                 client.emit('join to group', groupId) 
             })
         }
-        // dispatch(getUsers())
+        dispatch(getUsers())
     }, [])
+
+    console.log(commReducer)
 
     const animations = {
         in: {

@@ -1,9 +1,15 @@
 const CREATEGROUP = 'creategroup'
 const COMMUNITYERROR = 'communityerror'
+const GETUSERS = 'getusers'
 
 interface CreateGroup {
     type: typeof CREATEGROUP,
     payload: CommunityGroup
+}
+
+interface GetUsers {
+    type: typeof GETUSERS,
+    payload: CommunityUser[]
 }
 
 interface CommunityError {
@@ -17,4 +23,4 @@ interface CommunityReducer {
     error: string
 }
 
-type CommunityActionType = CreateGroup | CommunityError
+type CommunityActionType = CreateGroup | GetUsers | CommunityError

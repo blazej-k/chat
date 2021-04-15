@@ -1,6 +1,7 @@
 import { Dispatch } from "react"
 import addUserToGroup from "./helpers/addUsertoGroup"
 import { JOINTOGROUP } from './UserActions'
+export const GETUSERS = 'getusers'
 
 export const CREATEGROUP = 'creategroup'
 export const COMMUNITYERROR = 'communityerror'
@@ -35,3 +36,10 @@ export const createGroup = (groupInfo: { groupName: string, login: string, sex: 
             })
             .catch(() => dispatch({ type: COMMUNITYERROR, payload: 'Sorry, we can\'t do this now' }))
     }
+
+export const getUsers = () => async(dispatch: Dispatch<CommunityActionType>) => {
+    const ENDPOINT = process.env.GET_USERS
+    await fetch(ENDPOINT || '')
+        .then(res => res.json())
+        .then((res: CommunityUser[]) => dispatch({type: GETUSERS, payload: res}))
+}
