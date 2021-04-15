@@ -1,19 +1,17 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
 import { FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
-import ChatContent from './ChatHome/Home'
+import ChatContent from './home/Home'
 import ColorProvider from '../context/ColorContext';
 import { useSocket } from '../hooks/Hooks';
+import { getUsers } from '../../actions/CommunityActions';
 
-interface ChatProps {
 
-}
-
-const Chat: FC<ChatProps> = () => {
+const Chat: FC = () => {
 
     const [showModal, setShowModal] = useState(true)
 
@@ -21,15 +19,19 @@ const Chat: FC<ChatProps> = () => {
 
     const {client} = useSocket()
 
+    const dispatch = useDispatch()
+
     const {user: {groups, login}} = useSelector((store: Store) => store.userReducer)
 
     useEffect(() => {
-        if(groups.length > 0){
+        client.emit('add user to listeners', login)
+        if(groups && groups.length > 0){
             groups.forEach(group => {
                 const { groupId } = group
-                client.emit('join to group', groupId)
+                client.emit('join to group', groupId) 
             })
         }
+        // dispatch(getUsers())
     }, [])
 
     const animations = {
