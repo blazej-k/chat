@@ -1,11 +1,12 @@
 import { Dispatch } from "react"
 import addUserToGroup from "./helpers/addUsertoGroup"
-import { JOINTOGROUP, ERRORMESSAGE } from './UserActions'
+import { JOINTOGROUP } from './UserActions'
 
 export const CREATEGROUP = 'creategroup'
+export const COMMUNITYERROR = 'communityerror'
 
 export const createGroup = (groupInfo: { groupName: string, login: string, sex: Sex }) =>
-    async (dispatch: Dispatch<CommunityActionType | UserActionType>) => {
+    async (dispatch: Dispatch<CommunityActionType | JoinToGroup>) => {
         const { login, sex } = groupInfo
         const ENDPOINT = process.env.CREATE_GROUP
 
@@ -32,5 +33,5 @@ export const createGroup = (groupInfo: { groupName: string, login: string, sex: 
                 dispatch({ type: JOINTOGROUP, payload: group })
                 addUserToGroup(ENDPOINT || '', group, login, sex)
             })
-            .catch(() => dispatch({ type: ERRORMESSAGE, payload: 'Sorry, we can\'t do this now' }))
+            .catch(() => dispatch({ type: COMMUNITYERROR, payload: 'Sorry, we can\'t do this now' }))
     }

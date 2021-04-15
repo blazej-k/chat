@@ -1,4 +1,4 @@
-import {CREATEGROUP} from '../actions/CommunityActions'
+import {CREATEGROUP, COMMUNITYERROR} from '../actions/CommunityActions'
 
 const initState: CommunityReducer = {
     community: {
@@ -15,6 +15,8 @@ export const CommunityReducer = (state = initState, action: CommunityActionType)
             const { community } = state
             state = { loading: false, error: '', community: { ...community, groups: [...community.groups, action.payload] } }
             return state
+        case COMMUNITYERROR:
+            return state = {...state, loading: false, error: action.payload}
         default:
             return state
     } 
