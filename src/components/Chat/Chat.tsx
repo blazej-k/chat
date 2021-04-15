@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { motion } from 'framer-motion';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
 import ChatContent from './ChatHome/Home'
 import ColorProvider from '../context/ColorContext';
+import { useSocket } from '../hooks/Hooks';
 
 interface ChatProps {
 
@@ -18,7 +19,18 @@ const Chat: FC<ChatProps> = () => {
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
-    const store = useSelector((store: Store) => store.userReducer)
+    const {client} = useSocket()
+
+    const {user: {groups, login}} = useSelector((store: Store) => store.userReducer)
+
+    useEffect(() => {
+        if(groups.length > 0){
+            groups.forEach(group => {
+                const { groupId } = group
+                client.emit('join to group', groupId)
+            })
+        }
+    }, [])
 
     const animations = {
         in: {
@@ -34,11 +46,11 @@ const Chat: FC<ChatProps> = () => {
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
             <ColorProvider>
-                {!store.user.login ? <Redirect to='/' /> :
+                {!login ? <Redirect to='/' /> :
                     <>
                         {isNew === 'true' &&
                             <div className="chat-modal">
-                                {showModal && <Modal login={store.user.login} showModal={setShowModal} />}
+                                {showModal && <Modal login={login} showModal={setShowModal} />}
                             </div>
                         }
                         <div className="nav-wrapper">
