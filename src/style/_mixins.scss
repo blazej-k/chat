@@ -30,6 +30,7 @@
         }
     } 
     @else if($type == "color") {
+        transition: 1s;
         &.red {
             color: $red;
         }

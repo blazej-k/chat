@@ -1,4 +1,5 @@
 import { Dispatch } from "react"
+import addUserToGroup from "./helpers/addUsertoGroup"
 
 export const SIGNUP = 'signup'
 export const SIGNIN = 'signin'
@@ -38,15 +39,9 @@ export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<Us
         })
 }
 
-export const joinToGroup = (group: Group, login: string, sex: 'male' | 'female', decision: 'accept' | 'reject') => async (dispatch: Dispatch<UserActionType>) => {
+export const joinToGroup = (group: Group, login: string, sex: Sex, decision: Decission) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = process.env.JOIN_TO_GROUP
-    await fetch(ENDPOINT || '', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ group, login, sex, decision }),
-    })
+    addUserToGroup(ENDPOINT || '', group, login, sex, decision)
         .then(res => res.json())
         .then((res: Group) =>  dispatch({ type: JOINTOGROUP, payload: res }))
 }
