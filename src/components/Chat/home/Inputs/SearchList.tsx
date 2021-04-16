@@ -22,7 +22,10 @@ const SearchList: FC<SearchListProps> = ({ friendName }) => {
                 setSearchedUsers(prev => [...prev, user])
             }
         })
-        return () => setSearchedUsers([])
+        return () => {
+            setSearchedUsers([])
+            setFirstIndex(0)
+        }
     }, [friendName])
 
     const handleChangeIndex = (type: 'next' | 'prev') => {
