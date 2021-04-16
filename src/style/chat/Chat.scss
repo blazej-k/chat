@@ -1,0 +1,17 @@
+@import '../colors';
+@import '../mixins';
+
+.chat{
+    width: 100%;
+    margin: 0;
+    @import './Nav';
+    color: $black;
+    .chat-content-wrapper{
+        width: 85%;
+        margin-left: auto;
+        margin-right: 0;
+        .chat-content{
+            @import 'Home';
+        }
+    }
+}

@@ -34,8 +34,6 @@ const Chat: FC = () => {
         dispatch(getUsers())
     }, [])
 
-    console.log(commReducer)
-
     const animations = {
         in: {
             opacity: 1,

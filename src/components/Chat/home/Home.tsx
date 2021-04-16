@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import Inputs from './Inputs';
+import Inputs from './Inputs/Inputs';
 import Preferences from './Preferences';
 
 interface ChatContentProps {

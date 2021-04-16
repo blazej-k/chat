@@ -3,8 +3,9 @@ import { ChangeEvent, useState } from 'react';
 import { useEffect } from 'react';
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createGroup } from '../../../actions/CommunityActions';
-import { useColor, useSocket } from '../../hooks/Hooks';
+import { createGroup } from '../../../../actions/CommunityActions';
+import { useColor, useSocket } from '../../../hooks/Hooks';
+import SearchList from './SearchList';
 
 
 const Inputs: FC = () => {
@@ -48,6 +49,7 @@ const Inputs: FC = () => {
     return (
         <>
             <input type="text" value={newFriend} id='friend' onChange={handleInput} placeholder='Add new friend' />
+            {newFriend.length > 2 && <SearchList/>}
             <input type="text" value={newGroup} id='group' onChange={handleInput} placeholder='Create new group' />
             <button className={color} onClick={handleCreateGroup}>Create!</button>
         </>
