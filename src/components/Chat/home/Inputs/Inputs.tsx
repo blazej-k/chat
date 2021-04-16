@@ -19,12 +19,12 @@ const Inputs: FC = () => {
     const { color } = useColor()
     const { client } = useSocket()
 
-    const { user: { login, sex, groups, groups: {length} } } = userReducer
+    const { user: { login, sex, groups, groups: { length } } } = userReducer
 
     const [userGroupsLength, setUserGroupsLength] = useState(length)
 
     useEffect(() => {
-        if(length > userGroupsLength) {
+        if (length > userGroupsLength) {
             setUserGroupsLength(length)
             groups[length - 1]
             client.emit('join to group', groups[length - 1].groupId)
@@ -49,7 +49,7 @@ const Inputs: FC = () => {
     return (
         <>
             <input type="text" value={newFriend} id='friend' onChange={handleInput} placeholder='Add new friend' />
-            {newFriend.length > 2 && <SearchList/>}
+            {newFriend.length > 2 && <SearchList friendName={newFriend} />}
             <input type="text" value={newGroup} id='group' onChange={handleInput} placeholder='Create new group' />
             <button className={color} onClick={handleCreateGroup}>Create!</button>
         </>
