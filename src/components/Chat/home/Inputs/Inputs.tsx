@@ -49,7 +49,7 @@ const Inputs: FC = () => {
     }
 
     const handleSelectFriend = (recipient: string) => {
-        // dispatch(sendInvite('friend', { sender: login, recipient}))
+        dispatch(sendInvite('friend', { sender: login, recipient}))
         setNewFriend('')
         setConfirmNewFriend(true)
         setTimeout(() => {
