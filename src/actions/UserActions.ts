@@ -46,7 +46,7 @@ export const joinToGroup = (group: Group, login: string, sex: Sex, decision: Dec
         .then((res: Group) =>  dispatch({ type: JOINTOGROUP, payload: res }))
 }
 
-export const sendInvite = (type: 'friend' | 'group', info: GroupInfo | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
+export const sendInvite = (type: 'friend' | 'group', info: WaitingGroup | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = type === 'friend' ? process.env.INVITE_FRIEND : process.env.INVITE_GROUP
     await fetch(ENDPOINT || '', {
         method: 'POST',

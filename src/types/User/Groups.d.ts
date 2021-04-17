@@ -1,17 +1,10 @@
-interface GroupInfo {
-    sender: string,
-    groupName: string,
-    groupId: string,
-    date: any,
-    members: GroupMembers[]
-}
-
-interface ConfirmGroup {
-    groupName: string,
-    groupId: string,
-    newMember: string
-    decission: Decission
-}
+// interface GroupInfo {
+//     sender: string,
+//     groupName: string,
+//     groupId: string,
+//     date: any,
+//     members: GroupMembers[]
+// }
 
 interface Group {
     groupName: string,
@@ -37,5 +30,5 @@ interface WaitingGroup {
     sender: string
     date: any,
     members: GroupMembers[],
-    _id: string
+    _id?: string
 }

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { FC, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { confirmFriendsInvite, logOut, removeInvite } from '../../../actions/UserActions'
+import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import List from './List';
-import {MdClear} from 'react-icons/md'
-import {MdDone} from 'react-icons/md'
+import { MdClear } from 'react-icons/md'
+import { MdDone } from 'react-icons/md'
 
 export interface NavListProps<T, N> {
     friends: T | N,
@@ -23,11 +23,11 @@ const Nav: FC = () => {
     })
     const [showSpanWarning, setShowSpanWarning] = useState(false)
 
-    const store = useSelector((store: Store) => store.userReducer)
+    const { user: { login, friends, groups, waitingFriends, waitingGroups, sex } } = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
 
     const handleListStatus = (e: MouseEvent<HTMLSpanElement>) => {
-        const {parentElement} = e.target as Element
+        const { parentElement } = e.target as Element
         if (parentElement?.className === 'collection-close') {
             setListsStatus(prev => {
                 return {
@@ -46,74 +46,84 @@ const Nav: FC = () => {
         }
     }
 
-    const handleUserDecision = (waiter: string, decision: Decission) => {
+    const handleNewFriendDecission = (decision: Decission, waiter: string) => {
+        dispatch(removeInvite(waiter, 'friend'))
         const confirm: ConfirmFriend = {
-            waiter,
+            waiter: waiter,
             recipient: login,
             decision
         }
-        dispatch(removeInvite(waiter, 'friend'))
         dispatch(confirmFriendsInvite(confirm))
+    }
+
+    const handleNewGroupDecission = (decision: Decission, group: WaitingGroup) => {
+        dispatch(removeInvite(group.groupId, 'group'))
+        const { groupId, groupName, members } = group
+        const newGroup: Group = {
+            groupId,
+            groupName,
+            members: [...members],
+            dialogues: []
+        }
+        dispatch(joinToGroup(newGroup, login, sex, decision))
     }
 
     const handleLogOut = () => dispatch(logOut())
 
     const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
 
-    const { user: { login, friends, groups, waitingFriends, waitingGroups } } = store
-
     return (
         <div className="nav">
             <h1>{login}</h1>
             <ul>
                 <li><b>Home</b></li>
-                <List  
-                    type='friends' 
-                    list={friends} 
-                    listsStatus={listsStatus} 
-                    handleListStatus={handleListStatus} 
-                    elements={friends.map(({date, login}) => <li key={date}>{login}</li>)}
+                <List
+                    type='friends'
+                    list={friends}
+                    listsStatus={listsStatus}
+                    handleListStatus={handleListStatus}
+                    elements={friends.map(({ date, login }) => <li key={date}>{login}</li>)}
                 />
-                <List  
-                    type='groups' 
-                    list={groups} 
-                    listsStatus={listsStatus} 
-                    handleListStatus={handleListStatus} 
-                    elements={groups.map(({groupId, groupName}) => <li key={groupId}>{groupName}</li>)}
+                <List
+                    type='groups'
+                    list={groups}
+                    listsStatus={listsStatus}
+                    handleListStatus={handleListStatus}
+                    elements={groups.map(({ groupId, groupName }) => <li key={groupId}>{groupName}</li>)}
                 />
-                <List  
-                    type='waitingFriends' 
-                    list={waitingFriends} 
-                    listsStatus={listsStatus} 
-                    handleListStatus={handleListStatus} 
+                <List
+                    type='waitingFriends'
+                    list={waitingFriends}
+                    listsStatus={listsStatus}
+                    handleListStatus={handleListStatus}
                     elements={waitingFriends.map(({ sender, date }) => (
                         <li key={date}>
                             {sender}
                             <div className="decission">
-                                <MdClear onClick={() => handleUserDecision(sender, 'reject')} className={'red'} size={25}/>
-                                <MdDone onClick={() => handleUserDecision(sender, 'accept')} className={'green'} size={25}/>
+                                <MdClear onClick={() => handleNewFriendDecission('reject', sender)} className={'red'} size={25} />
+                                <MdDone onClick={() => handleNewFriendDecission('accept', sender)} className={'green'} size={25} />
                             </div>
                         </li>
                     ))}
                 />
-                <List  
-                    type='waitingGroups' 
-                    list={waitingGroups} 
-                    listsStatus={listsStatus} 
-                    handleListStatus={handleListStatus} 
-                    elements={waitingGroups.map(({ sender, date }) => (
-                        <li key={date}>
-                            {sender}
+                <List
+                    type='waitingGroups'
+                    list={waitingGroups}
+                    listsStatus={listsStatus}
+                    handleListStatus={handleListStatus}
+                    elements={waitingGroups.map(group => (
+                        <li key={group.date}>
+                            {group.sender}
                             <div className="decission">
-                                <MdClear onClick={() => handleUserDecision(sender, 'reject')} className={'red'} size={25}/>
-                                <MdDone onClick={() => handleUserDecision(sender, 'accept')} className={'green'} size={25}/>
+                                <MdClear onClick={() => handleNewGroupDecission('reject', group)} className={'red'} size={25} />
+                                <MdDone onClick={() => handleNewGroupDecission('accept', group)} className={'green'} size={25} />
                             </div>
                         </li>
                     ))}
                 />
                 <li>
                     <span
-                        onMouseOver={() => handleSpanMouseHover(true)} 
+                        onMouseOver={() => handleSpanMouseHover(true)}
                         onMouseLeave={() => handleSpanMouseHover(false)}
                         onClick={handleLogOut}
                     >
