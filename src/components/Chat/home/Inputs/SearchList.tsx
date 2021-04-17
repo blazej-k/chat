@@ -16,11 +16,13 @@ const SearchList: FC<SearchListProps> = ({ friendName, handleSelectFriend }) => 
 
     const { color } = useColor()
 
-    const { commReducer: { community: { users } }, userReducer: { user: { login } } } = useSelector((state: Store) => state)
+    const { commReducer: { community: { users } }, userReducer: { user: { login, friends } } } = useSelector((state: Store) => state)
 
     useEffect(() => {
+        const friendsLogins = friends.map(friend => friend.login)
         users.map(user => {
-            if (user.login.toLowerCase().slice(0, friendName.length) === friendName.toLowerCase() && login !== user.login) {
+            if (user.login.toLowerCase().slice(0, friendName.length) === friendName.toLowerCase() && 
+            login !== user.login && !friendsLogins.includes(user.login)) {
                 setSearchedUsers(prev => [...prev, user])
             }
         })
