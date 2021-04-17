@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { FC, MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../../../actions/UserActions'
+import { confirmFriendsInvite, logOut, removeInvite } from '../../../actions/UserActions'
 import List from './List';
+import {MdClear} from 'react-icons/md'
+import {MdDone} from 'react-icons/md'
 
 export interface NavListProps<T, N> {
     friends: T | N,
@@ -44,6 +46,16 @@ const Nav: FC = () => {
         }
     }
 
+    const handleUserDecision = (waiter: string, decision: Decission) => {
+        const confirm: ConfirmFriend = {
+            waiter,
+            recipient: login,
+            decision
+        }
+        dispatch(removeInvite(waiter, 'friend'))
+        dispatch(confirmFriendsInvite(confirm))
+    }
+
     const handleLogOut = () => dispatch(logOut())
 
     const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
@@ -74,7 +86,15 @@ const Nav: FC = () => {
                     list={waitingFriends} 
                     listsStatus={listsStatus} 
                     handleListStatus={handleListStatus} 
-                    elements={waitingFriends.map(({ sender, date }) => <li key={date}>{sender}</li>)}
+                    elements={waitingFriends.map(({ sender, date }) => (
+                        <li key={date}>
+                            {sender}
+                            <div className="decission">
+                                <MdClear onClick={() => handleUserDecision(sender, 'reject')} className={'red'} size={25}/>
+                                <MdDone onClick={() => handleUserDecision(sender, 'accept')} className={'green'} size={25}/>
+                            </div>
+                        </li>
+                    ))}
                 />
                 <List  
                     type='waitingGroups' 
