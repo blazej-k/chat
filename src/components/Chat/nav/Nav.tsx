@@ -101,7 +101,15 @@ const Nav: FC = () => {
                     list={waitingGroups} 
                     listsStatus={listsStatus} 
                     handleListStatus={handleListStatus} 
-                    elements={waitingGroups.map(({ sender, date }) => <li key={date}>{sender}</li>)}
+                    elements={waitingGroups.map(({ sender, date }) => (
+                        <li key={date}>
+                            {sender}
+                            <div className="decission">
+                                <MdClear onClick={() => handleUserDecision(sender, 'reject')} className={'red'} size={25}/>
+                                <MdDone onClick={() => handleUserDecision(sender, 'accept')} className={'green'} size={25}/>
+                            </div>
+                        </li>
+                    ))}
                 />
                 <li>
                     <span
