@@ -35,7 +35,7 @@ const Inputs: FC = () => {
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         const { id, value } = e.target
-        if (id === 'friend') {
+        if (id === 'friend' || id === 'search-friend') {
             setNewFriend(value)
         }
         else {
@@ -49,7 +49,7 @@ const Inputs: FC = () => {
     }
 
     const handleSelectFriend = (recipient: string) => {
-        dispatch(sendInvite('friend', { sender: login, recipient}))
+        // dispatch(sendInvite('friend', { sender: login, recipient}))
         setNewFriend('')
         setConfirmNewFriend(true)
         setTimeout(() => {
@@ -59,8 +59,8 @@ const Inputs: FC = () => {
 
     return (
         <>
-            <input type="text" value={newFriend} id='friend' onChange={handleInput} placeholder='Add new friend' />
-            {confirmNewFriend && <span>Invite sended!</span>}
+            <input type="text" value={newFriend} id={newFriend.length > 2 ? 'search-friend' : 'friend'} onChange={handleInput} placeholder='Add new friend' />
+            {confirmNewFriend && <span className='confirm-new-friend'>Invite sended!</span>}
             {newFriend.length > 2 && <SearchList friendName={newFriend} handleSelectFriend={handleSelectFriend}/>}
             <input type="text" value={newGroup} id='group' onChange={handleInput} placeholder='Create new group' />
             <button className={color} onClick={handleCreateGroup}>Create!</button>
