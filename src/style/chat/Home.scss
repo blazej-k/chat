@@ -64,11 +64,12 @@ h1{
                     background-color: white;
                     font-size: 120%;
                     cursor: pointer;
-                    &:first-child{
+                    &.next{
                         float: right;
                     }
-                    &:last-child{
-                       float: left; 
+                    &.prev{
+                        transform: rotate(0.5turn);
+                        float: left;
                     }
                 }
                 span{

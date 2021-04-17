@@ -2,23 +2,25 @@ import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/Hooks';
+import { MdNavigateNext } from 'react-icons/md'
 
 interface SearchListProps {
-    friendName: string
+    friendName: string,
+    handleSelectFriend: (recipient: string) => void
 }
 
-const SearchList: FC<SearchListProps> = ({ friendName }) => {
+const SearchList: FC<SearchListProps> = ({ friendName, handleSelectFriend }) => {
 
     const [searchedUsers, setSearchedUsers] = useState<CommunityUser[]>([])
     const [firstIndex, setFirstIndex] = useState(0)
 
-    const {color} = useColor()
+    const { color } = useColor()
 
-    const { community: { users } } = useSelector((state: Store) => state.commReducer)
+    const { commReducer: { community: { users } }, userReducer: { user: { login } } } = useSelector((state: Store) => state)
 
     useEffect(() => {
         users.map(user => {
-            if (user.login.toLowerCase().slice(0, friendName.length) === friendName.toLowerCase()) {
+            if (user.login.toLowerCase().slice(0, friendName.length) === friendName.toLowerCase() && login !== user.login) {
                 setSearchedUsers(prev => [...prev, user])
             }
         })
@@ -38,12 +40,23 @@ const SearchList: FC<SearchListProps> = ({ friendName }) => {
                 <>
                     <ul>
                         {searchedUsers.slice(firstIndex, firstIndex + 4).map(({ _id, login }) => (
-                            <li key={_id}>{login}</li>
+                            <li onClick={() => handleSelectFriend(login)} key={_id}>{login}</li>
                         ))}
                     </ul>
-                    {firstIndex - 4 >= 0 && <button className='red' onClick={() => handleChangeIndex('prev')}>Prev</button>}
+                    {firstIndex - 4 >= 0 && 
+                        <button 
+                            className={`prev ${color}`} 
+                            onClick={() => handleChangeIndex('prev')}>
+                                <MdNavigateNext size={40}/>
+                        </button>
+                    }
                     {searchedUsers.length > firstIndex + 4 &&
-                    <button className={color} onClick={() => handleChangeIndex('next')}>Next</button>}
+                        <button 
+                            className={`next ${color}`} 
+                            onClick={() => handleChangeIndex('next')}>
+                                <MdNavigateNext  size={40}/>
+                        </button>
+                    }
                 </> : <span>No users!</span>}
         </div>
     );

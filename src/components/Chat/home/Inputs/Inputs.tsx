@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGroup } from '../../../../actions/CommunityActions';
+import { sendInvite } from '../../../../actions/UserActions';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import SearchList from './SearchList';
 
@@ -12,6 +13,7 @@ const Inputs: FC = () => {
 
     const [newFriend, setNewFriend] = useState('')
     const [newGroup, setNewGroup] = useState('')
+    const [confirmNewFriend, setConfirmNewFriend] = useState(false)
 
     const dispatch = useDispatch()
     const { userReducer } = useSelector((state: Store) => state)
@@ -46,10 +48,20 @@ const Inputs: FC = () => {
         setNewGroup('')
     }
 
+    const handleSelectFriend = (recipient: string) => {
+        dispatch(sendInvite('friend', { sender: login, recipient}))
+        setNewFriend('')
+        setConfirmNewFriend(true)
+        setTimeout(() => {
+            setConfirmNewFriend(false)
+        }, 2000)
+    }
+
     return (
         <>
             <input type="text" value={newFriend} id='friend' onChange={handleInput} placeholder='Add new friend' />
-            {newFriend.length > 2 && <SearchList friendName={newFriend} />}
+            {confirmNewFriend && <span>Invite sended!</span>}
+            {newFriend.length > 2 && <SearchList friendName={newFriend} handleSelectFriend={handleSelectFriend}/>}
             <input type="text" value={newGroup} id='group' onChange={handleInput} placeholder='Create new group' />
             <button className={color} onClick={handleCreateGroup}>Create!</button>
         </>
