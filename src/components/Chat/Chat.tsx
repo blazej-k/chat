@@ -24,18 +24,18 @@ const Chat: FC = () => {
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
-    const {client} = useSocket()
+    const { client } = useSocket()
 
     const dispatch = useDispatch()
 
-    const {userReducer: {user: {login, groups}}, commReducer} = useSelector((store: Store) => store)
+    const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
 
     useEffect(() => {
         client.emit('add user to listeners', login)
-        if(groups && groups.length > 0){
+        if (groups && groups.length > 0) {
             groups.forEach(group => {
                 const { groupId } = group
-                client.emit('join to group', groupId) 
+                client.emit('join to group', groupId)
             })
         }
         dispatch(getUsers())
@@ -82,12 +82,12 @@ const Chat: FC = () => {
                             </div>
                         }
                         <div className="nav-wrapper">
-                            <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home}/>
+                            <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />
                         </div>
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
-                            {showFriendChat && <FriendsChat friendName={friendName}/>}
-                            {showGroupsChat && <GroupsChat/>}
+                            {showFriendChat && <FriendsChat friendName={friendName} />}
+                            {showGroupsChat && <GroupsChat />}
                         </div>
                     </>
                 }

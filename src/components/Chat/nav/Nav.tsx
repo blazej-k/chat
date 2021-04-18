@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FC, MouseEvent, useState } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import List from './List';
@@ -31,6 +31,21 @@ const Nav: FC<NavProps> = ({showFriendsChat, showGroupsChat, showHome}) => {
 
     const { user: { login, friends, groups, waitingFriends, waitingGroups, sex } } = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        let collectionToClose: 'waitingGroups' | 'waitingFriends' | '' =  ''
+        if(waitingFriends.length === 0) collectionToClose = 'waitingFriends'
+        if(waitingGroups.length === 0) collectionToClose = 'waitingGroups'
+        if(collectionToClose.length > 0){
+            setListsStatus(prev => {
+                return {
+                    ...prev,
+                    [collectionToClose]: 'collection-close'
+                }
+            })
+        }
+    }, [waitingFriends, waitingGroups])
+
 
     const handleListStatus = (e: MouseEvent<HTMLSpanElement>) => {
         const { parentElement } = e.target as Element

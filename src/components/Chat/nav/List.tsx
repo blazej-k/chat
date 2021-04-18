@@ -20,7 +20,7 @@ const List: FC<ListProps> = ({ type, list, listsStatus, elements, handleListStat
     }
 
     return (
-        <li className={listsStatus[type]} id={type}>
+        <li className={list.length === 0 ? 'collection-close' : listsStatus[type]} id={type}>
             {list.length > 0 ?
                 <>
                     <span onClick={(e) => handleListStatus(e)}>{getListName(type)}</span>
