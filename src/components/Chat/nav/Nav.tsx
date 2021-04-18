@@ -49,22 +49,15 @@ const Nav: FC<NavProps> = ({showFriendsChat, showGroupsChat, showHome}) => {
 
     const handleListStatus = (e: MouseEvent<HTMLSpanElement>) => {
         const { parentElement } = e.target as Element
-        if (parentElement?.className === 'collection-close') {
-            setListsStatus(prev => {
-                return {
-                    ...prev,
-                    [parentElement.id]: 'collection-open'
-                }
-            })
-        }
-        else if (parentElement?.className === 'collection-open') {
-            setListsStatus(prev => {
-                return {
-                    ...prev,
-                    [parentElement.id]: 'collection-close'
-                }
-            })
-        }
+        let newValue: 'collection-close' | 'collection-open'
+        if (parentElement?.className === 'collection-close') newValue = 'collection-open'
+        else if (parentElement?.className === 'collection-open') newValue = 'collection-close'
+        setListsStatus(prev => {
+            return {
+                ...prev,
+                [parentElement!.id]: newValue
+            }
+        })
     }
 
     const handleNewFriendDecission = (decision: Decission, waiter: string) => {
