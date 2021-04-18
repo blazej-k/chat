@@ -3,13 +3,7 @@ interface User {
     sex: Sex,
     waitingFriends: WaitingFriend[],
     waitingGroups: WaitingGroup[],
-    conversations: {
-        login: string,
-        dialogues: {
-            date: any, //to fix later
-            text: string
-        }[]
-    }[],
+    conversations: Conversations[],
     friends: Friend[],
     groups: Group[],
 }
@@ -21,3 +15,13 @@ interface UserAuthInfo {
 }
 
 type Sex = 'male' | 'female'
+type Dialogues = {
+    _id?: string
+    date?: any, //to fix later
+    text: string,
+    from: string 
+}
+type Conversations = {
+    login: string,
+    dialogues: Dialogues[]
+}

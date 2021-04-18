@@ -6,30 +6,23 @@ import { useSocket } from '../../../hooks/Hooks';
 interface FriendsChatProps {
     friendName: string
 }
-
-interface PrivateMess {
-    from: string,
-    mess: string,
-    date?: any
-}
  
 const FriendsChat: FC<FriendsChatProps> = ({friendName}) => {
-    const [messages, setMessages] = useState<PrivateMess[]>([])
+    const [messages, setMessages] = useState<Dialogues[]>([])
 
     const {client} = useSocket()
 
     const {user: {conversations}} = useSelector((state: Store) => state.userReducer)
 
+    console.log(messages)
+
     useEffect(() => {
-        client.on('private message', (res: PrivateMess) => {
+        client.on('private message', (res: Dialogues) => {
             setMessages(prev => [...prev, {...res, date: new Date()}])
         })
-        let conversationsArrayModel: PrivateMess[] = [];
         conversations.forEach(conversation => {
             if(conversation.login === friendName){
-                // const conversationModel = {
-
-                // }
+                setMessages(conversation.dialogues)
                 return
             }
         });
@@ -41,7 +34,11 @@ const FriendsChat: FC<FriendsChatProps> = ({friendName}) => {
                 <h1>{friendName}</h1>
             </div>
             <div className="dialogues">
-                <ul></ul>
+                <ul>
+                    {messages.map(message => (
+                        <li key={message.date}>{message.text}</li>
+                    ))}
+                </ul>
             </div>
         </div>
     );
