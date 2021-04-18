@@ -35,11 +35,13 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                     <h1>{friendName}</h1>
                 </div>
                 <div className="dialogues">
+                    {messages.length > 0 ? 
                     <ul>
                         {messages.map(message => (
                             <li key={message.date}>{message.text}</li>
                         ))}
-                    </ul>
+                    </ul> :
+                    <h1 className={color}>Start conversation with {friendName}!</h1>}
                 </div>
                 <div className="new-message">
                     <input type="text" placeholder='New mess...'/>

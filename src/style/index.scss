@@ -3,12 +3,14 @@
 @import 'Modals';
 @import './chat/Chat';
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+@import 'colors';
 
 body{
     margin: 0;
     width: 100%;
     font-family: 'Ubuntu', sans-serif;
     padding: 0;
+    background-color: $page_background;
     .content{
         min-height: 100vh;
     }
