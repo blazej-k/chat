@@ -5,15 +5,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
-import ChatContent from './home/Home'
+import Home from './home/Home'
 import ColorProvider from '../context/ColorContext';
 import { useSocket } from '../hooks/Hooks';
 import { getUsers } from '../../actions/CommunityActions';
+import FriendsChat from './conversations/friends/FriendsChat';
+import GroupsChat from './conversations/groups/GroupsChat';
 
 
 const Chat: FC = () => {
 
     const [showModal, setShowModal] = useState(true)
+    const [showFriendChat, setShowFriendChat] = useState(false)
+    const [showGroupsChat, setShowGroupsChat] = useState(false)
+    const [showHome, setShowHome] = useState(true)
+    const [friendName, setFriendName] = useState('')
+    const [groupName, setGroupName] = useState('')
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
@@ -45,6 +52,25 @@ const Chat: FC = () => {
         }
     }
 
+    const friendsChat = (friend: string) => {
+        setFriendName(friend)
+        setShowGroupsChat(false)
+        setShowHome(false)
+        setShowFriendChat(true)
+    }
+    const groupsChat = (group: string) => {
+        setGroupName(group)
+        setShowFriendChat(false)
+        setShowHome(false)
+        setShowGroupsChat(true)
+    }
+
+    const home = () => {
+        setShowFriendChat(false)
+        setShowGroupsChat(false)
+        setShowHome(true)
+    }
+
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
             <ColorProvider>
@@ -56,10 +82,12 @@ const Chat: FC = () => {
                             </div>
                         }
                         <div className="nav-wrapper">
-                            <Nav />
+                            <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home}/>
                         </div>
                         <div className="chat-content-wrapper">
-                            <ChatContent isNew={isNew} />
+                            {showHome && <Home isNew={isNew} />}
+                            {showFriendChat && <FriendsChat friendName={friendName}/>}
+                            {showGroupsChat && <GroupsChat/>}
                         </div>
                     </>
                 }

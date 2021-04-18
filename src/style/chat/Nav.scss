@@ -56,6 +56,9 @@
                         li {
                             font-size: 80%;
                             margin: 20px 0;
+                            span{
+                                cursor: pointer;
+                            }
                             .decission{
                                 overflow: auto;
                                 display: inline;

@@ -6,16 +6,22 @@ import List from './List';
 import { MdClear } from 'react-icons/md'
 import { MdDone } from 'react-icons/md'
 
-export interface NavListProps<T, N> {
+interface NavProps {
+    showFriendsChat: (friend: string) => void 
+    showGroupsChat: (group: string) => void 
+    showHome: () => void
+}
+
+export interface NavList<T, N> {
     friends: T | N,
     groups: T | N,
     waitingFriends: T | N,
     waitingGroups: T | N
 }
 
-const Nav: FC = () => {
+const Nav: FC<NavProps> = ({showFriendsChat, showGroupsChat, showHome}) => {
 
-    const [listsStatus, setListsStatus] = useState<NavListProps<'collection-close', 'collection-open'>>({
+    const [listsStatus, setListsStatus] = useState<NavList<'collection-close', 'collection-open'>>({
         friends: 'collection-close',
         groups: 'collection-close',
         waitingFriends: 'collection-close',
@@ -76,20 +82,28 @@ const Nav: FC = () => {
         <div className="nav">
             <h1>{login}</h1>
             <ul>
-                <li><b>Home</b></li>
+                <li onClick={showHome}><b>Home</b></li>
                 <List
                     type='friends'
                     list={friends}
                     listsStatus={listsStatus}
                     handleListStatus={handleListStatus}
-                    elements={friends.map(({ date, login }) => <li key={date}>{login}</li>)}
+                    elements={friends.map(({ date, login }) => (
+                        <li key={date}>
+                            <span onClick={() => showFriendsChat(login)}>{login}</span>
+                        </li>
+                    ))}
                 />
                 <List
                     type='groups'
                     list={groups}
                     listsStatus={listsStatus}
                     handleListStatus={handleListStatus}
-                    elements={groups.map(({ groupId, groupName }) => <li key={groupId}>{groupName}</li>)}
+                    elements={groups.map(({ groupId, groupName }) => (
+                        <li key={groupId}>
+                            <span onClick={() => showGroupsChat(groupName)}>{groupName}</span>
+                        </li>
+                    ))}
                 />
                 <List
                     type='waitingFriends'
@@ -98,7 +112,9 @@ const Nav: FC = () => {
                     handleListStatus={handleListStatus}
                     elements={waitingFriends.map(({ sender, date }) => (
                         <li key={date}>
-                            {sender}
+                            <span>
+                                {sender}
+                            </span>
                             <div className="decission">
                                 <MdClear onClick={() => handleNewFriendDecission('reject', sender)} className={'red'} size={25} />
                                 <MdDone onClick={() => handleNewFriendDecission('accept', sender)} className={'green'} size={25} />
@@ -113,7 +129,9 @@ const Nav: FC = () => {
                     handleListStatus={handleListStatus}
                     elements={waitingGroups.map(group => (
                         <li key={group.date}>
-                            {group.sender}
+                            <span>
+                                {group.sender}
+                            </span>
                             <div className="decission">
                                 <MdClear onClick={() => handleNewGroupDecission('reject', group)} className={'red'} size={25} />
                                 <MdDone onClick={() => handleNewGroupDecission('accept', group)} className={'green'} size={25} />

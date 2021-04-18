@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import Inputs from './Inputs/Inputs';
 import Preferences from './Preferences';
 
-interface ChatContentProps {
+interface HomeProps {
     isNew: 'true' | 'false'
 }
  
-const ChatContent: FC<ChatContentProps> = ({isNew}) => {
+const Home: FC<HomeProps> = ({isNew}) => {
 
     const userReducer = useSelector((state: Store) => state.userReducer)
 
@@ -37,4 +37,4 @@ const ChatContent: FC<ChatContentProps> = ({isNew}) => {
     );
 }
  
-export default ChatContent;
+export default Home;

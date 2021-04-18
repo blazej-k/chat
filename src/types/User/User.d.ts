@@ -9,7 +9,7 @@ interface User {
             date: any, //to fix later
             text: string
         }[]
-    },
+    }[],
     friends: Friend[],
     groups: Group[],
 }

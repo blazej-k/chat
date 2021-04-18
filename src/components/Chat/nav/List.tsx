@@ -2,12 +2,12 @@ import * as React from 'react';
 import { MouseEvent } from 'react'
 import { FC } from 'react';
 import { RiArrowRightSLine } from 'react-icons/ri';
-import { NavListProps } from './Nav';
+import { NavList } from './Nav';
 
 interface ListProps {
     type: 'friends' | 'groups' | 'waitingFriends' | 'waitingGroups',
     list: Friend[] | Group[] | WaitingFriend[] | WaitingGroup[]
-    listsStatus: NavListProps<'collection-close', 'collection-open'>
+    listsStatus: NavList<'collection-close', 'collection-open'>
     elements: JSX.Element[],
     handleListStatus: (e: MouseEvent<HTMLSpanElement>) => void
 }
