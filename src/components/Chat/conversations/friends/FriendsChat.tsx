@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useLayoutEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import {AiOutlineSend} from 'react-icons/ai'
@@ -17,7 +17,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         client.on('private message', (res: Dialogues) => {
             console.log(res)
             setMessages(prev => [...prev, { ...res, date: new Date() }])
@@ -59,11 +59,11 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                 <div className="dialogues">
                     {messages.length > 0 ? 
                     <ul>
-                        {messages.map(({date, text, from}) => (
-                            <div className='mess'>
-                                <span>{from}, {date}</span>
-                                <li key={date} className={`${color} ${from === login && 'my-mess'}`}>{text}</li>
-                            </div>
+                        {messages.map(({date, text, from, _id}) => (
+                            <li key={_id || (date as unknown as string)} className={from === login ? 'my-mess' : ''}>
+                                <span>{from}</span>
+                                <div className={`${color} mess`}>{text}</div>
+                            </li>
                         ))}
                     </ul> :
                     <h1 className={color}>Start conversation with {friendName}!</h1>}

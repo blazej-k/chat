@@ -39,19 +39,40 @@
             padding: 20px 0;
             list-style-type: none;
             overflow: auto;
+            // li{
+            //     @include multiColors('bgcolor');
+            //     max-width: 20%;
+            //     color: white;
+            //     display: block;
+            //     padding: 10px;
+            //     border-radius: 10px;
+            //     float: left;
+            //     clear: both;
+            //     margin: 10px 0;
+            //     font-size: 120%;
+            //     &.my-mess{
+            //         float: right;
+            //     }
+            // }
             li{
-                @include multiColors('bgcolor');
-                max-width: 20%;
-                color: white;
-                padding: 10px;
-                border-radius: 10px;
+                margin: 10px 0;
                 float: left;
                 clear: both;
-                margin: 10px 0;
+                max-width: 20%;
+                display: flex;
+                flex-wrap: wrap;
+                span{
+                    color: $gray;
+                    display: block;
+                    font-size: 70%;
+                }
                 .mess{
-                    li{
-                        
-                    }
+                    @include multiColors('bgcolor');
+                        color: white;
+                        padding: 10px;
+                        border-radius: 10px;
+                        font-size: 120%;
+                        width: auto;
                 }
                 &.my-mess{
                     float: right;
