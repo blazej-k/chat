@@ -51,6 +51,12 @@
                     display: block;
                     font-size: 70%;
                     flex-basis: 100%;
+                    &.date-hide{
+                        opacity: 0;
+                    }
+                    &.date-show{
+                        opacity: 1;
+                    }
                 }
                 .mess {
                     clear: both;

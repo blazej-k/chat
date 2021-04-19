@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, FC, useLayoutEffect, useState } from 'react';
+import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
@@ -13,6 +13,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setMewMess] = useState('')
+    const [showMessDate, setshowMessDate] = useState(false)
 
     const { client } = useSocket()
     const { color } = useColor()
@@ -53,6 +54,11 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
         setMewMess(e.target.value)
     }
 
+    const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
+        (e.target as Element).previousElementSibling!.className = newClassName
+    }
+
+
     return (
         <div className="chat-content">
             <div className="conversations">
@@ -62,10 +68,16 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                 <div className="dialogues">
                     {messages.length > 0 ?
                         <ul>
-                            {messages.map(({date, _id, text, from}) => (
+                            {messages.map(({ date, _id, text, from }) => (
                                 <li key={_id || date} className={from === login ? 'my-mess' : ''}>
-                                    <span>{format(new Date(date || ''), "HH:mm, DD/MM")}</span>
-                                    <div className={`${color} mess`}>{text}</div>
+                                    <span className='date-hide'>{format(new Date(date || ''), "HH:mm, DD/MM")}</span>
+                                    <div
+                                        className={`${color} mess`}
+                                        onMouseOver={(e) => toogleMessDate(e, 'date-show')}
+                                        onMouseLeave={(e) => toogleMessDate(e, 'date-hide')}
+                                    >
+                                        {text}
+                                    </div>
                                 </li>
                             ))}
                         </ul> :
