@@ -29,8 +29,34 @@
             width: 100%;
             text-align: center;
             color: $black;
-            margin-top: 40px;
+            margin: 40px auto;
             @include multiColors('color');
+            font-style: italic;
+        }
+        ul{
+            width: 90%;
+            margin: auto;
+            padding: 20px 0;
+            list-style-type: none;
+            overflow: auto;
+            li{
+                @include multiColors('bgcolor');
+                max-width: 20%;
+                color: white;
+                padding: 10px;
+                border-radius: 10px;
+                float: left;
+                clear: both;
+                margin: 10px 0;
+                .mess{
+                    li{
+                        
+                    }
+                }
+                &.my-mess{
+                    float: right;
+                }
+            }
         }
     }
     .new-message{
@@ -64,6 +90,13 @@
                     @include multiColors('color');
                     height: 100%;
                     flex: 1;
+                    &.disabled{
+                        // color: $gray !important; 
+                        // cursor: auto;
+                    }
+                }
+                &:disabled{
+                    cursor: auto;
                 }
             }
         }
