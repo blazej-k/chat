@@ -64,7 +64,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                         <ul>
                             {messages.map(({date, _id, text, from}) => (
                                 <li key={_id || date} className={from === login ? 'my-mess' : ''}>
-                                    <span>{format(new Date(date || ''), "HH:MM, DD/MM")}</span>
+                                    <span>{format(new Date(date || ''), "HH:mm, DD/MM")}</span>
                                     <div className={`${color} mess`}>{text}</div>
                                 </li>
                             ))}
