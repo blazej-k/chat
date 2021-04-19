@@ -1,92 +1,84 @@
-@import '../colors';
+@import "../colors";
 
-.conversations{
+.conversations {
     display: flex;
     width: 100%;
     margin: auto;
     max-height: 100vh;
     flex-wrap: wrap;
-    .header{
+    .header {
         margin: 0;
         width: 100%;
         text-align: center;
         border-bottom: 0.5px solid $black;
         height: 10vh;
         padding-top: 20px;
-        h1{
+        h1 {
             margin: 0 auto;
             font-size: 300%;
-            height: 10vh; 
+            height: 10vh;
             width: 100%;
             text-align: center;
         }
     }
-    .dialogues{
+    .dialogues {
         height: 80vh;
         overflow: auto;
         width: 100%;
-        h1{
+        h1 {
             width: 100%;
             text-align: center;
             color: $black;
             margin: 40px auto;
-            @include multiColors('color');
+            @include multiColors("color");
             font-style: italic;
         }
-        ul{
+        ul {
             width: 90%;
             margin: auto;
             padding: 20px 0;
             list-style-type: none;
             overflow: auto;
-            // li{
-            //     @include multiColors('bgcolor');
-            //     max-width: 20%;
-            //     color: white;
-            //     display: block;
-            //     padding: 10px;
-            //     border-radius: 10px;
-            //     float: left;
-            //     clear: both;
-            //     margin: 10px 0;
-            //     font-size: 120%;
-            //     &.my-mess{
-            //         float: right;
-            //     }
-            // }
-            li{
+            li {
                 margin: 10px 0;
                 float: left;
                 clear: both;
-                max-width: 20%;
+                max-width: 50%;
                 display: flex;
                 flex-wrap: wrap;
-                span{
+                span {
                     color: $gray;
                     display: block;
                     font-size: 70%;
+                    flex-basis: 100%;
                 }
-                .mess{
-                    @include multiColors('bgcolor');
-                        color: white;
-                        padding: 10px;
-                        border-radius: 10px;
-                        font-size: 120%;
-                        width: auto;
+                .mess {
+                    clear: both;
+                    @include multiColors("bgcolor");
+                    color: white;
+                    padding: 10px;
+                    border-radius: 10px;
+                    font-size: 120%;
+                    width: auto;
+                    margin-top: 10px;
                 }
-                &.my-mess{
+                &.my-mess {
                     float: right;
+                    flex-direction: row-reverse;
+                    span {
+                        text-align: right;
+                    }
                 }
             }
         }
     }
-    .new-message{
+    .new-message {
         width: 100%;
         height: 10vh;
         display: flex;
         align-items: flex-start;
         padding: 0 20px 10px 20px;
-        input{
+        input {
             width: 90%;
             font-size: 150%;
             border: 1px solid $gray;
@@ -96,10 +88,10 @@
             color: $black;
             background-color: transparent;
         }
-        .send{
+        .send {
             width: 10%;
             margin-left: 5px;
-            button{
+            button {
                 border: none;
                 background-color: transparent;
                 width: 100%;
@@ -107,16 +99,12 @@
                 display: flex;
                 align-items: center;
                 height: 6vh;
-                svg{
-                    @include multiColors('color');
+                svg {
+                    @include multiColors("color");
                     height: 100%;
                     flex: 1;
-                    &.disabled{
-                        // color: $gray !important; 
-                        // cursor: auto;
-                    }
                 }
-                &:disabled{
+                &:disabled {
                     cursor: auto;
                 }
             }
