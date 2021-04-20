@@ -13,7 +13,6 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setMewMess] = useState('')
-    const [showMessDate, setshowMessDate] = useState(false)
 
     const { client } = useSocket()
     const { color } = useColor()
@@ -24,7 +23,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     useLayoutEffect(() => {
         client.on('private message', (res: Dialogues) => {
-            setMessages(prev => [...prev, { ...res, date: (new Date() as unknown as string) }])
+            setMessages(prev => [...prev, { ...res, date: Date.now() }])
         })
         setMessages([])
         conversations.forEach(conversation => {
@@ -43,7 +42,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                 {
                     text: newMess,
                     from: login,
-                    date: (new Date() as unknown as string)
+                    date: Date.now()
                 }
             ]
         })
@@ -70,7 +69,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                         <ul>
                             {messages.map(({ date, _id, text, from }) => (
                                 <li key={_id || date} className={from === login ? 'my-mess' : ''}>
-                                    <span className='date-hide'>{format(new Date(date || ''), "HH:mm, DD/MM")}</span>
+                                    <span className='date-hide'>{date && format(new Date(date), "HH:mm, DD/MM")}</span>
                                     <div
                                         className={`${color} mess`}
                                         onMouseOver={(e) => toogleMessDate(e, 'date-show')}

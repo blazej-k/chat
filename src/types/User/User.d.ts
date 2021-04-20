@@ -17,7 +17,7 @@ interface UserAuthInfo {
 type Sex = 'male' | 'female'
 type Dialogues = {
     _id?: string
-    date?: string, //to fix later
+    date?: number, //to fix later
     text: string,
     from: string 
 }
