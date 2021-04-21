@@ -24,21 +24,26 @@ const Chat: FC = () => {
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
-    const { client } = useSocket()
+    const { client, handleDisconnecting, handleConnecting } = useSocket()
 
     const dispatch = useDispatch()
 
     const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
 
     useEffect(() => {
-        client.emit('add user to listeners', login)
-        if (groups && groups.length > 0) {
-            groups.forEach(group => {
-                const { groupId } = group
-                client.emit('join to group', groupId)
-            })
+        if(login){
+            client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
+            dispatch(getUsers())
+            if (groups && groups.length > 0) {
+                groups.forEach(group => {
+                    const { groupId } = group
+                    client.emit('join to group', groupId)
+                })
+            }
         }
-        dispatch(getUsers())
+        return () => {
+            login && handleDisconnecting()
+        }
     }, [])
 
     const animations = {
