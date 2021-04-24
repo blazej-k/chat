@@ -1,5 +1,5 @@
 import { Avatar, message } from 'antd';
-import React, { FC, MouseEvent } from 'react'
+import React, { FC, MouseEvent, useEffect, useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/Hooks';
 import date from 'date-and-time'
@@ -15,16 +15,22 @@ const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
 
     const { mainColor, secondColor } = useColor()
 
+    const ref = useRef<HTMLUListElement>(null)
+
     const { format } = date
 
     const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
         (e.target as Element).previousElementSibling!.className = newClassName
     }
 
+    useLayoutEffect(() => {
+        messages.length > 0 && ref?.current?.lastElementChild?.scrollIntoView()
+    }, [messages])
+
     return (
         <div className="dialogues">
             {messages.length > 0 ?
-                <ul>
+                <ul ref={ref}>
                     {messages.map(({ date, _id, text, from }, index) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                             <div className="avatar">

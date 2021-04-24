@@ -27,7 +27,7 @@ const ColorsSection: FC<ColorsSectionProps> = ({changeColor, colors, type}) => {
             <div className="colors">
                 <h3>Select {type} color: </h3>
                 <div className="select-color">
-                    {colors.map(color => setExludedColor() !== color && <ColorButton color={color} changeColor={changeColor}/>)}
+                    {colors.map(color => setExludedColor() !== color && <ColorButton key={color} color={color} changeColor={changeColor}/>)}
                 </div>
             </div>
         </>
