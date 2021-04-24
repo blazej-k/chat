@@ -3,9 +3,8 @@ import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
-import date from 'date-and-time'
 import 'antd/dist/antd.css';
-import { Avatar } from 'antd';
+import Messages from './Messages';
 
 interface FriendsChatProps {
     friendName: string
@@ -18,8 +17,6 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const { client } = useSocket()
     const { mainColor, secondColor } = useColor()
-
-    const { format } = date
 
     const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
 
@@ -55,46 +52,13 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
         setMewMess(e.target.value)
     }
 
-    const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
-        (e.target as Element).previousElementSibling!.previousElementSibling!.className = newClassName
-    }
-
-
     return (
         <div className="chat-content">
             <div className="conversations">
                 <div className='header'>
                     <h1 className={mainColor}>{friendName}</h1>
                 </div>
-                <div className="dialogues">
-                    {messages.length > 0 ?
-                        <ul>
-                            {messages.map(({ date, _id, text, from }) => (
-                                <li key={_id || date} className={from === login ? 'my-mess' : ''}>
-                                    <span className='date-hide'>{date && format(new Date(date), "HH:mm, DD/MM")}</span>
-                                    <div className="avatar">
-                                        <Avatar
-                                            style={{
-                                                color: 'white',
-                                                backgroundColor: from === login ? mainColor : secondColor,
-                                            }}
-                                            size='large'
-                                            gap={2}>
-                                            {from}
-                                        </Avatar>
-                                    </div>
-                                    <div
-                                        className={`${from === login ? mainColor : secondColor} mess`}
-                                        onMouseOver={(e) => toogleMessDate(e, 'date-show')}
-                                        onMouseLeave={(e) => toogleMessDate(e, 'date-hide')}
-                                    >
-                                        {text}
-                                    </div>
-                                </li>
-                            ))}
-                        </ul> :
-                        <h1 className={mainColor}>Start conversation with {friendName}!</h1>}
-                </div>
+                <Messages messages={messages} friendName={friendName}/>
                 <div className="new-message">
                     <input value={newMess} className={secondColor} onChange={handleInput} type="text" placeholder='New mess...' />
                     <div className="send">

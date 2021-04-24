@@ -6,7 +6,7 @@ import Modal from './modal/Modal';
 import Nav from './nav/Nav';
 import Home from './home/Home'
 import ColorProvider from '../context/ColorContext';
-import { useColor, useSocket } from '../hooks/Hooks';
+import { useSocket } from '../hooks/Hooks';
 import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
@@ -24,7 +24,6 @@ const Chat: FC = () => {
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
     const { client, handleDisconnecting, handleConnecting } = useSocket()
-    const {mainColor} = useColor()
 
     const dispatch = useDispatch()
 
