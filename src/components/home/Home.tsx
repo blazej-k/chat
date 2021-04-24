@@ -1,4 +1,4 @@
-import { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Slider from './Slider'
 import '../../style/Home.scss'
 import { motion } from "framer-motion"
@@ -7,6 +7,7 @@ import Modal from './Modal'
 import HomeDescription from './HomeDescription';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
+import Footer from '../footer/Footer';
 
 const Home: FC = () => {
 
@@ -36,10 +37,10 @@ const Home: FC = () => {
     }, [])
 
     useEffect(() => {
-        if(showSignUpModal && !newUser){
+        if (showSignUpModal && !newUser) {
             setNewUser(true)
         }
-        else if(!showSignUpModal && newUser){
+        else if (!showSignUpModal && newUser) {
             setNewUser(false)
         }
     }, [showSignUpModal])
@@ -84,43 +85,46 @@ const Home: FC = () => {
     }
 
     return (
-        <div className="home-wrapper">
-            {store.user.login && <Redirect to={`/chat/${newUser}`}/>} 
-            <motion.div className="home" variants={animations} initial='out' animate='in'>
-                <div className="header">
-                    <h1 ref={ref}>ChatZilla</h1>
-                    <div className="actions">
-                        <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
-                        <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
-                        <button className={randomColors[0]} onClick={() => handleButtonClick('signin')}>Sign In</button>
+        <>
+            <div className="home-wrapper">
+                {store.user.login && <Redirect to={`/chat/${newUser}`} />}
+                <motion.div className="home" variants={animations} initial='out' animate='in'>
+                    <div className="header">
+                        <h1 ref={ref}>ChatZilla</h1>
+                        <div className="actions">
+                            <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
+                            <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
+                            <button className={randomColors[0]} onClick={() => handleButtonClick('signin')}>Sign In</button>
+                        </div>
                     </div>
-                </div>
-                <div className="home-info">
-                    <HomeDescription 
-                        buttonClick={handleButtonClick}
-                        buttonHover={handleButtonHover}
-                        colors={randomColors}
-                        showSpanInfo={showSpanInfo}    
-                    />
-                    <div className="home-info-slider">
-                        <Slider />
+                    <div className="home-info">
+                        <HomeDescription
+                            buttonClick={handleButtonClick}
+                            buttonHover={handleButtonHover}
+                            colors={randomColors}
+                            showSpanInfo={showSpanInfo}
+                        />
+                        <div className="home-info-slider">
+                            <Slider />
+                        </div>
                     </div>
-                </div>
-            </motion.div>
-            {(showSignInModal || showSignUpModal) &&
-                <div className='modal-full-screen'>
-                    {showSignInModal ? <Modal 
-                        isModalOpen={setShowSignInModal} 
-                        redirectModal={redirectModal} 
-                        type='signin'
-                    /> : 
-                    <Modal 
-                        isModalOpen={setShowSignUpModal} 
-                        type='signup'
-                    />}
-                </div>
-            }
-        </div>
+                </motion.div>
+                {(showSignInModal || showSignUpModal) &&
+                    <div className='modal-full-screen'>
+                        {showSignInModal ? <Modal
+                            isModalOpen={setShowSignInModal}
+                            redirectModal={redirectModal}
+                            type='signin'
+                        /> :
+                            <Modal
+                                isModalOpen={setShowSignUpModal}
+                                type='signup'
+                            />}
+                    </div>
+                }
+            </div>
+            <Footer />
+        </>
     );
 }
 

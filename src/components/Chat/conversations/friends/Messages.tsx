@@ -35,7 +35,7 @@ const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
                                         backgroundColor: from === login ? mainColor : secondColor,
                                     }}
                                     size='large'
-                                    gap={2}>
+                                    gap={8}>
                                     {from}
                                 </Avatar>
                             </div>

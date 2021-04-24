@@ -2,7 +2,6 @@ import { FC } from "react";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Home from "./home/Home";
 import Chat from "./chat/Chat";
-import Footer from "./footer/Footer";
 import { AnimatePresence } from "framer-motion"
 
 
@@ -19,7 +18,6 @@ const Page: FC = () => {
                     </AnimatePresence>
                 </Router>
             </div>
-            <Footer />
         </>
     );
 }

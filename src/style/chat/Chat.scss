@@ -4,8 +4,9 @@
 .chat{
     width: 100%;
     margin: 0;
-    @import './Nav';
     color: $black;
+    overflow-y: hidden;
+    @import './Nav';
     .chat-content-wrapper{
         width: 75%;
         margin-left: auto;
