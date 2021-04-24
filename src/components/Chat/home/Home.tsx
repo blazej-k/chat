@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor } from '../../hooks/Hooks';
-import Inputs from './Inputs/Inputs';
+import Inputs from './inputs/Inputs';
 import Preferences from './preferences/Preferences';
 
 interface HomeProps {
