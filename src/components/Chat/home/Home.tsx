@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import Inputs from './Inputs/Inputs';
-import Preferences from './Preferences';
+import Preferences from './preferences/Preferences';
 
 interface HomeProps {
     isNew: 'true' | 'false'
