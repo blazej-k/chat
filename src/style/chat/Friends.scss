@@ -95,7 +95,8 @@
         input {
             width: 90%;
             font-size: 150%;
-            border: 1px solid $gray;
+            border: 1px solid;
+            @include multiColors('border-color');
             border-radius: 5px;
             padding: 0 20px;
             height: 6vh;

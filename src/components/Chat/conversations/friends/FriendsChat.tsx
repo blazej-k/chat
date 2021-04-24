@@ -96,7 +96,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                         <h1 className={mainColor}>Start conversation with {friendName}!</h1>}
                 </div>
                 <div className="new-message">
-                    <input value={newMess} onChange={handleInput} type="text" placeholder='New mess...' />
+                    <input value={newMess} className={secondColor} onChange={handleInput} type="text" placeholder='New mess...' />
                     <div className="send">
                         <button disabled={!(newMess.length > 0)} onClick={sendPrivateMess}>
                             <AiOutlineSend className={newMess.length > 0 ? mainColor : 'disabled'} />
