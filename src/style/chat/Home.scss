@@ -1,40 +1,40 @@
-@import '../colors';
-@import '../mixins';
-@import '../keyframes';
+@import "../colors";
+@import "../mixins";
+@import "../keyframes";
 
-h1{
+h1 {
     margin: 30px;
     margin-top: 0;
     font-size: 400%;
 }
-.sections{
+.sections {
     width: 80%;
     margin-top: 100px;
     margin-left: 40px;
-    .section{
-        h2{
+    .section {
+        h2 {
             font-size: 200%;
         }
     }
-    .section:first-child{
-        .inputs-wrapper{
+    .section:first-child {
+        .inputs-wrapper {
             @include inputs;
-            input#search-friend{
+            input#search-friend {
                 margin-bottom: 0;
                 border-radius: 6px 6px 0 0;
             }
             width: 70%;
 
-            > button{
+            > button {
                 border: none;
-                @include multiColors('color');
-                background-color: white;
+                @include multiColors("color");
+                background-color: transparent;
                 margin-left: 20px;
                 cursor: pointer;
                 color: $orange;
                 font-size: 150%;
             }
-            .search-list{
+            .search-list {
                 border: 0.5px solid black;
                 width: 60%;
                 padding: 10px 15px;
@@ -44,73 +44,77 @@ h1{
                 background-color: white;
                 border-top: 0;
                 overflow: auto;
-                ul{
+                ul {
                     margin: 0;
                     list-style-type: none;
                     padding: 0;
-                    li{
+                    li {
                         cursor: pointer;
                         color: $black;
-                        transition: .2s;
+                        transition: 0.2s;
                         padding: 10px 0 10px 5px;
                         border-bottom: none;
                         background-color: white;
-                        &:hover{
+                        &:hover {
                             background-color: rgb(219, 219, 219);
                         }
                     }
-                } 
-                > button{
-                    @include multiColors('color');
+                }
+                > button {
+                    @include multiColors("color");
                     border: none;
-                    background-color: white;
+                    background-color: transparent;
                     font-size: 120%;
                     cursor: pointer;
-                    &.next{
+                    &.next {
                         float: right;
                     }
-                    &.prev{
+                    &.prev {
                         transform: rotate(0.5turn);
                         float: left;
                     }
                 }
-                span{
+                span {
                     color: $red;
                 }
-
             }
-            > span{
+            > span {
                 margin-left: 30px;
                 font-size: 150%;
-                animation: slideLeft .5s;
+                animation: slideLeft 0.5s;
                 position: relative;
             }
         }
         border-bottom: 0.5px solid $black;
         padding-bottom: 35px;
     }
-    .section:last-child{
-        h3{
+    .section:last-child {
+        h3 {
             display: inline;
         }
-        .preferences-wrapper{
-            h3{
+        .preferences-wrapper {
+            h3 {
                 font-size: 160%;
             }
-            .select-color{
-                margin-top: 30px;
-                button{
-                    width: 7%;
-                    height: 50px;
-                    margin: 0 20px;
-                    border: 1px solid $black;
-                    border-radius: 10px;
-                    cursor: pointer;
-                    @include multiColors('gradient');
-                    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;;
-                    &:first-child{
-                        margin-left: 0;
+            .colors {
+                .select-color {
+                    margin-top: 30px;
+                    button {
+                        width: 7%;
+                        height: 50px;
+                        margin: 0 20px;
+                        border: 1px solid $black;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        @include multiColors("gradient");
+                        box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+                        &:first-child {
+                            margin-left: 0;
+                        }
                     }
+                }
+                &:last-child{
+                    margin-top: 5%;
                 }
             }
         }

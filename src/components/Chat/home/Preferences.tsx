@@ -5,18 +5,30 @@ import { useColor } from '../../hooks/Hooks';
 
 const Preferences: FC = () => {
 
-    const {changeColor} = useColor()
+    const {changeMainColor, changeSecondColor} = useColor()
 
     return (
         <>
-            <h3>Select main color: </h3>
+        <div className="colors">
+             <h3>Select main color: </h3>
             <div className="select-color">
-                <button onClick={() => changeColor('red')} className='red'></button>
-                <button onClick={() => changeColor('blue')} className='blue'></button>
-                <button onClick={() => changeColor('orange')} className='orange'></button>
-                <button onClick={() => changeColor('green')} className='green'></button>
-                <button onClick={() => changeColor('dark')} className='dark'></button>
+                <button onClick={() => changeMainColor('red')} className='red'></button>
+                <button onClick={() => changeMainColor('blue')} className='blue'></button>
+                <button onClick={() => changeMainColor('orange')} className='orange'></button>
+                <button onClick={() => changeMainColor('green')} className='green'></button>
+                <button onClick={() => changeMainColor('dark')} className='dark'></button>
             </div>
+        </div>
+        <div className="colors">
+        <h3>Select second color: </h3>
+            <div className="select-color">
+                <button onClick={() => changeSecondColor('red')} className='red'></button>
+                <button onClick={() => changeSecondColor('blue')} className='blue'></button>
+                <button onClick={() => changeSecondColor('orange')} className='orange'></button>
+                <button onClick={() => changeSecondColor('green')} className='green'></button>
+                <button onClick={() => changeSecondColor('dark')} className='dark'></button>
+            </div>
+        </div>
         </>
     );
 }

@@ -17,7 +17,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const [newMess, setMewMess] = useState('')
 
     const { client } = useSocket()
-    const { color } = useColor()
+    const { mainColor, secondColor } = useColor()
 
     const { format } = date
 
@@ -76,7 +76,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                                         <Avatar
                                             style={{
                                                 color: 'white',
-                                                backgroundColor: color,
+                                                backgroundColor: from === login ? mainColor : secondColor,
                                             }}
                                             size='large'
                                             gap={4}>
@@ -84,7 +84,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                                         </Avatar>
                                     </div>
                                     <div
-                                        className={`${color} mess`}
+                                        className={`${from === login ? mainColor : secondColor} mess`}
                                         onMouseOver={(e) => toogleMessDate(e, 'date-show')}
                                         onMouseLeave={(e) => toogleMessDate(e, 'date-hide')}
                                     >
@@ -93,13 +93,13 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                                 </li>
                             ))}
                         </ul> :
-                        <h1 className={color}>Start conversation with {friendName}!</h1>}
+                        <h1 className={mainColor}>Start conversation with {friendName}!</h1>}
                 </div>
                 <div className="new-message">
                     <input value={newMess} onChange={handleInput} type="text" placeholder='New mess...' />
                     <div className="send">
                         <button disabled={!(newMess.length > 0)} onClick={sendPrivateMess}>
-                            <AiOutlineSend className={newMess.length > 0 ? color : 'disabled'} />
+                            <AiOutlineSend className={newMess.length > 0 ? mainColor : 'disabled'} />
                         </button>
                     </div>
                 </div>

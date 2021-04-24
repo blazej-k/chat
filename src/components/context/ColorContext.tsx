@@ -2,22 +2,32 @@ import { useState } from "react";
 import { createContext, FC } from "react";
 
 interface Context {
-    color: string,
-    changeColor: (newColor: string) => void
+    mainColor: string,
+    secondColor: string,
+    changeMainColor: (newColor: string) => void
+    changeSecondColor: (newColor: string) => void
 }
 
 const ColorProvider: FC = ({children}) => {
 
-    const [color, setColor] = useState('blue')
+    const [mainColor, setMainColor] = useState('blue')
+    const [secondColor, setSecondColor] = useState('red')
 
-    const changeColor = (newColor: string) => setColor(newColor)
+    const changeMainColor = (newColor: string) => setMainColor(newColor)
+
+    const changeSecondColor = (newColor: string) => setSecondColor(newColor)
 
     return(
-        <ColorContext.Provider value={{color, changeColor}}>
+        <ColorContext.Provider value={{mainColor, secondColor, changeMainColor, changeSecondColor}}>
             {children}
         </ColorContext.Provider>
     )
 }
 
-export const ColorContext = createContext<Context>({color: '', changeColor: () => null})
+export const ColorContext = createContext<Context>({
+    mainColor: 'blue', 
+    secondColor: 'red', 
+    changeMainColor: () => null,
+    changeSecondColor: () => null
+})
 export default  ColorProvider

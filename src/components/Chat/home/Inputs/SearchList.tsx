@@ -14,7 +14,7 @@ const SearchList: FC<SearchListProps> = ({ friendName, handleSelectFriend }) => 
     const [searchedUsers, setSearchedUsers] = useState<CommunityUser[]>([])
     const [firstIndex, setFirstIndex] = useState(0)
 
-    const { color } = useColor()
+    const { mainColor } = useColor()
 
     const { commReducer: { community: { users } }, userReducer: { user: { login, friends } } } = useSelector((state: Store) => state)
 
@@ -47,14 +47,14 @@ const SearchList: FC<SearchListProps> = ({ friendName, handleSelectFriend }) => 
                     </ul>
                     {firstIndex - 4 >= 0 && 
                         <button 
-                            className={`prev ${color}`} 
+                            className={`prev ${mainColor}`} 
                             onClick={() => handleChangeIndex('prev')}>
                                 <MdNavigateNext size={40}/>
                         </button>
                     }
                     {searchedUsers.length > firstIndex + 4 &&
                         <button 
-                            className={`next ${color}`} 
+                            className={`next ${mainColor}`} 
                             onClick={() => handleChangeIndex('next')}>
                                 <MdNavigateNext  size={40}/>
                         </button>

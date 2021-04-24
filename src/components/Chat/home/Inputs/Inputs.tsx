@@ -18,7 +18,7 @@ const Inputs: FC = () => {
     const dispatch = useDispatch()
     const { userReducer } = useSelector((state: Store) => state)
 
-    const { color } = useColor()
+    const { mainColor } = useColor()
     const { client } = useSocket()
 
     const { user: { login, sex, groups, groups: { length } } } = userReducer
@@ -63,7 +63,7 @@ const Inputs: FC = () => {
             {confirmNewFriend && <span className='confirm-new-friend'>Invite sended!</span>}
             {newFriend.length > 2 && <SearchList friendName={newFriend} handleSelectFriend={handleSelectFriend}/>}
             <input type="text" value={newGroup} id='group' onChange={handleInput} placeholder='Create new group' />
-            <button className={color} onClick={handleCreateGroup}>Create!</button>
+            <button className={mainColor} onClick={handleCreateGroup}>Create!</button>
         </>
     );
 }
