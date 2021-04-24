@@ -11,6 +11,17 @@ import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 
+const animations = {
+    in: {
+        opacity: 1,
+        transition: { duration: 0.6 },
+    },
+    out: {
+        opacity: 0,
+        transition: { duration: 0.6 },
+    }
+}
+
 
 const Chat: FC = () => {
 
@@ -44,17 +55,6 @@ const Chat: FC = () => {
             login && handleDisconnecting()
         }
     }, [])
-
-    const animations = {
-        in: {
-            opacity: 1,
-            transition: { duration: 0.6 },
-        },
-        out: {
-            opacity: 0,
-            transition: { duration: 0.6 },
-        }
-    }
 
     const friendsChat = (friend: string) => {
         setFriendName(friend)

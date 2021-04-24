@@ -22,6 +22,7 @@
             text-align: center;
             border-bottom: .5px solid;
             @include multiColors('border-bottom-color');
+            @include multiColors("color");
         }
         > ul {
             list-style-type: none;

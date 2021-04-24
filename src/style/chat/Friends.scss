@@ -19,6 +19,9 @@
             text-align: center;
             border-bottom: 0.5px solid;
             @include multiColors("border-bottom-color");
+            span{
+                @include multiColors("color");
+            }
         }
     }
     .dialogues {

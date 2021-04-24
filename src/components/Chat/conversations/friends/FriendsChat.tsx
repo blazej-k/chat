@@ -56,7 +56,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
         <div className="chat-content">
             <div className="conversations">
                 <div className='header'>
-                    <h1 className={mainColor}>{friendName}</h1>
+                    <h1 className={mainColor}><span className={secondColor}>{friendName}</span></h1>
                 </div>
                 <Messages messages={messages} friendName={friendName}/>
                 <div className="new-message">
