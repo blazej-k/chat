@@ -1,6 +1,5 @@
-import * as React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
@@ -31,7 +30,7 @@ const Chat: FC = () => {
     const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
 
     useEffect(() => {
-        if(login){
+        if (login) {
             client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
             dispatch(getUsers())
             if (groups && groups.length > 0) {

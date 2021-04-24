@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
 import date from 'date-and-time'
+import 'antd/dist/antd.css';
+import { Avatar } from 'antd';
 
 interface FriendsChatProps {
     friendName: string
@@ -54,7 +56,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     }
 
     const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
-        (e.target as Element).previousElementSibling!.className = newClassName
+        (e.target as Element).previousElementSibling!.previousElementSibling!.className = newClassName
     }
 
 
@@ -70,6 +72,17 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                             {messages.map(({ date, _id, text, from }) => (
                                 <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                                     <span className='date-hide'>{date && format(new Date(date), "HH:mm, DD/MM")}</span>
+                                    <div className="avatar">
+                                        <Avatar
+                                            style={{
+                                                color: 'white',
+                                                backgroundColor: color,
+                                            }}
+                                            size='large'
+                                            gap={4}>
+                                            {from}
+                                        </Avatar>
+                                    </div>
                                     <div
                                         className={`${color} mess`}
                                         onMouseOver={(e) => toogleMessDate(e, 'date-show')}

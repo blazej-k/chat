@@ -46,11 +46,16 @@
                 max-width: 50%;
                 display: flex;
                 flex-wrap: wrap;
-                span {
+                .avatar{
+                    display: inline;
+                    margin-right: 20px;
+                }
+                > span {
                     color: $gray;
                     display: block;
                     font-size: 70%;
                     flex-basis: 100%;
+                    text-align: center;
                     &.date-hide{
                         opacity: 0;
                     }
@@ -71,9 +76,12 @@
                 &.my-mess {
                     float: right;
                     flex-direction: row-reverse;
-                    span {
-                        text-align: right;
+                    .avatar{
+                        margin-left: 20px;
                     }
+                    // span {
+                    //     text-align: right;
+                    // }
                 }
             }
         }

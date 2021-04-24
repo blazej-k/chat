@@ -5,14 +5,13 @@ import SocketProvider from './components/context/SocketContext';
 import './style/index.scss'
 import { Provider } from 'react-redux';
 import { store } from './reducers/store';
-// import 'aos/dist/aos.css'
 
 const App: FC = () => {
 
     return (
         <SocketProvider>
             <Provider store={store}>
-            <Page/>
+                <Page/>
             </Provider>
         </SocketProvider>
     );
