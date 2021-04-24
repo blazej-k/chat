@@ -86,9 +86,7 @@ const Chat: FC = () => {
                                 {showModal && <Modal login={login} showModal={setShowModal} />}
                             </div>
                         }
-                        <div className={`nav-wrapper ${mainColor}`}>
-                            <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />
-                        </div>
+                        <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
                             {showFriendChat && <FriendsChat friendName={friendName} />}

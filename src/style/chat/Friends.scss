@@ -18,7 +18,7 @@
             width: 100%;
             text-align: center;
             border-bottom: 0.5px solid;
-            @include multiColors("border-color");
+            @include multiColors("border-bottom-color");
         }
     }
     .dialogues {
@@ -65,7 +65,7 @@
                 }
                 .mess {
                     clear: both;
-                    @include multiColors("bgcolor");
+                    @include multiColors("background-color");
                     color: white;
                     padding: 10px;
                     border-radius: 10px;

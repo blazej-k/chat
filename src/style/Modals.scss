@@ -32,7 +32,7 @@
                 overflow: auto;
                 button {
                     outline: none;
-                    @include multiColors('bgcolor');
+                    @include multiColors('background-color');
                     font-size: 80%;
                     border: none;
                     cursor: pointer;
