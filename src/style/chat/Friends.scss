@@ -50,8 +50,7 @@
                 display: flex;
                 flex-wrap: wrap;
                 .avatar{
-                    display: inline;
-                    margin-right: 20px;
+                    width: 100%;
                 }
                 > span {
                     color: $gray;
@@ -74,13 +73,15 @@
                     border-radius: 10px;
                     font-size: 120%;
                     width: auto;
+                    max-width: 100%;
                     margin-top: 10px;
+                    overflow-wrap: break-word;
                 }
                 &.my-mess {
                     float: right;
                     flex-direction: row-reverse;
                     .avatar{
-                        margin-left: 20px;
+                       text-align: right;
                     }
                 }
             }

@@ -1,4 +1,4 @@
-import { Avatar } from 'antd';
+import { Avatar, message } from 'antd';
 import React, { FC, MouseEvent } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/Hooks';
@@ -18,27 +18,27 @@ const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
     const { format } = date
 
     const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
-        (e.target as Element).previousElementSibling!.previousElementSibling!.className = newClassName
+        (e.target as Element).previousElementSibling!.className = newClassName
     }
 
     return (
         <div className="dialogues">
             {messages.length > 0 ?
                 <ul>
-                    {messages.map(({ date, _id, text, from }) => (
+                    {messages.map(({ date, _id, text, from }, index) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
-                            <span className='date-hide'>{date && format(new Date(date), "HH:mm, DD/MM")}</span>
                             <div className="avatar">
                                 <Avatar
                                     style={{
                                         color: 'white',
                                         backgroundColor: from === login ? mainColor : secondColor,
                                     }}
-                                    size='large'
-                                    gap={8}>
+                                    size={45}
+                                    gap={4}>
                                     {from}
                                 </Avatar>
                             </div>
+                            <span className='date-hide'>{date && format(new Date(date), "HH:mm, DD/MM")}</span>
                             <div
                                 className={`${from === login ? mainColor : secondColor} mess`}
                                 onMouseOver={(e) => toogleMessDate(e, 'date-show')}
