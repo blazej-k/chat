@@ -5,6 +5,7 @@ import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../.
 import List from './List';
 import { MdClear } from 'react-icons/md'
 import { MdDone } from 'react-icons/md'
+import { useColor } from '../../hooks/Hooks';
 
 interface NavProps {
     showFriendsChat: (friend: string) => void 
@@ -31,6 +32,8 @@ const Nav: FC<NavProps> = ({showFriendsChat, showGroupsChat, showHome}) => {
 
     const { user: { login, friends, groups, waitingFriends, waitingGroups, sex } } = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
+
+    const {mainColor} = useColor()
 
     useEffect(() => {
         let collectionToClose: 'waitingGroups' | 'waitingFriends' | '' =  ''
@@ -88,7 +91,7 @@ const Nav: FC<NavProps> = ({showFriendsChat, showGroupsChat, showHome}) => {
 
     return (
         <div className="nav">
-            <h1>{login}</h1>
+            <h1 className={mainColor}>{login}</h1>
             <ul>
                 <li onClick={showHome}><b>Home</b></li>
                 <List

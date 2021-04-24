@@ -1,11 +1,13 @@
 @import "../keyframes";
 @import "../colors";
+@import "../mixins";
 
 
 .nav-wrapper {
     position: fixed;
     height: 100vh;
-    border-right: .5px solid $black;
+    border-right: .5px solid;
+    @include multiColors('border-color');
     width: 25%;
     color: $black;
     z-index: 1;
@@ -18,7 +20,8 @@
             height: 10vh;
             width: 100%;
             text-align: center;
-            border-bottom: 0.5px solid $black;
+            border-bottom: .5px solid;
+            @include multiColors('border-color');
         }
         > ul {
             list-style-type: none;

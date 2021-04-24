@@ -63,8 +63,8 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     return (
         <div className="chat-content">
             <div className="conversations">
-                <div className="header">
-                    <h1>{friendName}</h1>
+                <div className='header'>
+                    <h1 className={mainColor}>{friendName}</h1>
                 </div>
                 <div className="dialogues">
                     {messages.length > 0 ?
@@ -79,7 +79,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                                                 backgroundColor: from === login ? mainColor : secondColor,
                                             }}
                                             size='large'
-                                            gap={4}>
+                                            gap={2}>
                                             {from}
                                         </Avatar>
                                     </div>
