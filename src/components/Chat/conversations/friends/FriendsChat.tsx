@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent, useEffect } from 'react';
+import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
@@ -20,6 +20,8 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const { client } = useSocket()
     const { mainColor, secondColor } = useColor()
 
+    const ref = useRef<HTMLInputElement>(null)
+
     const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
 
     useEffect(() => {
@@ -32,6 +34,11 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
         }), 2000)
     }, [])
 
+    useEffect(() => {
+        ref.current?.addEventListener('keydown', (e: KeyboardEvent) => handleEnterClick(e))
+        return () => ref.current?.removeEventListener('keydown', (e: KeyboardEvent) => handleEnterClick(e))
+    }, [newMess])
+
     useLayoutEffect(() => {
         conversations.forEach(conversation => {
             if (conversation.login === friendName) {
@@ -41,6 +48,12 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
         });
         return () => setMessages([])
     }, [friendName])
+
+    const handleEnterClick = (e: KeyboardEvent) => {
+        if (e.key === 'Enter' && newMess.length > 0) {
+            sendPrivateMess()
+        }
+    }
 
     const sendPrivateMess = () => {
         client.emit('send private message', { name: login, to: friendName, mess: newMess })
@@ -72,7 +85,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
                 </div>
                 <Messages messages={messages} friendName={friendName} />
                 <div className="new-message">
-                    <input value={newMess} className={secondColor} onChange={handleInput} type="text" placeholder='New mess...' />
+                    <input value={newMess} ref={ref} className={secondColor} onChange={handleInput} placeholder='New mess...' />
                     <div className="send">
                         <button disabled={!(newMess.length > 0)} onClick={sendPrivateMess}>
                             <AiOutlineSend className={newMess.length > 0 ? mainColor : 'disabled'} />
