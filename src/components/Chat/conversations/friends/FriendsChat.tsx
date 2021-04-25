@@ -23,9 +23,10 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
 
     useEffect(() => {
-        setTimeout(() => client.on('private message', (res: Dialogues) => {
+        const timer = setTimeout(() => client.on('private message', (res: Dialogues) => {
             setMessages(prev => [...prev, { ...res, date: Date.now() }])
         }), 2000)
+        return () => clearTimeout(timer)
     }, [])
 
     useEffect(() => {
