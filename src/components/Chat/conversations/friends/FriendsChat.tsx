@@ -71,9 +71,6 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     return (
         <div className="chat-content">
             <div className="conversations">
-                <div className='header'>
-                    <h1 className={mainColor}><span className={secondColor}>{friendName}</span></h1>
-                </div>
                 <Messages messages={messages} friendName={friendName} />
                 <div className="new-message">
                     <input value={newMess} ref={ref} className={secondColor} onChange={handleInput} placeholder='New mess...' />

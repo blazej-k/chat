@@ -20,6 +20,7 @@ const SearchList: FC<SearchListProps> = ({ friendName, handleSelectFriend }) => 
 
     useEffect(() => {
         const friendsLogins = friends.map(friend => friend.login)
+        console.log(users)
         users.map(user => {
             if (user.login.toLowerCase().slice(0, friendName.length) === friendName.toLowerCase() && 
             login !== user.login && !friendsLogins.includes(user.login)) {

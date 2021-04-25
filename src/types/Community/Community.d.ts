@@ -3,7 +3,6 @@ interface Community {
     groups: CommunityGroup[],
 }
 
-
 interface CommunityGroup {
     groupName: string,
     groupId: string,

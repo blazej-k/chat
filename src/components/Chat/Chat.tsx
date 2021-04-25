@@ -23,7 +23,6 @@ const animations = {
     }
 }
 
-
 const Chat: FC = () => {
 
     const [showModal, setShowModal] = useState(true)
@@ -40,7 +39,7 @@ const Chat: FC = () => {
 
     const dispatch = useDispatch()
 
-    const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
+    const { userReducer: { user: { login, groups, friends } } } = useSelector((store: Store) => store)
 
     const showNewMess = (from: string, text: string) => {
         setNewMessInfo(initNewMessInfo)
@@ -58,7 +57,13 @@ const Chat: FC = () => {
                     client.emit('join to group', groupId)
                 })
             }
-            client.connected ? client.on('private message', ({ text, from }: Dialogues) => showNewMess(from, text))
+            client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
+                showNewMess(from, text)
+                const friendsNames = friends.map(friend => friend.login)
+                if(!friendsNames.includes(from)){
+                    //dispatch
+                }
+            })
             : getNewMess(showNewMess)
         }
         return () => {
