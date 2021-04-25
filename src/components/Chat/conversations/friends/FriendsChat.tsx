@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent } from 'react';
+import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
@@ -14,23 +14,29 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setMewMess] = useState('')
+    const [showNewMessInfo, setShowNewMessInfo] = useState(false)
 
     const { client } = useSocket()
     const { mainColor, secondColor } = useColor()
 
     const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
 
-    useLayoutEffect(() => {
-        client.on('private message', (res: Dialogues) => {
+    useEffect(() => {
+        setTimeout(() => client.on('private message', (res: Dialogues) => {
             setMessages(prev => [...prev, { ...res, date: Date.now() }])
-        })
-        setMessages([])
+            setShowNewMessInfo(true)
+            setTimeout(() => setShowNewMessInfo(false), 5000)
+        }), 2000)
+    }, [])
+
+    useLayoutEffect(() => {
         conversations.forEach(conversation => {
             if (conversation.login === friendName) {
                 setMessages(conversation.dialogues)
                 return
             }
         });
+        return () => setMessages([])
     }, [friendName])
 
     const sendPrivateMess = () => {
@@ -55,6 +61,10 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     return (
         <div className="chat-content">
             <div className="conversations">
+                {messages.length > 0 && <div className={`${secondColor} new-mess-info`}>
+                    <span>{messages[0].from}</span>
+                    <span>{messages[0].text}</span>
+                </div>}
                 <div className='header'>
                     <h1 className={mainColor}><span className={secondColor}>{friendName}</span></h1>
                 </div>

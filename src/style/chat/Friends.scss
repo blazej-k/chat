@@ -7,6 +7,35 @@
     margin: auto;
     max-height: 100vh;
     flex-wrap: wrap;
+    .new-mess-info{
+        position: absolute;
+        top: 2%;
+        left: 4%;
+        background-color: white;
+        border: 1px solid;
+        @include multiColors("border-color");
+        border-radius: 10px;
+        z-index: 2;
+        padding: 5px 10px 5px 13px;
+        width: 20%;
+        animation: newMess .3s;
+        span{
+            display: block;
+            &:first-child{
+                font-size: 150%;
+            }
+        }
+        @keyframes newMess {
+            from{
+                left: -20%;
+                opacity: 0;
+            }
+            to{
+                left: 4%;
+                opacity: 1;
+            }
+        }
+    }
     .header {
         margin: 0;
         width: 100%;
