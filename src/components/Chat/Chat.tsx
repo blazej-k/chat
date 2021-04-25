@@ -10,6 +10,7 @@ import { useSocket } from '../hooks/Hooks';
 import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
+import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
 
 const animations = {
     in: {
@@ -30,15 +31,22 @@ const Chat: FC = () => {
     const [showGroupsChat, setShowGroupsChat] = useState(false)
     const [showHome, setShowHome] = useState(true)
     const [friendName, setFriendName] = useState('')
+    const [newMessInfo, setNewMessInfo] = useState<typeof initNewMessInfo>(initNewMessInfo)
     const [groupName, setGroupName] = useState('')
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
-    const { client, handleDisconnecting, handleConnecting } = useSocket()
+    const { client, handleDisconnecting, handleConnecting, getNewMess } = useSocket()
 
     const dispatch = useDispatch()
 
     const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
+
+    const showNewMess = (from: string, text: string) => {
+        setNewMessInfo(initNewMessInfo)
+        setNewMessInfo({ show: true, from, text })
+        setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
+    }
 
     useEffect(() => {
         if (login) {
@@ -50,6 +58,8 @@ const Chat: FC = () => {
                     client.emit('join to group', groupId)
                 })
             }
+            client.connected ? client.on('private message', ({ text, from }: Dialogues) => showNewMess(from, text))
+            : getNewMess(showNewMess)
         }
         return () => {
             login && handleDisconnecting()
@@ -75,6 +85,8 @@ const Chat: FC = () => {
         setShowHome(true)
     }
 
+    const { from, show, text } = newMessInfo
+
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
             <ColorProvider>
@@ -85,6 +97,7 @@ const Chat: FC = () => {
                                 {showModal && <Modal login={login} showModal={setShowModal} />}
                             </div>
                         }
+                        <NewMessInfo show={show} text={text} from={from} />
                         <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}

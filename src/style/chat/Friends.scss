@@ -8,37 +8,27 @@
     max-height: 100vh;
     flex-wrap: wrap;
     overflow-y: hidden;
-    .new-mess-info {
-        position: absolute;
-        top: 2%;
-        left: 4%;
-        background-color: white;
-        border: 1px solid;
-        @include multiColors("border-color");
-        border-radius: 10px;
-        z-index: 2;
-        padding: 5px 15px 5px 18px;
-        width: 20%;
-        animation: newMess 0.3s;
-        span {
-            display: block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            &:first-child {
-                font-size: 150%;
-            }
-        }
-        @keyframes newMess {
-            from {
-                left: -20%;
-                opacity: 0;
-            }
-            to {
-                left: 4%;
-                opacity: 1;
-            }
-        }
+    // .new-mess-info {
+    //     position: absolute;
+    //     top: 2%;
+    //     left: 4%;
+    //     background-color: white;
+    //     border: 1px solid;
+    //     @include multiColors("border-color");
+    //     border-radius: 10px;
+    //     z-index: 2;
+    //     padding: 5px 15px 5px 18px;
+    //     width: 20%;
+    //     animation: newMess 0.3s;
+    //     span {
+    //         display: block;
+    //         overflow: hidden;
+    //         text-overflow: ellipsis;
+    //         white-space: nowrap;
+    //         &:first-child {
+    //             font-size: 150%;
+    //         }
+    //     }
     }
     .header {
         margin: 0;
@@ -168,4 +158,3 @@
             }
         }
     }
-}

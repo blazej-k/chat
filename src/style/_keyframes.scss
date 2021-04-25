@@ -68,3 +68,14 @@
         transform: scaleY(1);
     }
 }
+
+@keyframes newMess {
+    from {
+        left: -20%;
+        opacity: 0;
+    }
+    to {
+        left: 4%;
+        opacity: 1;
+    }
+}

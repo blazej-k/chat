@@ -5,7 +5,6 @@ import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
 import 'antd/dist/antd.css';
 import Messages from './Messages';
-import NewMessInfo, { initNewMessInfo } from '../../../helpers/NewMessInfo'
 
 interface FriendsChatProps {
     friendName: string
@@ -15,7 +14,6 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setMewMess] = useState('')
-    const [newMessInfo, setNewMessInfo] = useState<typeof initNewMessInfo>(initNewMessInfo)
 
     const { client } = useSocket()
     const { mainColor, secondColor } = useColor()
@@ -26,17 +24,13 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     useEffect(() => {
         setTimeout(() => client.on('private message', (res: Dialogues) => {
-            const { from, text } = res
             setMessages(prev => [...prev, { ...res, date: Date.now() }])
-            setNewMessInfo(initNewMessInfo)
-            setNewMessInfo({ show: true, from, text })
-            setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
         }), 2000)
     }, [])
 
     useEffect(() => {
-        ref.current?.addEventListener('keydown', (e: KeyboardEvent) => handleEnterClick(e))
-        return () => ref.current?.removeEventListener('keydown', (e: KeyboardEvent) => handleEnterClick(e))
+        ref.current?.addEventListener('keydown', handleEnterClick)
+        return () => ref.current?.removeEventListener('keydown', handleEnterClick)
     }, [newMess])
 
     useLayoutEffect(() => {
@@ -74,12 +68,9 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
         setMewMess(e.target.value)
     }
 
-    const { from, show, text } = newMessInfo
-
     return (
         <div className="chat-content">
             <div className="conversations">
-                <NewMessInfo show={show} text={text} from={from} />
                 <div className='header'>
                     <h1 className={mainColor}><span className={secondColor}>{friendName}</span></h1>
                 </div>
