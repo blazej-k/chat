@@ -29,7 +29,9 @@ const SocketProvider: FC = ({ children }) => {
     }
 
     const getNewMess = (callback: (from: string, text: string) => void) => {
-        setTimeout(() => client.on('private message', ({text, from}: Dialogues) => callback(from, text)), 2000)
+        setTimeout(() => client.on('private message', ({text, from}: Dialogues) => {
+            callback(from, text)
+        }), 2000)
     }
 
     const handleDisconnecting = () => {

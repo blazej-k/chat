@@ -11,6 +11,7 @@ import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
+import { getCurrentUser } from '../../actions/UserActions';
 
 const animations = {
     in: {
@@ -42,6 +43,7 @@ const Chat: FC = () => {
     const { userReducer: { user: { login, groups, friends } } } = useSelector((store: Store) => store)
 
     const showNewMess = (from: string, text: string) => {
+        dispatch(getCurrentUser(login))
         setNewMessInfo(initNewMessInfo)
         setNewMessInfo({ show: true, from, text })
         setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
@@ -59,10 +61,10 @@ const Chat: FC = () => {
             }
             client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
                 showNewMess(from, text)
-                const friendsNames = friends.map(friend => friend.login)
-                if(!friendsNames.includes(from)){
-                    //dispatch
-                }
+                // const friendsNames = friends.map(friend => friend.login)
+                // if(!friendsNames.includes(from)){
+                    // dispatch(getCurrentUser(login))
+                // }
             })
             : getNewMess(showNewMess)
         }

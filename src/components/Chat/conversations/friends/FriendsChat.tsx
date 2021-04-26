@@ -22,12 +22,10 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
 
-    useEffect(() => {
-        const timer = setTimeout(() => client.on('private message', (res: Dialogues) => {
-            setMessages(prev => [...prev, { ...res, date: Date.now() }])
-        }), 2000)
-        return () => clearTimeout(timer)
-    }, [])
+    useLayoutEffect(() => {
+        const conversationObj = conversations.find(conversation => conversation.login === friendName)
+        conversationObj && setMessages(conversationObj.dialogues)
+    }, [conversations])
 
     useEffect(() => {
         ref.current?.addEventListener('keydown', handleEnterClick)

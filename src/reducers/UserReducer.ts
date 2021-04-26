@@ -9,7 +9,9 @@ import {
     REMOVEGROUPINVITE,
     NEWGROUPMESSAGE,
     REMOVEERRORMESSAGE,
-    LOGOUT
+    LOGOUT,
+    GETCURRENTUSER,
+    // ADDNEWMESS,
 } from '../actions/UserActions'
 
 const initState: UserReducer = {
@@ -21,7 +23,7 @@ const initState: UserReducer = {
 export const UserReducer = (state = initState, action: UserActionType) => {
     switch (action.type) {
         case USERLOADING:
-            return state = {...state, loading: true, error: ''}
+            return state = { ...state, loading: true, error: '' }
         case SIGNIN:
         case SIGNUP:
             const { login, sex, conversations, waitingFriends, waitingGroups, friends, groups } = action.payload
@@ -88,7 +90,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             const newMessage = {
                 text: action.payload.text,
                 login: action.payload.login,
-                date: new Date()
+                date: Date.now()
             }
             const updatedGroup: Group = {
                 ...group,
@@ -98,24 +100,33 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                 ]
             }
             const updatedGroups = state.user.groups.map(group => {
-                if(group.groupId === action.payload.groupId){
+                if (group.groupId === action.payload.groupId) {
                     return updatedGroup
                 }
                 return group
             })
             return state = {
-                ...state, 
+                ...state,
                 user: {
                     ...state.user,
                     groups: updatedGroups
                 }
             }
+        case GETCURRENTUSER:
+            console.log(action.payload)
+            return state = { loading: false, error: '', user: action.payload }
+        // case ADDNEWMESS:
+        //     const oldConversation = state.user.conversations
+
+        //     const newConversation: Conversations[] = oldConversation
+        //     return state = { ...state, user: { ...state.user, conversations: newConversation } }
+
         case ERRORMESSAGE:
             return state = { ...state, loading: false, error: action.payload }
         case REMOVEERRORMESSAGE:
-            return state = {...state, error: ''}
-        case LOGOUT: 
-            return state = {loading: false, error: '', user: {} as User}
+            return state = { ...state, error: '' }
+        case LOGOUT:
+            return state = { loading: false, error: '', user: {} as User }
         default:
             return state
     }

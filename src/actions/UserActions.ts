@@ -14,6 +14,8 @@ export const CONFIRMFRIEND = 'confirmfriendinvite'
 export const REMOVEFRIENDINVITE = 'removefriendinvite'
 export const REMOVEGROUPINVITE = 'removegroupinvite'
 export const NEWGROUPMESSAGE = 'newgroupmessage'
+export const GETCURRENTUSER = 'getcurrentuser'
+// export const ADDNEWMESS = 'addnewmess'
 export const LOGOUT = 'logout'
 
 
@@ -108,6 +110,27 @@ export const newGroupMessage = (groupId: string, text: string, login: string): N
         }
     }
 }
+
+export const getCurrentUser = (login: string) => async (dispatch: Dispatch<UserActionType>) => {
+    const ENDPOINT = process.env.GET_CURRENT_USER
+    console.log('gcu')
+    await fetch(ENDPOINT || '', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({login}),
+    })
+        .then(res => res.json())
+        .then((res: User) => dispatch({ type: GETCURRENTUSER, payload: res }))
+}
+
+// export const addNewMess = (mess: Dialogues): AddNewMess => {
+//     return {
+//         type: ADDNEWMESS,
+//         payload: mess
+//     }
+// }
 
 export const logOut = (): LogOut => {
     return {
