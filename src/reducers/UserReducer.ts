@@ -11,7 +11,6 @@ import {
     REMOVEERRORMESSAGE,
     LOGOUT,
     GETCURRENTUSER,
-    // ADDNEWMESS,
 } from '../actions/UserActions'
 
 const initState: UserReducer = {
@@ -112,19 +111,16 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     groups: updatedGroups
                 }
             }
+            
         case GETCURRENTUSER:
-            console.log(action.payload)
             return state = { loading: false, error: '', user: action.payload }
-        // case ADDNEWMESS:
-        //     const oldConversation = state.user.conversations
-
-        //     const newConversation: Conversations[] = oldConversation
-        //     return state = { ...state, user: { ...state.user, conversations: newConversation } }
 
         case ERRORMESSAGE:
             return state = { ...state, loading: false, error: action.payload }
+
         case REMOVEERRORMESSAGE:
             return state = { ...state, error: '' }
+
         case LOGOUT:
             return state = { loading: false, error: '', user: {} as User }
         default:

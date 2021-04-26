@@ -15,7 +15,6 @@ export const REMOVEFRIENDINVITE = 'removefriendinvite'
 export const REMOVEGROUPINVITE = 'removegroupinvite'
 export const NEWGROUPMESSAGE = 'newgroupmessage'
 export const GETCURRENTUSER = 'getcurrentuser'
-// export const ADDNEWMESS = 'addnewmess'
 export const LOGOUT = 'logout'
 
 
@@ -124,13 +123,6 @@ export const getCurrentUser = (login: string) => async (dispatch: Dispatch<UserA
         .then(res => res.json())
         .then((res: User) => dispatch({ type: GETCURRENTUSER, payload: res }))
 }
-
-// export const addNewMess = (mess: Dialogues): AddNewMess => {
-//     return {
-//         type: ADDNEWMESS,
-//         payload: mess
-//     }
-// }
 
 export const logOut = (): LogOut => {
     return {

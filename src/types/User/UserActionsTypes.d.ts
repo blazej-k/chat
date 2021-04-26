@@ -9,7 +9,6 @@ const REMOVEFRIENDINVITE = 'removefriendinvite'
 const REMOVEGROUPINVITE = 'removegroupinvite'
 const NEWGROUPMESSAGE = 'newgroupmessage'
 const GETCURRENTUSER = 'getcurrentuser'
-// const ADDNEWMESS = 'addnewmess'
 const ERRORMESSAGE = 'errormessage'
 const REMOVEERRORMESSAGE = 'removeerrormessage'
 const LOGOUT = 'logout'
@@ -58,11 +57,6 @@ interface GetCurrnetUser {
     payload: User
 }
 
-// interface AddNewMess {
-//     type: typeof ADDNEWMESS,
-//     payload: Dialogues
-// }
-
 interface UserError {
     type: typeof ERRORMESSAGE,
     payload: string
@@ -83,4 +77,4 @@ interface UserReducer {
 }
 
 type UserActionType = UserAuth | UserLoading | UserError | JoinToGroup | SendInvite | ConfirmFriendsInvite |
-NewGroupMessage | GetCurrnetUser /*| AddNewMess |*/ | RemoveInvite | RemoveUserError | LogOut
+NewGroupMessage | GetCurrnetUser | RemoveInvite | RemoveUserError | LogOut

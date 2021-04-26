@@ -61,10 +61,6 @@ const Chat: FC = () => {
             }
             client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
                 showNewMess(from, text)
-                // const friendsNames = friends.map(friend => friend.login)
-                // if(!friendsNames.includes(from)){
-                    // dispatch(getCurrentUser(login))
-                // }
             })
             : getNewMess(showNewMess)
         }
