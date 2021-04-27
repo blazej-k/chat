@@ -11,6 +11,7 @@ import {
     REMOVEERRORMESSAGE,
     LOGOUT,
     GETCURRENTUSER,
+    ADDNEWMESSAGE
 } from '../actions/UserActions'
 
 const initState: UserReducer = {
@@ -114,6 +115,23 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             
         case GETCURRENTUSER:
             return state = { loading: false, error: '', user: action.payload }
+
+        case ADDNEWMESSAGE:
+            const {from, text, convFriend} = action.payload
+            const updatedConv = state.user.conversations
+            console.log('okk')
+            updatedConv.forEach(conv => {
+                if(conv.login === convFriend){
+                    conv.dialogues.push({
+                        date: Date.now(),
+                        from: from,
+                        text: text
+                    })
+                    return
+                }
+            })
+            state = {...state, user: {...state.user, conversations: updatedConv}}
+            return state
 
         case ERRORMESSAGE:
             return state = { ...state, loading: false, error: action.payload }

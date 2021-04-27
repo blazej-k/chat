@@ -11,7 +11,7 @@ import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
-import { getCurrentUser } from '../../actions/UserActions';
+import { addNewMessage } from '../../actions/UserActions';
 
 const animations = {
     in: {
@@ -40,10 +40,10 @@ const Chat: FC = () => {
 
     const dispatch = useDispatch()
 
-    const { userReducer: { user: { login, groups, friends } } } = useSelector((store: Store) => store)
+    const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
 
     const showNewMess = (from: string, text: string) => {
-        dispatch(getCurrentUser(login))
+        dispatch(addNewMessage({ from, text, convFriend: from }))
         setNewMessInfo(initNewMessInfo)
         setNewMessInfo({ show: true, from, text })
         setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
@@ -53,12 +53,12 @@ const Chat: FC = () => {
         if (login) {
             client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
             dispatch(getUsers())
-            if (groups && groups.length > 0) {
-                groups.forEach(group => {
-                    const { groupId } = group
-                    client.emit('join to group', groupId)
-                })
-            }
+            // if (groups && groups.length > 0) {
+            //     groups.forEach(group => {
+            //         const { groupId } = group
+            //         client.emit('join to group', groupId)
+            //     })
+            // }
             client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
                 showNewMess(from, text)
             })

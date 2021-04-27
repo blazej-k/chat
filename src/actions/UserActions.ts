@@ -15,11 +15,12 @@ export const REMOVEFRIENDINVITE = 'removefriendinvite'
 export const REMOVEGROUPINVITE = 'removegroupinvite'
 export const NEWGROUPMESSAGE = 'newgroupmessage'
 export const GETCURRENTUSER = 'getcurrentuser'
+export const ADDNEWMESSAGE = 'addnewmesage'
 export const LOGOUT = 'logout'
 
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => {
-    dispatch({type: USERLOADING})
+    dispatch({ type: USERLOADING })
     const isUserExist = 'sex' in userInfo ? false : true
     const ENDPOINT = isUserExist ? process.env.SIGN_IN : process.env.SIGN_UP
     await fetch(ENDPOINT || '', {
@@ -44,7 +45,7 @@ export const joinToGroup = (group: Group, login: string, sex: Sex, decision: Dec
     const ENDPOINT = process.env.JOIN_TO_GROUP
     addUserToGroup(ENDPOINT || '', group, login, sex, decision)
         .then(res => res.json())
-        .then((res: Group) =>  dispatch({ type: JOINTOGROUP, payload: res }))
+        .then((res: Group) => dispatch({ type: JOINTOGROUP, payload: res }))
 }
 
 export const sendInvite = (type: 'friend' | 'group', info: WaitingGroup | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
@@ -57,8 +58,8 @@ export const sendInvite = (type: 'friend' | 'group', info: WaitingGroup | Friend
         body: JSON.stringify({ info }),
     })
         .then(res => res.json())
-        .then((res: {message: string} | true) => {
-            if(typeof res !== 'boolean'){
+        .then((res: { message: string } | true) => {
+            if (typeof res !== 'boolean') {
                 dispatch({ type: ERRORMESSAGE, payload: res.message })
             }
         })
@@ -112,20 +113,26 @@ export const newGroupMessage = (groupId: string, text: string, login: string): N
 
 export const getCurrentUser = (login: string) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = process.env.GET_CURRENT_USER
-    console.log('gcu')
     await fetch(ENDPOINT || '', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({login}),
+        body: JSON.stringify({ login }),
     })
         .then(res => res.json())
         .then((res: User) => dispatch({ type: GETCURRENTUSER, payload: res }))
+}
+
+export const addNewMessage = (messInfo: { text: string, from: string, convFriend: string }): AddNewMessage => {
+    return {
+        type: ADDNEWMESSAGE,
+        payload: messInfo
+    }
 }
 
 export const logOut = (): LogOut => {
     return {
         type: LOGOUT
     }
-} 
+}

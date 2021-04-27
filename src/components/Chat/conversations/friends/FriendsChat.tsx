@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
 import 'antd/dist/antd.css';
 import Messages from './Messages';
+import { addNewMessage, getCurrentUser } from '../../../../actions/UserActions';
 
 interface FriendsChatProps {
     friendName: string
@@ -20,11 +21,17 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const ref = useRef<HTMLInputElement>(null)
 
-    const { user: { conversations, login } } = useSelector((state: Store) => state.userReducer)
+    const state = useSelector((state: Store) => state.userReducer)
+    const { user: { login, conversations } } = state
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getCurrentUser(login))
+    }, [])
 
     useLayoutEffect(() => {
         const conversationObj = conversations.find(conversation => conversation.login === friendName)
-        conversationObj && setMessages(conversationObj.dialogues)
+        conversationObj ? setMessages(conversationObj.dialogues) : dispatch(getCurrentUser(login))
     }, [conversations])
 
     useEffect(() => {
@@ -50,16 +57,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const sendPrivateMess = () => {
         client.emit('send private message', { name: login, to: friendName, mess: newMess })
-        setMessages(prev => {
-            return [
-                ...prev,
-                {
-                    text: newMess,
-                    from: login,
-                    date: Date.now()
-                }
-            ]
-        })
+        dispatch(addNewMessage({ from: login, text: newMess, convFriend: friendName }))
         setMewMess('')
     }
 
