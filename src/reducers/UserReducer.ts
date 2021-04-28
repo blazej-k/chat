@@ -127,7 +127,6 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                         from: from,
                         text: text
                     })
-                    return
                 }
             })
             state = {...state, user: {...state.user, conversations: updatedConv}}

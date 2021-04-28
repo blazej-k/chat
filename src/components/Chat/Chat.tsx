@@ -33,6 +33,7 @@ const Chat: FC = () => {
     const [friendName, setFriendName] = useState('')
     const [newMessInfo, setNewMessInfo] = useState<typeof initNewMessInfo>(initNewMessInfo)
     const [groupName, setGroupName] = useState('')
+    const [subscribeAsyncTasks, setSubscribeAsyncTasks] = useState(true)
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
@@ -50,19 +51,28 @@ const Chat: FC = () => {
     }
 
     useEffect(() => {
-        if (login) {
-            client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
-            dispatch(getUsers())
-            // if (groups && groups.length > 0) {
-            //     groups.forEach(group => {
-            //         const { groupId } = group
-            //         client.emit('join to group', groupId)
-            //     })
-            // }
-            client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
-                showNewMess(from, text)
-            })
-            : getNewMess(showNewMess)
+        return () => {
+            setSubscribeAsyncTasks(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (subscribeAsyncTasks) {
+            if (login) {
+                client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
+                dispatch(getUsers())
+                // if (groups && groups.length > 0) {
+                //     groups.forEach(group => {
+                //         const { groupId } = group
+                //         client.emit('join to group', groupId)
+                //     })
+                // }
+                client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
+                    console.log('chat')
+                    showNewMess(from, text)
+                })
+                    : getNewMess(showNewMess)
+            }
         }
         return () => {
             login && handleDisconnecting()

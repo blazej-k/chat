@@ -14,7 +14,7 @@ interface FriendsChatProps {
 const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
-    const [newMess, setMewMess] = useState('')
+    const [newMess, setNewMess] = useState('')
 
     const { client } = useSocket()
     const { mainColor, secondColor } = useColor()
@@ -58,11 +58,11 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const sendPrivateMess = () => {
         client.emit('send private message', { name: login, to: friendName, mess: newMess })
         dispatch(addNewMessage({ from: login, text: newMess, convFriend: friendName }))
-        setMewMess('')
+        setNewMess('')
     }
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setMewMess(e.target.value)
+        setNewMess(e.target.value)
     }
 
     return (
