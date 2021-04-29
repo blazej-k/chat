@@ -1,4 +1,4 @@
-import { Avatar, message } from 'antd';
+import { Avatar } from 'antd';
 import React, { FC, MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/Hooks';
@@ -31,7 +31,7 @@ const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
         <div className="dialogues">
             {messages.length > 0 ?
                 <ul ref={ref}>
-                    {messages.map(({ date, _id, text, from }) => (
+                    {messages.map(({ date, _id, text, from }, index) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                             <div className="avatar">
                                 <Avatar

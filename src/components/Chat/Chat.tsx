@@ -34,6 +34,7 @@ const Chat: FC = () => {
     const [newMessInfo, setNewMessInfo] = useState<typeof initNewMessInfo>(initNewMessInfo)
     const [groupName, setGroupName] = useState('')
     const [subscribeAsyncTasks, setSubscribeAsyncTasks] = useState(true)
+    const [isNewMess, setIsNewMess] = useState(false)
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
@@ -41,11 +42,11 @@ const Chat: FC = () => {
 
     const dispatch = useDispatch()
 
-    const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
+    const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
 
     const showNewMess = (from: string, text: string) => {
-        console.log('snm')
         dispatch(addNewMessage({ from, text, convFriend: from }))
+        setIsNewMess(true)
         setNewMessInfo(initNewMessInfo)
         setNewMessInfo({ show: true, from, text })
         setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
@@ -61,23 +62,18 @@ const Chat: FC = () => {
         if (subscribeAsyncTasks) {
             if (login) {
                 client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
-                dispatch(getUsers())
-                // if (groups && groups.length > 0) {
-                //     groups.forEach(group => {
-                //         const { groupId } = group
-                //         client.emit('join to group', groupId)
-                //     })
-                // }
-                client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
-                    console.log('chat')
+                dispatch(getUsers()) //move to home component
+                client.off('private message').on('private message', ({ text, from }: Dialogues) => {
                     showNewMess(from, text)
-                }) : getNewMess(showNewMess)
+                })
             }
         }
         return () => {
             login && handleDisconnecting()
         }
     }, [])
+
+    const newMessAccepted = () => setIsNewMess(false)
 
     const friendsChat = (friend: string) => {
         setFriendName(friend)
@@ -114,7 +110,7 @@ const Chat: FC = () => {
                         <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
-                            {showFriendChat && <FriendsChat friendName={friendName} />}
+                            {showFriendChat && <FriendsChat friendName={friendName} isNewMess={isNewMess} messAccepted={newMessAccepted} />}
                             {showGroupsChat && <GroupsChat />}
                         </div>
                     </>

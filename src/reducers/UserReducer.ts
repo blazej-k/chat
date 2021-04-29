@@ -119,7 +119,6 @@ export const UserReducer = (state = initState, action: UserActionType) => {
         case ADDNEWMESSAGE:
             const {from, text, convFriend} = action.payload
             const updatedConv = state.user.conversations
-            console.log('okk')
             updatedConv.forEach(conv => {
                 if(conv.login === convFriend){
                     conv.dialogues.push({

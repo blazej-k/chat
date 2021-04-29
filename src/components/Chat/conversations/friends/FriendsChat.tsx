@@ -8,10 +8,12 @@ import Messages from './Messages';
 import { addNewMessage, getCurrentUser } from '../../../../actions/UserActions';
 
 interface FriendsChatProps {
-    friendName: string
+    friendName: string,
+    isNewMess: boolean,
+    messAccepted: () => void
 }
 
-const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
+const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setNewMess] = useState('')
@@ -22,7 +24,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const ref = useRef<HTMLInputElement>(null)
 
     const state = useSelector((state: Store) => state.userReducer)
-    const { user: { login } } = state
+    const { user: { login, conversations } } = state
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -30,18 +32,32 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     }, [])
 
     useEffect(() => {
+        if (isNewMess) {
+            const conversationObj = conversations.find(conversation => conversation.login === friendName)
+            if (conversationObj) {
+                messages.length > 0 ?
+                    setMessages(prev => [...prev, (conversationObj.dialogues.pop() as Dialogues)])
+                    : setMessages(conversationObj.dialogues)
+            }
+            messAccepted()
+        }
+    }, [isNewMess])
+
+    useEffect(() => {
         ref.current?.addEventListener('keydown', handleEnterClick)
         return () => ref.current?.removeEventListener('keydown', handleEnterClick)
     }, [newMess])
 
     useLayoutEffect(() => {
-        const { user: { conversations } } = state
-        conversations.forEach(conversation => {
-            if (conversation.login === friendName) {
-                setMessages(conversation.dialogues)
-                return
-            }
-        });
+        if (!isNewMess) {
+            const { user: { conversations } } = state
+            conversations.forEach(conversation => {
+                if (conversation.login === friendName) {
+                    setMessages(conversation.dialogues)
+                    return
+                }
+            });
+        }
         return () => setMessages([])
     }, [friendName])
 
