@@ -23,8 +23,6 @@ const SocketProvider: FC = ({ children }) => {
         randomizationFactor: 0,
     })
 
-    let timer1 = {} as NodeJS.Timeout, timer2 = {} as NodeJS.Timeout
-
     const handleConnecting = (login: string) => {
         client.connect()
         setTimeout(() => client.emit('add user to listeners', login), 2000)
@@ -59,5 +57,5 @@ export const SocketContext = createContext<Context>({
     client: {} as Socket<DefaultEventsMap, DefaultEventsMap>,
     handleDisconnecting: () => undefined,
     handleConnecting: () => undefined,
-    getNewMess: (callback: (from: string, text: string) => void) => undefined,
+    getNewMess: () => undefined,
 })

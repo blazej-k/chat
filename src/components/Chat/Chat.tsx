@@ -44,6 +44,7 @@ const Chat: FC = () => {
     const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
 
     const showNewMess = (from: string, text: string) => {
+        console.log('snm')
         dispatch(addNewMessage({ from, text, convFriend: from }))
         setNewMessInfo(initNewMessInfo)
         setNewMessInfo({ show: true, from, text })
@@ -70,8 +71,7 @@ const Chat: FC = () => {
                 client.connected ? client.on('private message', ({ text, from }: Dialogues) => {
                     console.log('chat')
                     showNewMess(from, text)
-                })
-                    : getNewMess(showNewMess)
+                }) : getNewMess(showNewMess)
             }
         }
         return () => {

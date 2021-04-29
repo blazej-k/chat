@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChangeEvent, FC, useLayoutEffect, useState, MouseEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, FC, useLayoutEffect, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useColor, useSocket } from '../../../hooks/Hooks';
 import { AiOutlineSend } from 'react-icons/ai'
@@ -22,17 +22,12 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const ref = useRef<HTMLInputElement>(null)
 
     const state = useSelector((state: Store) => state.userReducer)
-    const { user: { login, conversations } } = state
+    const { user: { login } } = state
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getCurrentUser(login))
     }, [])
-
-    useLayoutEffect(() => {
-        const conversationObj = conversations.find(conversation => conversation.login === friendName)
-        conversationObj ? setMessages(conversationObj.dialogues) : dispatch(getCurrentUser(login))
-    }, [conversations])
 
     useEffect(() => {
         ref.current?.addEventListener('keydown', handleEnterClick)
@@ -40,6 +35,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     }, [newMess])
 
     useLayoutEffect(() => {
+        const { user: { conversations } } = state
         conversations.forEach(conversation => {
             if (conversation.login === friendName) {
                 setMessages(conversation.dialogues)
@@ -58,6 +54,11 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName }) => {
     const sendPrivateMess = () => {
         client.emit('send private message', { name: login, to: friendName, mess: newMess })
         dispatch(addNewMessage({ from: login, text: newMess, convFriend: friendName }))
+        setMessages(prev => [...prev, {
+            date: Date.now(),
+            from: login,
+            text: newMess
+        }])
         setNewMess('')
     }
 
