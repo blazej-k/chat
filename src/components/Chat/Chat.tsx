@@ -11,7 +11,7 @@ import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
-import { addNewMessage } from '../../actions/UserActions';
+import { addNewMessage, getCurrentUser } from '../../actions/UserActions';
 
 const animations = {
     in: {
@@ -25,7 +25,6 @@ const animations = {
 }
 
 const Chat: FC = () => {
-
     const [showModal, setShowModal] = useState(true)
     const [showFriendChat, setShowFriendChat] = useState(false)
     const [showGroupsChat, setShowGroupsChat] = useState(false)
@@ -42,7 +41,7 @@ const Chat: FC = () => {
 
     const dispatch = useDispatch()
 
-    const { userReducer: { user: { login, groups } } } = useSelector((store: Store) => store)
+    const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
 
     const showNewMess = (from: string, text: string) => {
         dispatch(addNewMessage({ from, text, convFriend: from }))
@@ -65,6 +64,8 @@ const Chat: FC = () => {
                 dispatch(getUsers()) //move to home component
                 client.off('private message').on('private message', ({ text, from }: Dialogues) => {
                     showNewMess(from, text)
+                    const conversationObj = conversations.find(conversation => conversation.login === friendName)
+                    !conversationObj && dispatch(getCurrentUser(login))
                 })
             }
         }

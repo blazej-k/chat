@@ -119,6 +119,13 @@ export const UserReducer = (state = initState, action: UserActionType) => {
         case ADDNEWMESSAGE:
             const {from, text, convFriend} = action.payload
             const updatedConv = state.user.conversations
+            const conversationObj = updatedConv.find(conversation => conversation.login === convFriend)
+            if(!conversationObj){
+                updatedConv.push({
+                    login: convFriend,
+                    dialogues: []
+                })
+            }
             updatedConv.forEach(conv => {
                 if(conv.login === convFriend){
                     conv.dialogues.push({

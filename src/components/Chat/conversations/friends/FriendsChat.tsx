@@ -39,6 +39,9 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
                     setMessages(prev => [...prev, (conversationObj.dialogues.pop() as Dialogues)])
                     : setMessages(conversationObj.dialogues)
             }
+            else{
+                dispatch(getCurrentUser(login))
+            }
             messAccepted()
         }
     }, [isNewMess])
