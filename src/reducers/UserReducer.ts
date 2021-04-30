@@ -107,7 +107,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             })
             return state = {
                 ...state,
-                user: {
+                user: { 
                     ...state.user,
                     groups: updatedGroups
                 }

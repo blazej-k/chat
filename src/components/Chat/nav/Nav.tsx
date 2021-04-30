@@ -2,10 +2,8 @@ import * as React from 'react';
 import { FC, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
-import List from './List';
-import { MdClear } from 'react-icons/md'
-import { MdDone } from 'react-icons/md'
 import { useColor } from '../../hooks/Hooks';
+import Lists from './Lists';
 
 interface NavProps {
     showFriendsChat: (friend: string) => void
@@ -89,68 +87,18 @@ const Nav: FC<NavProps> = ({ showFriendsChat, showGroupsChat, showHome }) => {
 
     const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
 
+    const values = {
+        friends, groups, waitingGroups, waitingFriends, listsStatus, handleListStatus, showFriendsChat,
+        showGroupsChat, handleNewFriendDecission, handleNewGroupDecission
+    }
+
     return (
         <div className={`nav-wrapper ${mainColor}`}>
             <div className="nav">
                 <h1 className={mainColor}>{login}</h1>
                 <ul>
                     <li onClick={showHome}><b>Home</b></li>
-                    <List
-                        type='friends'
-                        list={friends}
-                        listsStatus={listsStatus}
-                        handleListStatus={handleListStatus}
-                        elements={friends.map(({ date, login }) => (
-                            <li key={date}>
-                                <span onClick={() => showFriendsChat(login)}>{login}</span>
-                            </li>
-                        ))}
-                    />
-                    <List
-                        type='groups'
-                        list={groups}
-                        listsStatus={listsStatus}
-                        handleListStatus={handleListStatus}
-                        elements={groups.map(({ groupId, groupName }) => (
-                            <li key={groupId}>
-                                <span onClick={() => showGroupsChat(groupName)}>{groupName}</span>
-                            </li>
-                        ))}
-                    />
-                    <List
-                        type='waitingFriends'
-                        list={waitingFriends}
-                        listsStatus={listsStatus}
-                        handleListStatus={handleListStatus}
-                        elements={waitingFriends.map(({ sender, date }) => (
-                            <li key={date}>
-                                <span>
-                                    {sender}
-                                </span>
-                                <div className="decission">
-                                    <MdClear onClick={() => handleNewFriendDecission('reject', sender)} className={'red'} size={25} />
-                                    <MdDone onClick={() => handleNewFriendDecission('accept', sender)} className={'green'} size={25} />
-                                </div>
-                            </li>
-                        ))}
-                    />
-                    <List
-                        type='waitingGroups'
-                        list={waitingGroups}
-                        listsStatus={listsStatus}
-                        handleListStatus={handleListStatus}
-                        elements={waitingGroups.map(group => (
-                            <li key={group.date}>
-                                <span>
-                                    {group.sender}
-                                </span>
-                                <div className="decission">
-                                    <MdClear onClick={() => handleNewGroupDecission('reject', group)} className={'red'} size={25} />
-                                    <MdDone onClick={() => handleNewGroupDecission('accept', group)} className={'green'} size={25} />
-                                </div>
-                            </li>
-                        ))}
-                    />
+                    <Lists values={values} />
                     <li>
                         <span
                             onMouseOver={() => handleSpanMouseHover(true)}

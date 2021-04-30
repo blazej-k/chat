@@ -27,9 +27,9 @@ export const createGroup = (groupInfo: { groupName: string, login: string, sex: 
                 const ENDPOINT = process.env.JOIN_TO_GROUP
                 const group = {
                     groupName,
-                        groupId,
-                        members: [],
-                        dialogues: []
+                    groupId,
+                    members: [],
+                    dialogues: []
                 }
                 dispatch({ type: JOINTOGROUP, payload: group })
                 addUserToGroup(ENDPOINT || '', group, login, sex)
@@ -37,9 +37,9 @@ export const createGroup = (groupInfo: { groupName: string, login: string, sex: 
             .catch(() => dispatch({ type: COMMUNITYERROR, payload: 'Sorry, we can\'t do this now' }))
     }
 
-export const getUsers = () => async(dispatch: Dispatch<CommunityActionType>) => {
+export const getUsers = () => async (dispatch: Dispatch<CommunityActionType>) => {
     const ENDPOINT = process.env.GET_USERS
     await fetch(ENDPOINT || '')
         .then(res => res.json())
-        .then((res: CommunityUser[]) => dispatch({type: GETUSERS, payload: res}))
+        .then((res: CommunityUser[]) => dispatch({ type: GETUSERS, payload: res }))
 }
