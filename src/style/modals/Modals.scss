@@ -1,5 +1,5 @@
-@import "keyframes";
-@import "colors";
+@import "../helpers/keyframes";
+@import "../helpers/colors";
 
 .modal-wrapper {
     width: 100vw;
@@ -18,8 +18,8 @@
         left: 50%;
         margin: auto;
         transform: translate(-50%, -50%);
-        @import "./modals/FormModal";
-        @import "./modals/InfoModal";
+        @import "FormModal";
+        @import "InfoModal";
         .buttons-wrapper {
             border-top: 0.5px solid $black;
             padding: 10px 0;

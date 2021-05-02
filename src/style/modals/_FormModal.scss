@@ -1,6 +1,6 @@
-@import "../keyframes";
-@import "../colors";
-@import "../mixins";
+@import "../helpers/keyframes";
+@import "../helpers/colors";
+@import "../helpers/mixins";
 
 .modal {
     color: $black !important;

@@ -1,6 +1,6 @@
-@import "colors";
-@import "mixins";
-@import "keyframes";
+@import "./helpers/colors";
+@import "./helpers/mixins";
+@import "./helpers/keyframes";
 
 .home-wrapper {
     width: 100%;

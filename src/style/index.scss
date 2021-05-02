@@ -1,17 +1,17 @@
-@import 'Home';
-@import 'Footer';
-@import 'Modals';
-@import './chat/Chat';
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
-@import 'colors';
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap");
+@import "./helpers/colors";
 
-body{
+body {
     margin: 0;
     width: 100%;
-    font-family: 'Ubuntu', sans-serif;
+    font-family: "Ubuntu", sans-serif;
     padding: 0;
     background-color: $page_background;
-    .content{
+    .content {
         min-height: 100vh;
+        @import "Home";
+        @import "Footer";
+        @import "./Modals/Modals";
+        @import "./chat/Chat";
     }
 }
