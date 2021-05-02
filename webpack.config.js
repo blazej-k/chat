@@ -37,12 +37,12 @@ module.exports = {
                 use: ['babel-loader']
             },
             {
-                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                test: /\.(png|svg|jpg|jpeg|gif|mp3)$/i,
                 loader: 'file-loader',
                 options: {
                     name: '[name].[ext]'
                 }
-            }
+            },
         ]
     },
     plugins: [
