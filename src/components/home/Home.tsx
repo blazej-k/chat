@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Slider from './Slider'
-import '../../style/Home.scss'
 import { motion } from "framer-motion"
 import HeaderAnimation from '../helpers/HeaderAnimation';
 import Modal from './Modal'
@@ -8,6 +7,7 @@ import HomeDescription from './HomeDescription';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import Footer from '../footer/Footer';
+import '../../style/home/Home.scss'
 
 const Home: FC = () => {
 

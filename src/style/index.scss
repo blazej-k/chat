@@ -9,9 +9,5 @@ body {
     background-color: $page_background;
     .content {
         min-height: 100vh;
-        @import "Home";
-        @import "Footer";
-        @import "./Modals/Modals";
-        @import "./chat/Chat";
     }
 }

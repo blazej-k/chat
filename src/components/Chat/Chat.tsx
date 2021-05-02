@@ -12,6 +12,7 @@ import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser } from '../../actions/UserActions';
+import '../../style/chat/Chat.scss'
 
 const animations = {
     in: {
