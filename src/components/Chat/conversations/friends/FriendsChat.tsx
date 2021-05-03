@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChangeEvent, FC, useLayoutEffect, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useColor, useSocket } from '../../../hooks/Hooks';
+import { useSocket } from '../../../hooks/Hooks';
 import Messages from './Messages';
 import { addNewMessage, getCurrentUser } from '../../../../actions/UserActions';
 import NewMessInput from '../NewMessInput';

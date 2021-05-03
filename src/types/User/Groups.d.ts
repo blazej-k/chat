@@ -23,7 +23,8 @@ interface GroupMembers {
 interface WaitingGroup {
     groupName: string,
     groupId: string,
-    sender: string
+    sender: string,
+    recipient: string
     date: any,
     members: GroupMembers[],
     _id?: string

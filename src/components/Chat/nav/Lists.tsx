@@ -72,7 +72,7 @@ const Lists: FC<ListsProps> = ({ values }) => {
                 elements={waitingGroups.map(group => (
                     <li key={group.date}>
                         <span>
-                            {group.sender}
+                            {group.groupName}
                         </span>
                         <div className="decission">
                             <MdClear onClick={() => handleNewGroupDecission('reject', group)} className={'red'} size={25} />

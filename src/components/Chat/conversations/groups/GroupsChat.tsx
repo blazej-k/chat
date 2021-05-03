@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useSocket } from '../../../hooks/Hooks'
 import Messages from '../friends/Messages'
 import NewMessInput from '../NewMessInput'
-import {MdPersonAdd} from 'react-icons/md'
+import { sendInvite as sendGroupInvite } from '../../../../actions/UserActions'
 
 
 interface GroupsChatProps {
@@ -18,9 +18,11 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupName }) => {
     const { client } = useSocket()
 
     const { user: { login, groups } } = useSelector((state: Store) => state.userReducer)
+    const dispatch = useDispatch()
+
+    const wantedGroup = groups.find(group => group.groupName === groupName)
 
     const sendGroupMess = () => {
-        const wantedGroup = groups.find(group => group.groupName === groupName)
         if (wantedGroup) {
             const { groupId } = wantedGroup
             client.emit('send group message', { groupId, message: newMess, from: login })
@@ -37,11 +39,30 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupName }) => {
         setNewMess(e.target.value)
     }
 
+    const sendInvite = (recipient: string) => {
+        const { groupId, groupName, members } = (wantedGroup as Group)
+        const groupInfo: WaitingGroup = {
+            groupName,
+            groupId,
+            sender: login,
+            recipient,
+            date: new Date(),
+            members
+        }
+        dispatch(sendGroupInvite('group', groupInfo))
+    }
+
     return (
         <div className="chat-content">
             <div className="conversations">
-                <Messages messages={messages} groupName={groupName}/>
-                <NewMessInput newMess={newMess} sendMess={sendGroupMess} handleMessInput={handleInput} type='group' />
+                <Messages messages={messages} groupName={groupName} />
+                <NewMessInput
+                    newMess={newMess}
+                    sendMess={sendGroupMess}
+                    handleMessInput={handleInput}
+                    type='group'
+                    sendGroupInvite={sendInvite}
+                />
             </div>
         </div>
     );
