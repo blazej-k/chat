@@ -1,11 +1,9 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
-import { useRef } from 'react'
-import { AiOutlineSend } from 'react-icons/ai'
-import { useDispatch, useSelector } from 'react-redux'
-import { addNewMessage } from '../../../../actions/UserActions'
-import { useColor, useSocket } from '../../../hooks/Hooks'
+import { useSelector } from 'react-redux'
+import { useSocket } from '../../../hooks/Hooks'
 import Messages from '../friends/Messages'
 import NewMessInput from '../NewMessInput'
+import {MdPersonAdd} from 'react-icons/md'
 
 
 interface GroupsChatProps {
@@ -42,8 +40,8 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupName }) => {
     return (
         <div className="chat-content">
             <div className="conversations">
-                <Messages messages={messages} groupName={groupName} />
-                <NewMessInput newMess={newMess} sendMess={sendGroupMess} handleInput={handleInput} />
+                <Messages messages={messages} groupName={groupName}/>
+                <NewMessInput newMess={newMess} sendMess={sendGroupMess} handleInput={handleInput} type='group' />
             </div>
         </div>
     );

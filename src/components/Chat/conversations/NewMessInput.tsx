@@ -1,15 +1,17 @@
 import React, { ChangeEvent, FC, useEffect, useRef } from 'react'
 import { AiOutlineSend } from 'react-icons/ai';
+import { MdPersonAdd } from 'react-icons/md';
 import { useColor } from '../../hooks/Hooks';
 
 
 interface NewMessInputProps {
     newMess: string,
+    type?: 'group'
     sendMess: () => void,
     handleInput: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendMess, handleInput }) => {
+const NewMessInput: FC<NewMessInputProps> = ({ newMess, type, sendMess, handleInput }) => {
 
     const ref = useRef<HTMLInputElement>(null)
 
@@ -28,6 +30,9 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendMess, handleInput })
 
     return (
         <div className="new-message">
+            {type && <div className="add-new-user">
+                <button><MdPersonAdd size={45} className={secondColor}/></button>
+            </div>}
             <input value={newMess} ref={ref} className={secondColor} onChange={handleInput} placeholder='New mess...' />
             <div className="send">
                 <button disabled={!(newMess.length > 0)} onClick={sendMess}>
