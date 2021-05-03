@@ -41,7 +41,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupName }) => {
         <div className="chat-content">
             <div className="conversations">
                 <Messages messages={messages} groupName={groupName}/>
-                <NewMessInput newMess={newMess} sendMess={sendGroupMess} handleInput={handleInput} type='group' />
+                <NewMessInput newMess={newMess} sendMess={sendGroupMess} handleMessInput={handleInput} type='group' />
             </div>
         </div>
     );
