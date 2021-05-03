@@ -6,10 +6,11 @@ import date from 'date-and-time'
 
 interface MessagesProps {
     messages: Dialogues[],
-    friendName: string
+    friendName?: string,
+    groupName?: string
 }
 
-const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
+const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
 
     const { user: { login } } = useSelector((state: Store) => state.userReducer)
 
@@ -31,7 +32,7 @@ const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
         <div className="dialogues">
             {messages.length > 0 ?
                 <ul ref={ref}>
-                    {messages.map(({ date, _id, text, from }, index) => (
+                    {messages.map(({ date, _id, text, from }) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                             <div className="avatar">
                                 <Avatar
@@ -55,7 +56,7 @@ const Messages: FC<MessagesProps> = ({ messages, friendName }) => {
                         </li>
                     ))}
                 </ul> :
-                <h1 className={mainColor}>Start conversation with {friendName}!</h1>
+                <h1 className={mainColor}>Start conversation with {friendName ? friendName : groupName}!</h1>
             }
         </div>
     );

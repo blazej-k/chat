@@ -1,8 +1,9 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { AiOutlineSend } from 'react-icons/ai'
 import { useColor, useSocket } from '../../../hooks/Hooks'
 import Messages from '../friends/Messages'
+import NewMessInput from '../NewMessInput'
 
 
 interface GroupsChatProps {
@@ -12,11 +13,9 @@ interface GroupsChatProps {
 const GroupsChat: FC<GroupsChatProps> = ({groupName}) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
+    const [newMess, setNewMess] = useState('')
 
     const {client} = useSocket()
-    const {secondColor} = useColor()
-
-    const ref = useRef(null)
 
     // useEffect(() => {
     //     client.on('private message', (res: { from: string, mess: string }) => {
@@ -24,18 +23,26 @@ const GroupsChat: FC<GroupsChatProps> = ({groupName}) => {
     //     })
     // }, [])
 
+    const sendPrivateMess = () => {
+        client.emit('send private message', { name: login, to: friendName, mess: newMess })
+        dispatch(addNewMessage({ from: login, text: newMess, convFriend: friendName }))
+        setMessages(prev => [...prev, {
+            date: Date.now(),
+            from: login,
+            text: newMess
+        }])
+        setNewMess('')
+    }
+
+    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+        setNewMess(e.target.value)
+    }
+
     return (
         <div className="chat-content">
         <div className="conversations">
-            {/* <Messages messages={messages} groupName={groupName} />
-            <div className="new-message">
-                <input value={newMess} ref={ref} className={secondColor} onChange={handleInput} placeholder='New mess...' />
-                <div className="send">
-                    <button disabled={!(newMess.length > 0)} onClick={sendPrivateMess}>
-                        <AiOutlineSend className={newMess.length > 0 ? mainColor : 'disabled'} />
-                    </button>
-                </div>
-            </div> */}
+            <Messages messages={messages} groupName={groupName} />
+            <NewMessInput newMess={newMess} sendPrivateMess={sendPrivateMess} handleInput={handleInput}/>
         </div>
     </div>
     );

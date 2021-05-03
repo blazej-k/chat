@@ -13,7 +13,7 @@ import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser } from '../../actions/UserActions';
 import '../../style/chat/Chat.scss' 
-import sound from '../../assets/punkers.mp3'
+// import sound from '../../assets/punkers.mp3'
 
 const animations = {
     in: {
@@ -47,13 +47,13 @@ const Chat: FC = () => {
 
 
     const showNewMess = (from: string, text: string) => {
-        let notification = new Audio(sound)
-        notification.play()
+        // let notification = new Audio(sound)
+        // notification.play()
         dispatch(addNewMessage({ from, text, convFriend: from }))
         setIsNewMess(true)
         setNewMessInfo(initNewMessInfo)
         setNewMessInfo({ show: true, from, text })
-        setTimeout(() => notification.pause(), 1000)
+        // setTimeout(() => notification.pause(), 1000)
         setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
     }
 
@@ -118,7 +118,7 @@ const Chat: FC = () => {
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
                             {showFriendChat && <FriendsChat friendName={friendName} isNewMess={isNewMess} messAccepted={newMessAccepted} />}
-                            {showGroupsChat && <GroupsChat />}
+                            {showGroupsChat && <GroupsChat groupName={groupName}/>}
                         </div>
                     </>
                 }
