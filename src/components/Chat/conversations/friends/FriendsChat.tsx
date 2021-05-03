@@ -77,7 +77,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
         <div className="chat-content">
             <div className="conversations">
                 <Messages messages={messages} friendName={friendName} />
-                <NewMessInput handleInput={handleInput} sendPrivateMess={sendPrivateMess} newMess={newMess}/>
+                <NewMessInput handleInput={handleInput} sendMess={sendPrivateMess} newMess={newMess}/>
             </div>
         </div>
     );

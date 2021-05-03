@@ -89,7 +89,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             const [group] = state.user.groups.filter(group => group.groupId === action.payload.groupId)
             const newMessage = {
                 text: action.payload.text,
-                login: action.payload.login,
+                from: action.payload.login,
                 date: Date.now()
             }
             const updatedGroup: Group = {

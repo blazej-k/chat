@@ -12,7 +12,7 @@ import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser } from '../../actions/UserActions';
-import '../../style/chat/Chat.scss' 
+import '../../style/chat/Chat.scss'
 // import sound from '../../assets/punkers.mp3'
 
 const animations = {
@@ -46,14 +46,11 @@ const Chat: FC = () => {
     const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
 
 
-    const showNewMess = (from: string, text: string) => {
-        // let notification = new Audio(sound)
-        // notification.play()
-        dispatch(addNewMessage({ from, text, convFriend: from }))
+    const showNewMess = (from: string, text: string, type: 'group' | 'friend') => {
+        type === 'friend' && dispatch(addNewMessage({ from, text, convFriend: from }))
         setIsNewMess(true)
         setNewMessInfo(initNewMessInfo)
         setNewMessInfo({ show: true, from, text })
-        // setTimeout(() => notification.pause(), 1000)
         setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
     }
 
@@ -67,12 +64,21 @@ const Chat: FC = () => {
         if (subscribeAsyncTasks) {
             if (login) {
                 client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
+                groups.map(({groupId}) => client.emit('join to group', groupId))
                 dispatch(getUsers()) //move to home component
                 client.off('private message').on('private message', ({ text, from }: Dialogues) => {
-                    showNewMess(from, text)
+                    showNewMess(from, text, 'friend')
                     const conversationObj = conversations.find(conversation => conversation.login === friendName)
                     !conversationObj && dispatch(getCurrentUser(login))
                 })
+                client
+                    .off('group message')
+                    .on('group message', (res: { messageObj: { text: string, date: string, sender: string }, groupId: string }) => {
+                        const { messageObj, messageObj: { sender } } = res
+                        const groupObj = groups.find(group => group.groupName === groupName)
+                        !groupObj && dispatch(getCurrentUser(login))
+                        showNewMess(sender, messageObj.text, 'group')
+                    })
             }
         }
         return () => {
@@ -118,7 +124,7 @@ const Chat: FC = () => {
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
                             {showFriendChat && <FriendsChat friendName={friendName} isNewMess={isNewMess} messAccepted={newMessAccepted} />}
-                            {showGroupsChat && <GroupsChat groupName={groupName}/>}
+                            {showGroupsChat && <GroupsChat groupName={groupName} />}
                         </div>
                     </>
                 }

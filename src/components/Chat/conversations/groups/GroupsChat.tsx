@@ -1,6 +1,8 @@
 import React, { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useRef } from 'react'
 import { AiOutlineSend } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { addNewMessage } from '../../../../actions/UserActions'
 import { useColor, useSocket } from '../../../hooks/Hooks'
 import Messages from '../friends/Messages'
 import NewMessInput from '../NewMessInput'
@@ -9,28 +11,27 @@ import NewMessInput from '../NewMessInput'
 interface GroupsChatProps {
     groupName: string,
 }
- 
-const GroupsChat: FC<GroupsChatProps> = ({groupName}) => {
+
+const GroupsChat: FC<GroupsChatProps> = ({ groupName }) => {
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setNewMess] = useState('')
 
-    const {client} = useSocket()
+    const { client } = useSocket()
 
-    // useEffect(() => {
-    //     client.on('private message', (res: { from: string, mess: string }) => {
-    //         setMessages(prev => [...prev, res])
-    //     })
-    // }, [])
+    const { user: { login, groups } } = useSelector((state: Store) => state.userReducer)
 
-    const sendPrivateMess = () => {
-        client.emit('send private message', { name: login, to: friendName, mess: newMess })
-        dispatch(addNewMessage({ from: login, text: newMess, convFriend: friendName }))
-        setMessages(prev => [...prev, {
-            date: Date.now(),
-            from: login,
-            text: newMess
-        }])
+    const sendGroupMess = () => {
+        const wantedGroup = groups.find(group => group.groupName === groupName)
+        if (wantedGroup) {
+            const { groupId } = wantedGroup
+            client.emit('send group message', { groupId, message: newMess, from: login })
+            setMessages(prev => [...prev, {
+                date: Date.now(),
+                from: login,
+                text: newMess
+            }])
+        }
         setNewMess('')
     }
 
@@ -40,12 +41,12 @@ const GroupsChat: FC<GroupsChatProps> = ({groupName}) => {
 
     return (
         <div className="chat-content">
-        <div className="conversations">
-            <Messages messages={messages} groupName={groupName} />
-            <NewMessInput newMess={newMess} sendPrivateMess={sendPrivateMess} handleInput={handleInput}/>
+            <div className="conversations">
+                <Messages messages={messages} groupName={groupName} />
+                <NewMessInput newMess={newMess} sendMess={sendGroupMess} handleInput={handleInput} />
+            </div>
         </div>
-    </div>
     );
 }
- 
+
 export default GroupsChat;

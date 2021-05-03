@@ -5,11 +5,11 @@ import { useColor } from '../../hooks/Hooks';
 
 interface NewMessInputProps {
     newMess: string,
-    sendPrivateMess: () => void,
+    sendMess: () => void,
     handleInput: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendPrivateMess, handleInput }) => {
+const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendMess, handleInput }) => {
 
     const ref = useRef<HTMLInputElement>(null)
 
@@ -22,7 +22,7 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendPrivateMess, handleI
 
     const handleEnterClick = (e: KeyboardEvent) => {
         if (e.key === 'Enter' && newMess.length > 0) {
-            sendPrivateMess()
+            sendMess()
         }
     }
 
@@ -30,7 +30,7 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendPrivateMess, handleI
         <div className="new-message">
             <input value={newMess} ref={ref} className={secondColor} onChange={handleInput} placeholder='New mess...' />
             <div className="send">
-                <button disabled={!(newMess.length > 0)} onClick={sendPrivateMess}>
+                <button disabled={!(newMess.length > 0)} onClick={sendMess}>
                     <AiOutlineSend className={newMess.length > 0 ? mainColor : 'disabled'} />
                 </button>
             </div>
