@@ -16,6 +16,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setNewMess] = useState('')
+    const [toogleMessages, setToogleMessages] = useState(false)
 
     const { client } = useSocket()
 
@@ -86,9 +87,12 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
         dispatch(sendGroupInvite('group', groupInfo))
     }
 
+    const hideMessages = () => setToogleMessages(prev => !prev)
+
     return (
         <div className="chat-content">
             <div className="conversations">
+                {toogleMessages && <div className="hide-messages"></div>}
                 <Messages messages={messages} groupName={wantedGroup?.groupName} />
                 <NewMessInput
                     newMess={newMess}
@@ -96,6 +100,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
                     handleMessInput={handleInput}
                     type='group'
                     sendGroupInvite={sendInvite}
+                    toogleMessages={hideMessages}
                 />
             </div>
         </div>

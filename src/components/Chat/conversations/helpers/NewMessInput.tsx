@@ -11,10 +11,11 @@ interface NewMessInputProps {
     type?: 'group',
     sendGroupInvite?: (recipient: string) => void
     sendMess: () => void,
-    handleMessInput: (e: ChangeEvent<HTMLInputElement>) => void
+    handleMessInput: (e: ChangeEvent<HTMLInputElement>) => void,
+    toogleMessages?: () => void
 }
 
-const NewMessInput: FC<NewMessInputProps> = ({ newMess, type, sendGroupInvite, sendMess, handleMessInput }) => {
+const NewMessInput: FC<NewMessInputProps> = ({ newMess, type, sendGroupInvite, sendMess, handleMessInput, toogleMessages }) => {
 
     const [showMessageInput, setShowMessageInput] = useState(true)
     const [newMember, setNewMember] = useState('')
@@ -38,7 +39,10 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, type, sendGroupInvite, s
         setNewMember(e.target.value)
     }
 
-    const toogleInput = () => setShowMessageInput(prev => !prev)
+    const toogleInput = () => {
+        setShowMessageInput(prev => !prev)
+        toogleMessages && toogleMessages()
+    }
 
     const sendInvite = () => {
         sendGroupInvite && sendGroupInvite(newMember)

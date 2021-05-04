@@ -8,6 +8,14 @@
     max-height: 100vh;
     flex-wrap: wrap;
     overflow-y: hidden;
+    .hide-messages{
+        z-index: 1;
+        height: 90vh;
+        width: 100%;
+        opacity: .5;
+        position: fixed;
+        background-color: white;
+    }
     .dialogues {
         height: 90vh;
         overflow: scroll;
