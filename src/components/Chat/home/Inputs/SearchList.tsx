@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/Hooks';
 import { MdNavigateNext } from 'react-icons/md'
+import { getUsers } from '../../../../actions/CommunityActions';
 
 interface SearchListProps {
     friendName: string,
@@ -17,6 +18,11 @@ const SearchList: FC<SearchListProps> = ({ friendName, handleSelectFriend }) => 
     const { mainColor } = useColor()
 
     const { commReducer: { community: { users } }, userReducer: { user: { login, friends } } } = useSelector((state: Store) => state)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getUsers())
+    }, [])
 
     useEffect(() => {
         const friendsLogins = friends.map(friend => friend.login)

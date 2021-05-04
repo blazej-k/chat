@@ -6,9 +6,10 @@ import 'aos/dist/aos.css'
 
 interface Context {
     client: Socket<DefaultEventsMap, DefaultEventsMap>,
-    handleConnecting: (login: string) => void,
+    handleConnecting: (login: string, groups: Group[]) => void,
     handleDisconnecting: () => void,
-    getNewMess: (callback: (from: string, text: string) => void) => void
+    getNewPrivateMess: (callback: (from: string, text: string, type: 'friend') => void) => void
+    getNewGroupMess: (callback: (from: string, text: string, type: 'group', groupId: string) => void) => void
 }
 
 const SocketProvider: FC = ({ children }) => {
@@ -23,15 +24,33 @@ const SocketProvider: FC = ({ children }) => {
         randomizationFactor: 0,
     })
 
-    const handleConnecting = (login: string) => {
+    const handleConnecting = (login: string, groups: Group[]) => {
         client.connect()
-        setTimeout(() => client.emit('add user to listeners', login), 2000)
+        setTimeout(() => {
+            client.emit('add user to listeners', login)
+            groups.map(({ groupId }) => client.emit('join to group', groupId))
+        }, 2000)
     }
 
-    const getNewMess = (callback: (from: string, text: string) => void) => {
-        setTimeout(() => client.on('private message', ({ text, from }: Dialogues) => {
-            callback(from, text)
-        }), 2000)
+    const getNewPrivateMess = (callback: (from: string, text: string, type: 'friend', groupId?: string) => void) => {
+        setTimeout(() => {
+            client
+                .off('private message')
+                .on('private message', ({ text, from }: Dialogues) => {
+                    callback(from, text, 'friend')
+                }), 2000
+        })
+    }
+
+    const getNewGroupMess = (callback: (from: string, text: string, type: 'group', groupId: string) => void) => {
+        setTimeout(() => {
+            client
+                .off('group message')
+                .on('group message', (res: { text: string, sender: string, groupId: string }) => {
+                    const { sender, groupId, text } = res
+                    callback(sender, text, 'group', groupId)
+                }), 2000
+        })
     }
 
     const handleDisconnecting = () => {
@@ -46,7 +65,7 @@ const SocketProvider: FC = ({ children }) => {
     }, [])
 
     return (
-        <SocketContext.Provider value={{ client, handleDisconnecting, handleConnecting, getNewMess }}>
+        <SocketContext.Provider value={{ client, handleDisconnecting, handleConnecting, getNewPrivateMess, getNewGroupMess }}>
             {children}
         </SocketContext.Provider>
     )
@@ -57,5 +76,6 @@ export const SocketContext = createContext<Context>({
     client: {} as Socket<DefaultEventsMap, DefaultEventsMap>,
     handleDisconnecting: () => undefined,
     handleConnecting: () => undefined,
-    getNewMess: () => undefined,
+    getNewPrivateMess: () => undefined,
+    getNewGroupMess: () => undefined,
 })

@@ -7,13 +7,11 @@ import Nav from './nav/Nav';
 import Home from './home/Home'
 import ColorProvider from '../context/ColorContext';
 import { useSocket } from '../hooks/Hooks';
-import { getUsers } from '../../actions/CommunityActions';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import '../../style/chat/Chat.scss'
-// import sound from '../../assets/punkers.mp3'
 
 const animations = {
     in: {
@@ -40,7 +38,7 @@ const Chat: FC = () => {
 
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
-    const { client, handleDisconnecting, handleConnecting } = useSocket()
+    const { client, handleDisconnecting, handleConnecting, getNewPrivateMess, getNewGroupMess } = useSocket()
 
     const dispatch = useDispatch()
 
@@ -55,24 +53,30 @@ const Chat: FC = () => {
     useEffect(() => {
         if (subscribeAsyncTasks) {
             if (login) {
-                client.connected ? client.emit('add user to listeners', login) : handleConnecting(login)
-                groups.map(({ groupId }) => client.emit('join to group', groupId))
-                dispatch(getUsers()) //move to home component
-                client
-                    .off('private message')
-                    .on('private message', ({ text, from }: Dialogues) => {
-                        showNewMess(from, text, 'friend')
-                        const conversationObj = conversations.find(conversation => conversation.login === friendName)
-                        !conversationObj && dispatch(getCurrentUser(login))
-                    })
-                client
-                    .off('group message')
-                    .on('group message', (res: { text: string, date: string, sender: string, groupId: string }) => {
-                        const { sender, groupId } = res
-                        const groupObj = groups.find(group => group.groupId === groupId)
-                        !groupObj && dispatch(getCurrentUser(login))
-                        showNewMess(sender, res.text, 'group', groupId)
-                    })
+                if (client.connected) {
+                    client.emit('add user to listeners', login)
+                    groups.map(({ groupId }) => client.emit('join to group', groupId))
+                    client
+                        .off('private message')
+                        .on('private message', ({ text, from }: Dialogues) => {
+                            showNewMess(from, text, 'friend')
+                            const conversationObj = conversations.find(conversation => conversation.login === friendName)
+                            !conversationObj && dispatch(getCurrentUser(login))
+                        })
+                    client
+                        .off('group message')
+                        .on('group message', (res: { text: string, sender: string, groupId: string }) => {
+                            const { sender, groupId } = res
+                            showNewMess(sender, res.text, 'group', groupId)
+                            const groupObj = groups.find(group => group.groupId === groupId)
+                            !groupObj && dispatch(getCurrentUser(login))
+                        })
+                }
+                else{
+                    handleConnecting(login, groups)
+                    getNewPrivateMess(showNewMess)
+                    getNewGroupMess(showNewMess)
+                }   
             }
         }
         return () => {
@@ -134,14 +138,14 @@ const Chat: FC = () => {
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
                             {showFriendChat && <FriendsChat
-                                friendName={friendName} 
-                                isNewMess={isNewPrivateMess} 
-                                messAccepted={newMessAccepted} 
+                                friendName={friendName}
+                                isNewMess={isNewPrivateMess}
+                                messAccepted={newMessAccepted}
                             />}
-                            {showGroupsChat && <GroupsChat 
-                                groupId={groupId} 
-                                isNewMess={isNewGroupMess} 
-                                messAccepted={newMessAccepted} 
+                            {showGroupsChat && <GroupsChat
+                                groupId={groupId}
+                                isNewMess={isNewGroupMess}
+                                messAccepted={newMessAccepted}
                             />}
                         </div>
                     </>
