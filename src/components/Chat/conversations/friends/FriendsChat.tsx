@@ -2,10 +2,9 @@ import * as React from 'react';
 import { ChangeEvent, FC, useLayoutEffect, useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSocket } from '../../../hooks/Hooks';
-import Messages from './Messages';
+import Messages from '../helpers/Messages';
 import { addNewMessage, getCurrentUser } from '../../../../actions/UserActions';
-import NewMessInput from '../NewMessInput';
-import 'antd/dist/antd.css';
+import NewMessInput from '../helpers/NewMessInput';
 
 interface FriendsChatProps {
     friendName: string,
@@ -19,8 +18,6 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
     const [newMess, setNewMess] = useState('')
 
     const { client } = useSocket()
-
-    const ref = useRef<HTMLInputElement>(null)
 
     const state = useSelector((state: Store) => state.userReducer)
     const { user: { login, conversations } } = state

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { AiOutlineSend } from 'react-icons/ai';
 import { MdPersonAdd } from 'react-icons/md';
 import { BiMessageDetail } from 'react-icons/bi'
-import { useColor } from '../../hooks/Hooks';
+import { useColor } from '../../../hooks/Hooks';
 
 
 interface NewMessInputProps {

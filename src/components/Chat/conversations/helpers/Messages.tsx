@@ -3,6 +3,7 @@ import React, { FC, MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/Hooks';
 import date from 'date-and-time'
+import 'antd/dist/antd.css';
 
 interface MessagesProps {
     messages: Dialogues[],

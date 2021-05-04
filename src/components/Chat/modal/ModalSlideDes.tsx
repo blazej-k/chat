@@ -22,7 +22,7 @@ const modalDescription = [
     </div>,
     <div className="about-nav">
         <div className="description">
-            If you want you can change page theme in the preferences. In left side of the page you can aldo find 
+            If you want you can change page theme in the preferences. In left side of the page you can also find 
             your friends and groups.
         </div>
     </div>

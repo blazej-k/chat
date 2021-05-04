@@ -12,7 +12,7 @@ interface ListsProps {
         listsStatus: NavList<'collection-close', 'collection-open'>,
         handleListStatus: (e: MouseEvent<HTMLSpanElement>) => void,
         showFriendsChat: (friend: string) => void,
-        showGroupsChat: (group: string) => void,
+        showGroupsChat: (groupId: string) => void,
         handleNewFriendDecission: (decision: Decission, waiter: string) => void,
         handleNewGroupDecission: (decision: Decission, group: WaitingGroup) => void
     }
@@ -43,7 +43,7 @@ const Lists: FC<ListsProps> = ({ values }) => {
                 handleListStatus={handleListStatus}
                 elements={groups.map(({ groupId, groupName }) => (
                     <li key={groupId}>
-                        <span onClick={() => showGroupsChat(groupName)}>{groupName}</span>
+                        <span onClick={() => showGroupsChat(groupId)}>{groupName}</span>
                     </li>
                 ))}
             />

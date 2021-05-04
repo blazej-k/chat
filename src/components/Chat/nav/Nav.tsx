@@ -7,7 +7,7 @@ import Lists from './Lists';
 
 interface NavProps {
     showFriendsChat: (friend: string) => void
-    showGroupsChat: (group: string) => void
+    showGroupsChat: (groupId: string) => void
     showHome: () => void
 }
 
