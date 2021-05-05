@@ -2,8 +2,9 @@ import React, { ChangeEvent, FC, useEffect, useLayoutEffect, useState } from 're
 import { useDispatch, useSelector } from 'react-redux'
 import { useSocket } from '../../../hooks/Hooks'
 import Messages from '../helpers/Messages'
-import NewMessInput from '../helpers/NewMessInput'
+import NewMess from '../helpers/NewMess'
 import { getCurrentUser, newGroupMessage, sendInvite as sendGroupInvite } from '../../../../actions/UserActions'
+import InvitePanel from './InvitePanel'
 
 
 interface GroupsChatProps {
@@ -16,7 +17,8 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
 
     const [messages, setMessages] = useState<Dialogues[]>([])
     const [newMess, setNewMess] = useState('')
-    const [toogleMessages, setToogleMessages] = useState(false)
+    const [newMember, setNewMember] = useState('')
+    const [showInvitePanel, setShowInvitePanel] = useState(false)
 
     const { client } = useSocket()
 
@@ -74,34 +76,40 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
         setNewMess(e.target.value)
     }
 
-    const sendInvite = (recipient: string) => {
+    const sendInvite = () => {
         const { groupId, groupName, members } = (wantedGroup as Group)
         const groupInfo: WaitingGroup = {
             groupName,
             groupId,
             sender: login,
-            recipient,
+            recipient: newMember,
             date: new Date(),
             members
         }
+        setNewMember('')
         dispatch(sendGroupInvite('group', groupInfo))
     }
 
-    const hideMessages = () => setToogleMessages(prev => !prev)
+    const showGroupInvitePanel = () => setShowInvitePanel(prev => !prev)
 
     return (
         <div className="chat-content">
             <div className="conversations">
-                {toogleMessages && <div className="hide-messages"></div>}
+                {showInvitePanel && <div className="hide-messages"></div>}
                 <Messages messages={messages} groupName={wantedGroup?.groupName} />
-                <NewMessInput
+                {!showInvitePanel ? <NewMess
                     newMess={newMess}
                     sendMess={sendGroupMess}
-                    handleMessInput={handleInput}
-                    type='group'
-                    sendGroupInvite={sendInvite}
-                    toogleMessages={hideMessages}
-                />
+                    handleInput={handleInput}
+                    isGroupShowed={true}
+                    changeInputVisiblity={showGroupInvitePanel}
+                /> : <InvitePanel
+                     newMember={newMember} 
+                     handleInput={handleInput} 
+                     sendInvite={sendInvite} 
+                     changeInputVisiblity={showGroupInvitePanel}
+                    />
+                }
             </div>
         </div>
     );

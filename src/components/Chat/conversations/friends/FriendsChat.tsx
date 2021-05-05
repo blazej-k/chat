@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSocket } from '../../../hooks/Hooks';
 import Messages from '../helpers/Messages';
 import { addNewMessage, getCurrentUser } from '../../../../actions/UserActions';
-import NewMessInput from '../helpers/NewMessInput';
+import NewMess from '../helpers/NewMess';
 
 interface FriendsChatProps {
     friendName: string,
@@ -74,7 +74,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
         <div className="chat-content">
             <div className="conversations">
                 <Messages messages={messages} friendName={friendName} />
-                <NewMessInput handleMessInput={handleInput} sendMess={sendPrivateMess} newMess={newMess}/>
+                <NewMess handleInput={handleInput} sendMess={sendPrivateMess} newMess={newMess}/>
             </div>
         </div>
     );
