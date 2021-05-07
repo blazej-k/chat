@@ -86,48 +86,51 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             }
 
         case NEWGROUPMESSAGE:
-            const [group] = state.user.groups.filter(group => group.groupId === action.payload.groupId)
-            const newMessage = {
-                text: action.payload.text,
-                from: action.payload.login,
-                date: Date.now()
-            }
-            const updatedGroup: Group = {
-                ...group,
-                dialogues: [
-                    ...group.dialogues,
-                    newMessage
-                ]
-            }
-            const updatedGroups = state.user.groups.map(group => {
-                if (group.groupId === action.payload.groupId) {
-                    return updatedGroup
+            const group = state.user.groups.find(group => group.groupId === action.payload.groupId)
+            if (group) {
+                const newMessage = {
+                    text: action.payload.text,
+                    from: action.payload.login,
+                    date: Date.now()
                 }
-                return group
-            })
-            return state = {
-                ...state,
-                user: { 
-                    ...state.user,
-                    groups: updatedGroups
+                const updatedGroup: Group = {
+                    ...group,
+                    dialogues: [
+                        ...group.dialogues,
+                        newMessage
+                    ]
+                }
+                const updatedGroups = state.user.groups.map(group => {
+                    if (group.groupId === action.payload.groupId) {
+                        return updatedGroup
+                    }
+                    return group
+                })
+                return state = {
+                    ...state,
+                    user: {
+                        ...state.user,
+                        groups: updatedGroups
+                    }
                 }
             }
-            
+            return state
+
         case GETCURRENTUSER:
             return state = { loading: false, error: '', user: action.payload }
 
         case ADDNEWMESSAGE:
-            const {from, text, convFriend} = action.payload
+            const { from, text, convFriend } = action.payload
             const updatedConv = state.user.conversations
             const conversationObj = updatedConv.find(conversation => conversation.login === convFriend)
-            if(!conversationObj){
+            if (!conversationObj) {
                 updatedConv.push({
                     login: convFriend,
                     dialogues: []
                 })
             }
             updatedConv.forEach(conv => {
-                if(conv.login === convFriend){
+                if (conv.login === convFriend) {
                     conv.dialogues.push({
                         date: Date.now(),
                         from: from,
@@ -135,7 +138,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     })
                 }
             })
-            state = {...state, user: {...state.user, conversations: updatedConv}}
+            state = { ...state, user: { ...state.user, conversations: updatedConv } }
             return state
 
         case ERRORMESSAGE:

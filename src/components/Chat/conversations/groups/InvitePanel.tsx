@@ -35,14 +35,14 @@ const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput,
 
     useEffect(() => {
         const newUser = users.find(user => newMember === user.login)
-        if (newUser && !currentGroupUsers?.includes(user.login)) {
+        if (newUser) {
             setSearchedUser(newUser)
         }
-        else{
-            !searchedUser && setSearchedUser(null)
-        }
         ref.current?.addEventListener('keydown', handleEnterClick)
-        return () => ref.current?.removeEventListener('keydown', handleEnterClick)
+        return () => {
+            ref.current?.removeEventListener('keydown', handleEnterClick)
+            setSearchedUser(null)
+        }
     }, [newMember])
 
     const handleEnterClick = (e: KeyboardEvent) => {
@@ -61,7 +61,7 @@ const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput,
             <input id='invite' value={newMember} ref={ref} className={secondColor} onChange={handleInput} placeholder='New member...' />
             <div className="send">
                 <button
-                    disabled={searchedUser ? true : false}
+                    disabled={searchedUser ? false : true}
                     onClick={sendInvite}
                 >
                     <AiOutlineSend

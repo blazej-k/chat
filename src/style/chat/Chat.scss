@@ -34,6 +34,7 @@
         margin-left: auto;
         margin-right: 0;
         .chat-content{
+            overflow: clip;
             @import 'Home';
             @import 'Messages';
         }

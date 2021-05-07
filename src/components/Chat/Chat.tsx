@@ -59,7 +59,7 @@ const Chat: FC = () => {
                     client
                         .off('private message')
                         .on('private message', ({ text, from }: Dialogues) => {
-                            showNewMess(from, text, 'friend')
+                            showNewMess(from, text)
                             const conversationObj = conversations.find(conversation => conversation.login === friendName)
                             !conversationObj && dispatch(getCurrentUser(login))
                         })
@@ -67,7 +67,7 @@ const Chat: FC = () => {
                         .off('group message')
                         .on('group message', (res: { text: string, sender: string, groupId: string }) => {
                             const { sender, groupId } = res
-                            showNewMess(sender, res.text, 'group', groupId)
+                            showNewMess(sender, res.text, groupId)
                             const groupObj = groups.find(group => group.groupId === groupId)
                             !groupObj && dispatch(getCurrentUser(login))
                         })
@@ -84,13 +84,14 @@ const Chat: FC = () => {
         }
     }, [])
 
-    const showNewMess = (from: string, text: string, type: 'group' | 'friend', groupId?: string) => {
-        if (type === 'friend') {
+    const showNewMess = (from: string, text: string, groupId?: string) => {
+        if (!groupId) {
             dispatch(addNewMessage({ from, text, convFriend: from }))
             setIsNewPrivateMess(true)
         }
         else {
-            dispatch(newGroupMessage(groupId || '', text, from))
+            console.log(groupId, text, from)
+            dispatch(newGroupMessage(groupId, text, from))
             setIsNewGroupMess(true)
         }
         setNewMessInfo(initNewMessInfo)

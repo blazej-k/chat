@@ -8,8 +8,8 @@ interface Context {
     client: Socket<DefaultEventsMap, DefaultEventsMap>,
     handleConnecting: (login: string, groups: Group[]) => void,
     handleDisconnecting: () => void,
-    getNewPrivateMess: (callback: (from: string, text: string, type: 'friend') => void) => void
-    getNewGroupMess: (callback: (from: string, text: string, type: 'group', groupId: string) => void) => void
+    getNewPrivateMess: (callback: (from: string, text: string) => void) => void
+    getNewGroupMess: (callback: (from: string, text: string, groupId: string) => void) => void
 }
 
 const SocketProvider: FC = ({ children }) => {
@@ -32,23 +32,23 @@ const SocketProvider: FC = ({ children }) => {
         }, 2000)
     }
 
-    const getNewPrivateMess = (callback: (from: string, text: string, type: 'friend', groupId?: string) => void) => {
+    const getNewPrivateMess = (callback: (from: string, text: string) => void) => {
         setTimeout(() => {
             client
                 .off('private message')
                 .on('private message', ({ text, from }: Dialogues) => {
-                    callback(from, text, 'friend')
+                    callback(from, text)
                 }), 2000
         })
     }
 
-    const getNewGroupMess = (callback: (from: string, text: string, type: 'group', groupId: string) => void) => {
+    const getNewGroupMess = (callback: (from: string, text: string, groupId: string) => void) => {
         setTimeout(() => {
             client
                 .off('group message')
                 .on('group message', (res: { text: string, sender: string, groupId: string }) => {
                     const { sender, groupId, text } = res
-                    callback(sender, text, 'group', groupId)
+                    callback(sender, text, groupId)
                 }), 2000
         })
     }
