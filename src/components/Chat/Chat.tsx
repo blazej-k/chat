@@ -90,7 +90,6 @@ const Chat: FC = () => {
             setIsNewPrivateMess(true)
         }
         else {
-            console.log(groupId, text, from)
             dispatch(newGroupMessage(groupId, text, from))
             setIsNewGroupMess(true)
         }
