@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { useColor } from '../hooks/Hooks';
+import { useColor } from '../../../hooks/Hooks';
 
 interface NewMessInfoProps {
     show: boolean,

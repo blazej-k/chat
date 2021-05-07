@@ -9,7 +9,7 @@ import ColorProvider from '../context/ColorContext';
 import { useSocket } from '../hooks/Hooks';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
-import NewMessInfo, { initNewMessInfo } from '../helpers/NewMessInfo'
+import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import '../../style/chat/Chat.scss'
 
