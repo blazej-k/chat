@@ -35,7 +35,7 @@ const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput,
 
     useEffect(() => {
         const newUser = users.find(user => newMember === user.login)
-        if (newUser) {
+        if (newUser && !currentGroupUsers?.includes(user.login)) {
             setSearchedUser(newUser)
         }
         ref.current?.addEventListener('keydown', handleEnterClick)
