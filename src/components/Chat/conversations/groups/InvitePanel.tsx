@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FC, useEffect, useRef } from 'react'
+import React, { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { AiOutlineSend } from 'react-icons/ai';
 import { BiMessageDetail } from 'react-icons/bi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../../../actions/CommunityActions';
 import { useColor } from '../../../hooks/Hooks';
 
@@ -10,22 +10,37 @@ interface InvitePanelProps {
     sendInvite: () => void,
     handleInput: (e: ChangeEvent<HTMLInputElement>) => void,
     changeInputVisiblity: () => void
-    newMember: string
+    newMember: string,
+    groupId: string
 }
 
-const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput, changeInputVisiblity }) => {
+const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput, changeInputVisiblity, groupId }) => {
+
+    const [searchedUser, setSearchedUser] = useState<CommunityUser | null>(null)
 
     const ref = useRef<HTMLInputElement>(null)
 
     const { secondColor, mainColor } = useColor()
 
     const dispatch = useDispatch()
+    const { commReducer: { community: { users, groups } }, userReducer: { user } } = useSelector((state: Store) => state)
+
+    const currentGroupUsers = user.groups
+        .find(group => group.groupId === groupId)?.members
+        .map(member => member.login)
 
     useEffect(() => {
         dispatch(getUsers())
     }, [])
 
     useEffect(() => {
+        const newUser = users.find(user => newMember === user.login)
+        if (newUser && !currentGroupUsers?.includes(user.login)) {
+            setSearchedUser(newUser)
+        }
+        else{
+            !searchedUser && setSearchedUser(null)
+        }
         ref.current?.addEventListener('keydown', handleEnterClick)
         return () => ref.current?.removeEventListener('keydown', handleEnterClick)
     }, [newMember])
@@ -43,14 +58,14 @@ const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput,
                     <BiMessageDetail size={45} className={secondColor} />
                 </button>
             </div>
-            <input value={newMember} ref={ref} className={secondColor} onChange={handleInput} placeholder='New member...' />
+            <input id='invite' value={newMember} ref={ref} className={secondColor} onChange={handleInput} placeholder='New member...' />
             <div className="send">
                 <button
-                    disabled={!(newMember.length !== 0)}
+                    disabled={searchedUser ? true : false}
                     onClick={sendInvite}
                 >
                     <AiOutlineSend
-                        className={newMember.length !== 0 ? mainColor : 'disabled'}
+                        className={searchedUser ? mainColor : 'disabled'}
                     />
                 </button>
             </div>

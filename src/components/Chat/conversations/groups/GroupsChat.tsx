@@ -73,7 +73,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
     }
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewMess(e.target.value)
+        e.target.id === 'invite' ? setNewMember(e.target.value) : setNewMess(e.target.value)
     }
 
     const sendInvite = () => {
@@ -108,6 +108,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
                      handleInput={handleInput} 
                      sendInvite={sendInvite} 
                      changeInputVisiblity={showGroupInvitePanel}
+                     groupId={groupId}
                     />
                 }
             </div>
