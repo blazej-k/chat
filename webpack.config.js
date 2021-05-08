@@ -10,7 +10,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '/'
     },
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
@@ -48,7 +47,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: './src/index.html'
+            template: 'src/index.html'
         }),
         new webpack.HotModuleReplacementPlugin(),
         new Dotenv(),
