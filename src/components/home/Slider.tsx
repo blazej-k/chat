@@ -1,3 +1,4 @@
+import React from 'react'
 import { FC, useEffect, useState } from "react";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";

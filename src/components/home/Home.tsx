@@ -7,7 +7,7 @@ import HomeDescription from './HomeDescription';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import Footer from '../footer/Footer';
-import '../../style/home/Home.scss'
+import '../../style/home/Home.scss';
 
 const Home: FC = () => {
 
