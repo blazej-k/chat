@@ -6,6 +6,7 @@ import MetaTags from 'react-meta-tags';
 import './style/index.scss'
 import { Provider } from 'react-redux';
 import { store } from './reducers/store';
+import faviconIco from './assets/chat_icon.png'
 
 const App: FC = () => {
 
@@ -20,6 +21,7 @@ const App: FC = () => {
                 <meta name='author' content='Błazej Kania'/>
                 <meta charSet="utf-8"/> 
                 <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+                <link rel="shortcut icon" href={faviconIco}/>
             </MetaTags>
             <Provider store={store}>
                 <Page/>
