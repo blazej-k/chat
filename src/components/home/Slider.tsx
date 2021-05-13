@@ -8,10 +8,10 @@ const Slider: FC = () => {
     const [images, setImages] = useState<{ original: string }[]>([])
 
     const getPhoto = async () => {
-        const result: { original: string }[] = []
+        const result: { original: string, originalAlt: string }[] = []
         //add one to 6 when there'll be new photo
         for (let i = 1; i <= 6; i++) {
-            await import(`../../assets/img${i}.jpg`).then(res => result.push({ original: res.default }))
+            await import(`../../assets/img${i}.jpg`).then(res => result.push({ original: res.default, originalAlt: 'slider-image' }))
         }
         setImages(result)
     }

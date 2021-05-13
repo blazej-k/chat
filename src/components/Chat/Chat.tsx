@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
@@ -11,18 +11,8 @@ import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
+import animations from '../helpers/animationConfig'
 import '../../style/chat/Chat.scss'
-
-const animations = {
-    in: {
-        opacity: 1,
-        transition: { duration: 0.6 },
-    },
-    out: {
-        opacity: 0,
-        transition: { duration: 0.6 },
-    }
-}
 
 const Chat: FC = () => {
     const [showModal, setShowModal] = useState(true)
@@ -121,6 +111,8 @@ const Chat: FC = () => {
         setShowHome(true)
     }
 
+    const nav = useMemo(() => <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />, [])
+
     const { from, show, text } = newMessInfo
 
     return (
@@ -134,7 +126,7 @@ const Chat: FC = () => {
                             </div>
                         }
                         <NewMessInfo show={show} text={text} from={from} />
-                        <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />
+                        {nav}
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
                             {showFriendChat && <FriendsChat

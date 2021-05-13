@@ -75,6 +75,8 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const { handleSubmit, handleChange, values: { login, password }, errors } = formik
 
+    console.log('modal')
+
     return (
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
             <div className="modal-box">

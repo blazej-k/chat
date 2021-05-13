@@ -7,6 +7,7 @@ import HomeDescription from './HomeDescription';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import Footer from '../footer/Footer';
+import animations from '../helpers/animationConfig'
 import '../../style/home/Home.scss';
 
 const Home: FC = () => {
@@ -44,17 +45,6 @@ const Home: FC = () => {
             setNewUser(false)
         }
     }, [showSignUpModal])
-
-    const animations = {
-        in: {
-            opacity: 1,
-            transition: { duration: 1 },
-        },
-        out: {
-            opacity: 0,
-            transition: { duration: 1 },
-        }
-    }
 
     const handleButtonHover = (show: boolean) => {
         setShowSpanInfo(show)
@@ -120,8 +110,7 @@ const Home: FC = () => {
                                 isModalOpen={setShowSignUpModal}
                                 type='signup'
                             />}
-                    </div>
-                }
+                    </div>}
             </div>
             <Footer />
         </>
