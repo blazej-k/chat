@@ -19,6 +19,7 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendMess, handleInput, i
     const { secondColor, mainColor } = useColor()
 
     useEffect(() => {
+        ref.current?.focus()
         ref.current?.addEventListener('keydown', handleEnterClick)
         return () => ref.current?.removeEventListener('keydown', handleEnterClick)
     }, [newMess])

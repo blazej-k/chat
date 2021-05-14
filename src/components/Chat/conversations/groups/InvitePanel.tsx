@@ -31,6 +31,7 @@ const InvitePanel: FC<InvitePanelProps> = ({ newMember, sendInvite, handleInput,
 
     useEffect(() => {
         dispatch(getUsers())
+        ref.current?.focus()
     }, [])
 
     useEffect(() => {
