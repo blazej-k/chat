@@ -7,7 +7,7 @@ const validate = (values: FormValues, type: 'signup' | 'signin') => {
     if (password.length === 0) {
         errors.password = true
     }
-    if (sex?.length === 0 && type === 'signup') {
+    if (!sex && type === 'signup') {
         errors.sex = true
     }
     return errors
