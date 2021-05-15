@@ -74,7 +74,7 @@ const Modal: FC<ModalProps> = ({ login, showModal }) => {
     return (
         <div className="modal-wrapper">
             <div className="modal-box">
-                <div className="modal-welcome">
+                <div className="modal-welcome" data-testid='greeting-modal'>
                     <h1>Welcome {login}!</h1>
                     <div className="slide" ref={slideRef}>
                         <div className="description">

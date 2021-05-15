@@ -87,7 +87,7 @@ const Nav: FC<NavProps> = ({ showFriendsChat, showGroupsChat, showHome }) => {
 
     const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
 
-    const values = {
+    const listsProps = {
         friends, groups, waitingGroups, waitingFriends, listsStatus, handleListStatus, showFriendsChat,
         showGroupsChat, handleNewFriendDecission, handleNewGroupDecission
     }
@@ -98,7 +98,7 @@ const Nav: FC<NavProps> = ({ showFriendsChat, showGroupsChat, showHome }) => {
                 <h1 className={mainColor}>{login}</h1>
                 <ul>
                     <li onClick={showHome}><b>Home</b></li>
-                    <Lists values={values} />
+                    <Lists values={listsProps} />
                     <li>
                         <span
                             onMouseOver={() => handleSpanMouseHover(true)}

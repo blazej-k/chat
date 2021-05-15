@@ -114,7 +114,7 @@ const Chat: FC = () => {
     const nav = useMemo(() => <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />, [])
 
     const { from, show, text } = newMessInfo
-
+    
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
             <ColorProvider>

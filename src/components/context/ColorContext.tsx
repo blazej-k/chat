@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { createContext, FC } from "react";
+import React, { createContext, FC, useState } from "react";
 
 interface Context {
     mainColor: string,
