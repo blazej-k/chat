@@ -11,14 +11,16 @@ const Slider: FC = () => {
         const result: { original: string, originalAlt: string }[] = []
         //add one to 6 when there'll be new photo
         for (let i = 1; i <= 6; i++) {
-            await import(`../../assets/img${i}.jpg`).then(res => result.push({ original: res.default, originalAlt: 'slider-image' }))
+            await import(`../../assets/img${i}.jpg`).then(res => {
+                result.push({ original: res.default.toString(), originalAlt: 'slider-image' })
+            })
         }
         setImages(result)
     }
 
     useEffect(() => {
         getPhoto()
-    }, [])
+    }, []) 
 
     return (
         <div className="slider-wrapper">
