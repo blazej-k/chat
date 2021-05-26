@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useColor } from '../../../hooks/Hooks';
+import { useColor } from '../../../hooks/ContextHooks';
 import { MdNavigateNext } from 'react-icons/md'
 import { getUsers } from '../../../../actions/CommunityActions';
 

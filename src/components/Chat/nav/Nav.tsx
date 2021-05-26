@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FC, memo, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
-import { useColor } from '../../hooks/Hooks';
+import { useColor } from '../../hooks/ContextHooks';
 import Lists from './Lists';
 
 interface NavProps {

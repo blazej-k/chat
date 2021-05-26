@@ -1,7 +1,7 @@
 import { Avatar } from 'antd';
 import React, { FC, MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
-import { useColor } from '../../../hooks/Hooks';
+import { useColor } from '../../../hooks/ContextHooks';
 import date from 'date-and-time'
 import 'antd/dist/antd.css';
 

@@ -3,7 +3,7 @@ import { AiOutlineSend } from 'react-icons/ai';
 import { BiMessageDetail } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../../../actions/CommunityActions';
-import { useColor } from '../../../hooks/Hooks';
+import { useColor } from '../../../hooks/ContextHooks';
 
 
 interface InvitePanelProps {

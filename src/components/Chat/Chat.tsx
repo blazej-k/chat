@@ -6,19 +6,18 @@ import Modal from './modal/Modal';
 import Nav from './nav/Nav';
 import Home from './home/Home'
 import ColorProvider from '../context/ColorContext';
-import { useSocket } from '../hooks/Hooks';
+import { useSocket } from '../hooks/ContextHooks';
 import FriendsChat from './conversations/friends/FriendsChat';
 import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import animations from '../helpers/animationConfig'
 import '../../style/chat/Chat.scss'
+import useShowChatView from '../hooks/ChatHooks';
+import { ChatView } from '../../enums/chatView'
 
 const Chat: FC = () => {
     const [showModal, setShowModal] = useState(true)
-    const [showFriendChat, setShowFriendChat] = useState(false)
-    const [showGroupsChat, setShowGroupsChat] = useState(false)
-    const [showHome, setShowHome] = useState(true)
     const [friendName, setFriendName] = useState('')
     const [newMessInfo, setNewMessInfo] = useState<typeof initNewMessInfo>(initNewMessInfo)
     const [groupId, setGroupId] = useState('')
@@ -29,9 +28,9 @@ const Chat: FC = () => {
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
     const { client, handleDisconnecting, handleConnecting, getNewPrivateMess, getNewGroupMess } = useSocket()
+    const [{ home: showHome, friends: showFriends, groups: showGroups }, changeChatView] = useShowChatView()
 
     const dispatch = useDispatch()
-
     const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
 
     useEffect(() => {
@@ -62,16 +61,14 @@ const Chat: FC = () => {
                             !groupObj && dispatch(getCurrentUser(login))
                         })
                 }
-                else{
+                else {
                     handleConnecting(login, groups)
                     getNewPrivateMess(showNewMess)
                     getNewGroupMess(showNewMess)
-                }   
+                }
             }
         }
-        return () => {
-            login && handleDisconnecting()
-        }
+        return () => {login && handleDisconnecting()}
     }, [])
 
     const showNewMess = (from: string, text: string, groupId?: string) => {
@@ -88,33 +85,24 @@ const Chat: FC = () => {
         setTimeout(() => setNewMessInfo(initNewMessInfo), 5000)
     }
 
-    const newMessAccepted = () => {
-        isNewPrivateMess ? setIsNewPrivateMess(false) : setIsNewGroupMess(false)
-    }
+    const newMessAccepted = () => isNewPrivateMess ? setIsNewPrivateMess(false) : setIsNewGroupMess(false)
 
     const friendsChat = (friend: string) => {
         setFriendName(friend)
-        setShowGroupsChat(false)
-        setShowHome(false)
-        setShowFriendChat(true)
+        changeChatView(ChatView.friends)
     }
+
     const groupsChat = (groupId: string) => {
         setGroupId(groupId)
-        setShowFriendChat(false)
-        setShowHome(false)
-        setShowGroupsChat(true)
+        changeChatView(ChatView.groups)
     }
 
-    const home = () => {
-        setShowFriendChat(false)
-        setShowGroupsChat(false)
-        setShowHome(true)
-    }
-
-    const nav = useMemo(() => <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={home} />, [])
+    const nav = useMemo(() => (
+        <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={() => changeChatView(ChatView.home)} />),
+    [])
 
     const { from, show, text } = newMessInfo
-    
+
     return (
         <motion.div className="chat" variants={animations} initial='out' animate='in'>
             <ColorProvider>
@@ -129,12 +117,12 @@ const Chat: FC = () => {
                         {nav}
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
-                            {showFriendChat && <FriendsChat
+                            {showFriends && <FriendsChat
                                 friendName={friendName}
                                 isNewMess={isNewPrivateMess}
                                 messAccepted={newMessAccepted}
                             />}
-                            {showGroupsChat && <GroupsChat
+                            {showGroups && <GroupsChat
                                 groupId={groupId}
                                 isNewMess={isNewGroupMess}
                                 messAccepted={newMessAccepted}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { useColor } from '../../hooks/Hooks';
+import { useColor } from '../../hooks/ContextHooks';
 import Inputs from './inputs/Inputs';
 import Preferences from './preferences/Preferences';
 

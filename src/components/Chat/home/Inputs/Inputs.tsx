@@ -5,7 +5,7 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGroup } from '../../../../actions/CommunityActions';
 import { sendInvite } from '../../../../actions/UserActions';
-import { useColor, useSocket } from '../../../hooks/Hooks';
+import { useColor, useSocket } from '../../../hooks/ContextHooks';
 import SearchList from './SearchList';
 
 

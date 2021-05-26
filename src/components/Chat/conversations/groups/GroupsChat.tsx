@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FC, useEffect, useLayoutEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSocket } from '../../../hooks/Hooks'
+import { useSocket } from '../../../hooks/ContextHooks'
 import Messages from '../helpers/Messages'
 import NewMess from '../helpers/NewMess'
 import { getCurrentUser, newGroupMessage, sendInvite as sendGroupInvite } from '../../../../actions/UserActions'

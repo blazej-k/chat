@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FC, useEffect, useRef } from 'react'
 import { AiOutlineSend } from 'react-icons/ai';
 import { MdPersonAdd } from 'react-icons/md';
-import { useColor } from '../../../hooks/Hooks';
+import { useColor } from '../../../hooks/ContextHooks';
 
 
 interface NewMessInputProps {
