@@ -14,6 +14,8 @@ import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/Us
 import animations from '../helpers/animationConfig'
 import useShowChatView from '../hooks/ChatHooks';
 import '../../style/chat/Chat.scss'
+import { ErrorBoundary } from 'react-error-boundary'
+import ErrorChat from './ErrorChat';
 
 const Chat: FC = () => {
     const [showModal, setShowModal] = useState(true)
@@ -89,34 +91,36 @@ const Chat: FC = () => {
     const { from, show, text } = newMessInfo
 
     return (
-        <motion.div className="chat" variants={animations} initial='out' animate='in'>
-            <ColorProvider>
-                {!login ? <Redirect to='/' /> :
-                    <>
-                        {isNew === 'true' &&
-                            <div className="chat-modal">
-                                {showModal && <Modal login={login} showModal={setShowModal} />}
+        <ErrorBoundary FallbackComponent={ErrorChat}>
+            <motion.div className="chat" variants={animations} initial='out' animate='in'>
+                <ColorProvider>
+                    {!login ? <Redirect to='/' /> :
+                        <>
+                            {isNew === 'true' &&
+                                <div className="chat-modal">
+                                    {showModal && <Modal login={login} showModal={setShowModal} />}
+                                </div>
+                            }
+                            <NewMessInfo show={show} text={text} from={from} />
+                            {nav}
+                            <div className="chat-content-wrapper">
+                                {showHome && <Home isNew={isNew} />}
+                                {showFriend && <FriendsChat
+                                    friendName={friendName}
+                                    isNewMess={isNewPrivateMess}
+                                    messAccepted={newMessAccepted}
+                                />}
+                                {showGroup && <GroupsChat
+                                    groupId={groupId}
+                                    isNewMess={isNewGroupMess}
+                                    messAccepted={newMessAccepted}
+                                />}
                             </div>
-                        }
-                        <NewMessInfo show={show} text={text} from={from} />
-                        {nav}
-                        <div className="chat-content-wrapper">
-                            {showHome && <Home isNew={isNew} />}
-                            {showFriend && <FriendsChat
-                                friendName={friendName}
-                                isNewMess={isNewPrivateMess}
-                                messAccepted={newMessAccepted}
-                            />}
-                            {showGroup && <GroupsChat
-                                groupId={groupId}
-                                isNewMess={isNewGroupMess}
-                                messAccepted={newMessAccepted}
-                            />}
-                        </div>
-                    </>
-                }
-            </ColorProvider>
-        </motion.div>
+                        </>
+                    }
+                </ColorProvider>
+            </motion.div>
+        </ErrorBoundary>
     );
 }
 

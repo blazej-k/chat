@@ -12,8 +12,6 @@ interface ListsProps {
         waitingFriends: WaitingFriend[],
         listsStatus: NavList<'collection-close', 'collection-open'>,
         handleListStatus: (e: MouseEvent<HTMLSpanElement>) => void,
-        // showFriendsChat: (friend: string) => void,
-        // showGroupsChat: (groupId: string) => void,
         changeChatView: (type: ChatView, name: string) => void
         handleNewFriendDecission: (decision: Decission, waiter: string) => void,
         handleNewGroupDecission: (decision: Decission, group: WaitingGroup) => void
