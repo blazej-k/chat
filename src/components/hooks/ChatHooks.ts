@@ -2,28 +2,41 @@ import { useReducer } from "react"
 import { ChatView } from "../../enums/chatView"
 
 interface ChatViewProps {
-    home: boolean,
-    friends: boolean,
-    groups: boolean
+    showHome: boolean,
+    showFriend: boolean,
+    showGroup: boolean,
+    groupId: string,
+    friendName: string
 }
 
-const chatViewReducer = (state: ChatViewProps, type: ChatView) => {
-    switch(type){
+interface ChatViewAction {
+    type: ChatView,
+    name: string
+}
+
+const chatViewReducer = (state: ChatViewProps, action: ChatViewAction) => {
+    switch (action.type) {
         case 'HOME':
-            return state = {home: true, friends: false, groups: false}
+            return state = { showHome: true, showFriend: false, showGroup: false, friendName: '', groupId: '' }
         case 'FRIENDS':
-            return state = {home: false, friends: true, groups: false}
+            return state = { showHome: false, showFriend: true, showGroup: false, friendName: action.name, groupId: '' }
         case 'GROUPS':
-            return state = {home: false, friends: false, groups: true}
-        default: 
+            return state = { showHome: false, showFriend: false, showGroup: true, friendName: '', groupId: action.name }
+        default:
             return state
     }
 }
 
-const useShowChatView = (): [ChatViewProps, (type: ChatView) => void] => {
-    const [chatView, dispatch] = useReducer(chatViewReducer, {home: true, friends: false, groups: false})
-
-    const changeChatView = (type: ChatView) => dispatch(type)
+const useShowChatView = (): [ChatViewProps, (type: ChatView, name?: string) => void] => {
+    const initChatView: ChatViewProps = {
+        showFriend: false,
+        showGroup: false,
+        showHome: true,
+        friendName: '',
+        groupId: ''
+    }
+    const [chatView, dispatch] = useReducer(chatViewReducer, initChatView)
+    const changeChatView = (type: ChatView, name = '') => dispatch({ type, name })
 
     return [chatView, changeChatView]
 }

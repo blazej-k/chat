@@ -6,8 +6,6 @@ import { removeUserError, userAuth } from "../../actions/UserActions";
 import validate from '../helpers/FormikValidate'
 import Loader from "react-loader-spinner";
 
-
-
 interface ModalProps {
     isModalOpen: (value: false) => void,
     type: 'signup' | 'signin',

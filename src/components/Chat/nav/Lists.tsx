@@ -1,5 +1,6 @@
 import React, { FC, MouseEvent } from 'react'
 import { MdClear, MdDone } from 'react-icons/md';
+import { ChatView } from '../../../enums/chatView';
 import List from './List';
 import { NavList } from './Nav';
 
@@ -11,8 +12,9 @@ interface ListsProps {
         waitingFriends: WaitingFriend[],
         listsStatus: NavList<'collection-close', 'collection-open'>,
         handleListStatus: (e: MouseEvent<HTMLSpanElement>) => void,
-        showFriendsChat: (friend: string) => void,
-        showGroupsChat: (groupId: string) => void,
+        // showFriendsChat: (friend: string) => void,
+        // showGroupsChat: (groupId: string) => void,
+        changeChatView: (type: ChatView, name: string) => void
         handleNewFriendDecission: (decision: Decission, waiter: string) => void,
         handleNewGroupDecission: (decision: Decission, group: WaitingGroup) => void
     }
@@ -20,8 +22,8 @@ interface ListsProps {
 
 const Lists: FC<ListsProps> = ({ values }) => {
 
-    const { friends, groups, waitingFriends, waitingGroups, listsStatus, handleListStatus, showFriendsChat,
-        showGroupsChat, handleNewFriendDecission, handleNewGroupDecission } = values
+    const { friends, groups, waitingFriends, waitingGroups, listsStatus, handleListStatus, changeChatView,
+        handleNewFriendDecission, handleNewGroupDecission } = values
 
     return (
         <>
@@ -32,7 +34,7 @@ const Lists: FC<ListsProps> = ({ values }) => {
                 handleListStatus={handleListStatus}
                 elements={friends.map(({ date, login }) => (
                     <li key={date}>
-                        <span onClick={() => showFriendsChat(login)}>{login}</span>
+                        <span onClick={() => changeChatView(ChatView.friends, login)}>{login}</span>
                     </li>
                 ))}
             />
@@ -43,7 +45,7 @@ const Lists: FC<ListsProps> = ({ values }) => {
                 handleListStatus={handleListStatus}
                 elements={groups.map(({ groupId, groupName }) => (
                     <li key={groupId}>
-                        <span onClick={() => showGroupsChat(groupId)}>{groupName}</span>
+                        <span onClick={() => changeChatView(ChatView.groups, groupId)}>{groupName}</span>
                     </li>
                 ))}
             />

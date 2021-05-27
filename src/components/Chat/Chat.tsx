@@ -12,15 +12,12 @@ import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import animations from '../helpers/animationConfig'
-import '../../style/chat/Chat.scss'
 import useShowChatView from '../hooks/ChatHooks';
-import { ChatView } from '../../enums/chatView'
+import '../../style/chat/Chat.scss'
 
 const Chat: FC = () => {
     const [showModal, setShowModal] = useState(true)
-    const [friendName, setFriendName] = useState('')
     const [newMessInfo, setNewMessInfo] = useState<typeof initNewMessInfo>(initNewMessInfo)
-    const [groupId, setGroupId] = useState('')
     const [subscribeAsyncTasks, setSubscribeAsyncTasks] = useState(true)
     const [isNewPrivateMess, setIsNewPrivateMess] = useState(false)
     const [isNewGroupMess, setIsNewGroupMess] = useState(false)
@@ -28,7 +25,7 @@ const Chat: FC = () => {
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
     const { client, handleDisconnecting, handleConnecting, getNewPrivateMess, getNewGroupMess } = useSocket()
-    const [{ home: showHome, friends: showFriends, groups: showGroups }, changeChatView] = useShowChatView()
+    const [{ showHome, showFriend, showGroup, friendName, groupId }, changeChatView] = useShowChatView()
 
     const dispatch = useDispatch()
     const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
@@ -68,7 +65,7 @@ const Chat: FC = () => {
                 }
             }
         }
-        return () => {login && handleDisconnecting()}
+        return () => { login && handleDisconnecting() }
     }, [])
 
     const showNewMess = (from: string, text: string, groupId?: string) => {
@@ -87,19 +84,7 @@ const Chat: FC = () => {
 
     const newMessAccepted = () => isNewPrivateMess ? setIsNewPrivateMess(false) : setIsNewGroupMess(false)
 
-    const friendsChat = (friend: string) => {
-        setFriendName(friend)
-        changeChatView(ChatView.friends)
-    }
-
-    const groupsChat = (groupId: string) => {
-        setGroupId(groupId)
-        changeChatView(ChatView.groups)
-    }
-
-    const nav = useMemo(() => (
-        <Nav showFriendsChat={friendsChat} showGroupsChat={groupsChat} showHome={() => changeChatView(ChatView.home)} />),
-    [])
+    const nav = useMemo(() => <Nav changeChatView={changeChatView} />, [])
 
     const { from, show, text } = newMessInfo
 
@@ -117,12 +102,12 @@ const Chat: FC = () => {
                         {nav}
                         <div className="chat-content-wrapper">
                             {showHome && <Home isNew={isNew} />}
-                            {showFriends && <FriendsChat
+                            {showFriend && <FriendsChat
                                 friendName={friendName}
                                 isNewMess={isNewPrivateMess}
                                 messAccepted={newMessAccepted}
                             />}
-                            {showGroups && <GroupsChat
+                            {showGroup && <GroupsChat
                                 groupId={groupId}
                                 isNewMess={isNewGroupMess}
                                 messAccepted={newMessAccepted}

@@ -2,13 +2,15 @@ import * as React from 'react';
 import { FC, memo, MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
+import { ChatView } from '../../../enums/chatView';
 import { useColor } from '../../hooks/ContextHooks';
 import Lists from './Lists';
 
 interface NavProps {
-    showFriendsChat: (friend: string) => void
-    showGroupsChat: (groupId: string) => void
-    showHome: () => void
+    // showFriendsChat: (friend: string) => void
+    // showGroupsChat: (groupId: string) => void
+    // showHome: () => void
+    changeChatView: (type: ChatView, name?: string) => void
 }
 
 export interface NavList<T, N> {
@@ -18,7 +20,7 @@ export interface NavList<T, N> {
     waitingGroups: T | N
 }
 
-const Nav: FC<NavProps> = ({ showFriendsChat, showGroupsChat, showHome }) => {
+const Nav: FC<NavProps> = ({ changeChatView }) => {
 
     const [listsStatus, setListsStatus] = useState<NavList<'collection-close', 'collection-open'>>({
         friends: 'collection-close',
@@ -88,8 +90,8 @@ const Nav: FC<NavProps> = ({ showFriendsChat, showGroupsChat, showHome }) => {
     const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
 
     const listsProps = {
-        friends, groups, waitingGroups, waitingFriends, listsStatus, handleListStatus, showFriendsChat,
-        showGroupsChat, handleNewFriendDecission, handleNewGroupDecission
+        friends, groups, waitingGroups, waitingFriends, listsStatus, handleListStatus, changeChatView,
+        handleNewFriendDecission, handleNewGroupDecission
     }
 
     return (
@@ -97,7 +99,7 @@ const Nav: FC<NavProps> = ({ showFriendsChat, showGroupsChat, showHome }) => {
             <div className="nav">
                 <h1 className={mainColor}>{login}</h1>
                 <ul>
-                    <li onClick={showHome}><b>Home</b></li>
+                    <li onClick={() => changeChatView(ChatView.home)}><b>Home</b></li>
                     <Lists values={listsProps} />
                     <li>
                         <span
