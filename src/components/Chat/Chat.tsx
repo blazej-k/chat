@@ -1,14 +1,11 @@
-import React, { FC, useEffect, useMemo, useState } from 'react';
+import React, { FC, Suspense, useEffect, useMemo, useState, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
 import Nav from './nav/Nav';
-import Home from './home/Home'
 import ColorProvider from '../context/ColorContext';
 import { useSocket } from '../hooks/ContextHooks';
-import FriendsChat from './conversations/friends/FriendsChat';
-import GroupsChat from './conversations/groups/GroupsChat';
 import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import animations from '../helpers/animationConfig'
@@ -16,6 +13,9 @@ import useShowChatView from '../hooks/ChatHooks';
 import '../../style/chat/Chat.scss'
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorChat from './ErrorChat';
+const Home = lazy(() => import('./home/Home'))
+const FriendsChat = lazy(() => import('./conversations/friends/FriendsChat'));
+const GroupsChat = lazy(() => import('./conversations/groups/GroupsChat'));
 
 const Chat: FC = () => {
     const [showModal, setShowModal] = useState(true)
@@ -104,17 +104,19 @@ const Chat: FC = () => {
                             <NewMessInfo show={show} text={text} from={from} />
                             {nav}
                             <div className="chat-content-wrapper">
-                                {showHome && <Home isNew={isNew} />}
-                                {showFriend && <FriendsChat
-                                    friendName={friendName}
-                                    isNewMess={isNewPrivateMess}
-                                    messAccepted={newMessAccepted}
-                                />}
-                                {showGroup && <GroupsChat
-                                    groupId={groupId}
-                                    isNewMess={isNewGroupMess}
-                                    messAccepted={newMessAccepted}
-                                />}
+                                <Suspense fallback={<div>Loading...</div>}>
+                                    {showHome && <Home isNew={isNew} />}
+                                    {showFriend && <FriendsChat
+                                        friendName={friendName}
+                                        isNewMess={isNewPrivateMess}
+                                        messAccepted={newMessAccepted}
+                                    />}
+                                    {showGroup && <GroupsChat
+                                        groupId={groupId}
+                                        isNewMess={isNewGroupMess}
+                                        messAccepted={newMessAccepted}
+                                    />}
+                                </Suspense>
                             </div>
                         </>
                     }

@@ -15,6 +15,13 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
+    // mode: 'development',
+    // optimization: {
+    //     minimize: true,
+    //     removeAvailableModules: true,
+    //     removeEmptyChunks: true,
+    //     providedExports: true,
+    // },
     devtool: 'cheap-module-source-map',
     module: {
         rules: [

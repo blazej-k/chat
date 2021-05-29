@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeUserError, userAuth } from "../../actions/UserActions";
 import validate from '../helpers/FormikValidate'
 import Loader from "react-loader-spinner";
+import '../../style/modals/Modals.scss'
 
 interface ModalProps {
     isModalOpen: (value: false) => void,
