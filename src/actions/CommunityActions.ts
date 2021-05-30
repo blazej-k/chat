@@ -1,8 +1,8 @@
 import { Dispatch } from "react"
 import addUserToGroup from "./helpers/addUsertoGroup"
 import { JOINTOGROUP } from './UserActions'
-export const GETUSERS = 'getusers'
 
+export const GETUSERS = 'getusers'
 export const CREATEGROUP = 'creategroup'
 export const COMMUNITYERROR = 'communityerror'
 

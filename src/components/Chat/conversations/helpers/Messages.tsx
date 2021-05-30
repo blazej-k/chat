@@ -1,14 +1,12 @@
-import React, { FC, MouseEvent, useLayoutEffect, useRef, lazy } from 'react'
+import React, { FC, MouseEvent, useLayoutEffect, useRef, lazy, Suspense } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/ContextHooks';
-import date from 'date-and-time'
-import { Avatar } from 'antd';
-import('antd/dist/antd.css');
+import UserAvatar from 'react-user-avatar'
 
 interface MessagesProps {
     messages: Dialogues[],
     friendName?: string,
-    groupName?: string
+    groupName?: string,
 }
 
 const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
@@ -19,7 +17,10 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
 
     const ref = useRef<HTMLUListElement>(null)
 
-    const { format } = date
+    const getDate = (date: number) => {
+        return `${new Date(date).getDay()}/${new Date(date).getMonth() + 1}\n 
+        ${new Date(date).getHours()}:${new Date(date).getMinutes()}`
+    }
 
     const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
         (e.target as Element).previousElementSibling!.className = newClassName
@@ -36,17 +37,9 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
                     {messages.map(({ date, _id, text, from }) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                             <div className="avatar">
-                                <Avatar
-                                    style={{
-                                        color: 'white',
-                                        backgroundColor: from === login ? mainColor : secondColor,
-                                    }}
-                                    size={45}
-                                    gap={4}>
-                                    {from}
-                                </Avatar>
+                                <UserAvatar name={from}/>
                             </div>
-                            <span className='date-hide'>{date && format(new Date(date), "HH:mm, DD/MM")}</span>
+                            <span className='date-hide'>{date && getDate(date)}</span>
                             <div
                                 className={`${from === login ? mainColor : secondColor} mess`}
                                 onMouseOver={(e) => toogleMessDate(e, 'date-show')}

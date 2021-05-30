@@ -1,14 +1,14 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import Slider from './Slider'
+import React, { FC, useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from 'react';
 import { motion } from "framer-motion"
 import HeaderAnimation from '../helpers/HeaderAnimation';
-import Modal from './Modal'
-import HomeDescription from './HomeDescription';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import Footer from '../footer/Footer';
 import animations from '../helpers/animationConfig'
+import HomeDescription from './HomeDescription'
 import '../../style/home/Home.scss';
+const Slider = lazy(() => import('./Slider'))
+const Modal = lazy(() => import('./Modal'))
 
 const Home: FC = () => {
 
@@ -88,29 +88,34 @@ const Home: FC = () => {
                         </div>
                     </div>
                     <div className="home-info">
-                        <HomeDescription
-                            buttonClick={handleButtonClick}
-                            buttonHover={handleButtonHover}
-                            colors={randomColors}
-                            showSpanInfo={showSpanInfo}
-                        />
+                            <HomeDescription
+                                buttonClick={handleButtonClick}
+                                buttonHover={handleButtonHover}
+                                colors={randomColors}
+                                showSpanInfo={showSpanInfo}
+                            />
                         <div className="home-info-slider">
-                            <Slider />
+                            <Suspense fallback={<div>Loading</div>}>
+                                <Slider />
+                            </Suspense>
                         </div>
                     </div>
                 </motion.div>
-                {(showSignInModal || showSignUpModal) &&
-                    <div className='modal-full-screen'>
-                        {showSignInModal ? <Modal
-                            isModalOpen={setShowSignInModal}
-                            redirectModal={redirectModal}
-                            type='signin'
-                        /> :
-                            <Modal
-                                isModalOpen={setShowSignUpModal}
-                                type='signup'
-                            />}
-                    </div>}
+                <Suspense fallback={null}>
+                    {(showSignInModal || showSignUpModal) &&
+                        <div className='modal-full-screen'>
+                            {showSignInModal ? <Modal
+                                isModalOpen={setShowSignInModal}
+                                redirectModal={redirectModal}
+                                type='signin'
+                            /> :
+                                <Modal
+                                    isModalOpen={setShowSignUpModal}
+                                    type='signup'
+                                />}
+                        </div>
+                    }
+                </Suspense>
             </div>
             <Footer />
         </>

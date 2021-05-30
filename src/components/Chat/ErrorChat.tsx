@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC} from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { logOut } from '../../actions/UserActions'

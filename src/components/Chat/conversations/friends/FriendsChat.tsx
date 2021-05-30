@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { ChangeEvent, FC, useLayoutEffect, useState, useEffect, useRef } from 'react';
+import React, { ChangeEvent, FC, useLayoutEffect, useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSocket } from '../../../hooks/ContextHooks';
 import Messages from '../helpers/Messages';
@@ -35,7 +34,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
                     setMessages(prev => [...prev, (conversationObj.dialogues.pop() as Dialogues)])
                     : setMessages(conversationObj.dialogues)
             }
-            else{
+            else {
                 dispatch(getCurrentUser(login))
             }
             messAccepted()
@@ -73,8 +72,8 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
     return (
         <div className="chat-content">
             <div className="conversations">
-                <Messages messages={messages} friendName={friendName} />
-                <NewMess handleInput={handleInput} sendMess={sendPrivateMess} newMess={newMess}/>
+                <Messages messages={messages} friendName={friendName}/>
+                <NewMess handleInput={handleInput} sendMess={sendPrivateMess} newMess={newMess} />
             </div>
         </div>
     );

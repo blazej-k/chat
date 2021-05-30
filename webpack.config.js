@@ -3,6 +3,7 @@ const path = require('path')
 const webpack = require('webpack')
 const Dotenv = require('dotenv-webpack');
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 module.exports = {
@@ -15,13 +16,6 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js']
     },
-    // mode: 'development',
-    // optimization: {
-    //     minimize: true,
-    //     removeAvailableModules: true,
-    //     removeEmptyChunks: true,
-    //     providedExports: true,
-    // },
     devtool: 'cheap-module-source-map',
     module: {
         rules: [
@@ -59,7 +53,8 @@ module.exports = {
         }),
         new webpack.HotModuleReplacementPlugin(),
         new Dotenv(),
-        new ErrorOverlayPlugin()
+        new ErrorOverlayPlugin(),
+        // new BundleAnalyzerPlugin()
     ],
     devServer: {
         compress: true,
