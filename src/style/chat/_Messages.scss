@@ -74,6 +74,13 @@
                     flex-direction: row-reverse;
                     .avatar {
                         text-align: right;
+                        * {
+                            text-overflow: ellipsis;
+                            // white-space: nowrap;
+                            overflow: hidden;
+                            color: white;
+                            font-size: 90%;
+                        }
                     }
                 }
             }

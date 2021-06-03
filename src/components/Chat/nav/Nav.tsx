@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { FC, memo, MouseEvent, useEffect, useState } from 'react';
+import React, { FC, MouseEvent, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import { ChatView } from '../../../enums/chatView';
@@ -7,9 +6,6 @@ import { useColor } from '../../hooks/ContextHooks';
 import Lists from './Lists';
 
 interface NavProps {
-    // showFriendsChat: (friend: string) => void
-    // showGroupsChat: (groupId: string) => void
-    // showHome: () => void
     changeChatView: (type: ChatView, name?: string) => void
 }
 
@@ -30,7 +26,7 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
     })
     const [showSpanWarning, setShowSpanWarning] = useState(false)
 
-    const { user: { login, friends, groups, waitingFriends, waitingGroups, sex } } = useSelector((store: Store) => store.userReducer)
+    const { user: { login, waitingFriends, waitingGroups, sex } } = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
 
     const { mainColor } = useColor()
@@ -89,10 +85,9 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
 
     const handleSpanMouseHover = (show: boolean) => setShowSpanWarning(show)
 
-    const listsProps = {
-        friends, groups, waitingGroups, waitingFriends, listsStatus, handleListStatus, changeChatView,
-        handleNewFriendDecission, handleNewGroupDecission
-    }
+    const listsProps = useMemo(() => ({
+        listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission
+    }), [listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission])
 
     return (
         <div className={`nav-wrapper ${mainColor}`}>
@@ -100,7 +95,7 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
                 <h1 className={mainColor}>{login}</h1>
                 <ul>
                     <li onClick={() => changeChatView(ChatView.home)}><b>Home</b></li>
-                    <Lists values={listsProps} />
+                    <Lists {...listsProps} />
                     <li>
                         <span
                             onMouseOver={() => handleSpanMouseHover(true)}
@@ -117,4 +112,4 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
     );
 }
 
-export default memo(Nav);
+export default Nav;

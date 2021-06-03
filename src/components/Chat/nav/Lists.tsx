@@ -1,58 +1,41 @@
 import React, { FC, MouseEvent } from 'react'
 import { MdClear, MdDone } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { ChatView } from '../../../enums/chatView';
 import List from './List';
+import ListsWrapper from './ListsWrapper';
 import { NavList } from './Nav';
 
 interface ListsProps {
-    values: {
-        friends: Friend[],
-        groups: Group[],
-        waitingGroups: WaitingGroup[],
-        waitingFriends: WaitingFriend[],
-        listsStatus: NavList<'collection-close', 'collection-open'>,
-        handleListStatus: (e: MouseEvent<HTMLSpanElement>) => void,
-        changeChatView: (type: ChatView, name: string) => void
-        handleNewFriendDecission: (decision: Decission, waiter: string) => void,
-        handleNewGroupDecission: (decision: Decission, group: WaitingGroup) => void
-    }
+    listsStatus: NavList<'collection-close', 'collection-open'>,
+    handleListStatus: (e: MouseEvent<HTMLSpanElement>) => void
+    changeChatView: (type: ChatView, name: string) => void
+    handleNewFriendDecission: (decision: Decission, waiter: string) => void,
+    handleNewGroupDecission: (decision: Decission, group: WaitingGroup) => void
 }
 
-const Lists: FC<ListsProps> = ({ values }) => {
+const Lists: FC<ListsProps> = ({ listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission }) => {
 
-    const { friends, groups, waitingFriends, waitingGroups, listsStatus, handleListStatus, changeChatView,
-        handleNewFriendDecission, handleNewGroupDecission } = values
+    const { user: { friends, groups, waitingFriends, waitingGroups } } = useSelector((store: Store) => store.userReducer)
 
     return (
-        <>
-            <List
-                type='friends'
-                list={friends}
-                listsStatus={listsStatus}
-                handleListStatus={handleListStatus}
-                elements={friends.map(({ date, login }) => (
+        <ListsWrapper listsStatus={listsStatus} handleListStatus={handleListStatus}>
+            <List type='friends' list={friends}>
+                {friends.map(({ date, login }) => (
                     <li key={date}>
                         <span onClick={() => changeChatView(ChatView.friends, login)}>{login}</span>
                     </li>
                 ))}
-            />
-            <List
-                type='groups'
-                list={groups}
-                listsStatus={listsStatus}
-                handleListStatus={handleListStatus}
-                elements={groups.map(({ groupId, groupName }) => (
+            </List>
+            <List type='groups' list={groups}>
+                {groups.map(({ groupId, groupName }) => (
                     <li key={groupId}>
                         <span onClick={() => changeChatView(ChatView.groups, groupId)}>{groupName}</span>
                     </li>
                 ))}
-            />
-            <List
-                type='waitingFriends'
-                list={waitingFriends}
-                listsStatus={listsStatus}
-                handleListStatus={handleListStatus}
-                elements={waitingFriends.map(({ sender, date }) => (
+            </List>
+            <List type='waitingFriends' list={waitingFriends}>
+                {waitingFriends.map(({ sender, date }) => (
                     <li key={date}>
                         <span>
                             {sender}
@@ -63,13 +46,9 @@ const Lists: FC<ListsProps> = ({ values }) => {
                         </div>
                     </li>
                 ))}
-            />
-            <List
-                type='waitingGroups'
-                list={waitingGroups}
-                listsStatus={listsStatus}
-                handleListStatus={handleListStatus}
-                elements={waitingGroups.map(group => (
+            </List>
+            <List type='waitingGroups' list={waitingGroups}>
+                {waitingGroups.map(group => (
                     <li key={group.date}>
                         <span>
                             {group.groupName}
@@ -80,8 +59,8 @@ const Lists: FC<ListsProps> = ({ values }) => {
                         </div>
                     </li>
                 ))}
-            />
-        </>
+            </List>
+        </ListsWrapper>
     );
 }
 

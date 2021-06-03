@@ -16,7 +16,6 @@ const LazyChat: FC = () => (
     </Suspense>
 )
 
-
 const Page: FC = () => {
     return (
         <>

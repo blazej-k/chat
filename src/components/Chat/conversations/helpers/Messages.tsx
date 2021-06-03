@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useLayoutEffect, useRef, lazy, Suspense } from 'react'
+import React, { FC, MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/ContextHooks';
 import UserAvatar from 'react-user-avatar'
@@ -18,8 +18,11 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
     const ref = useRef<HTMLUListElement>(null)
 
     const getDate = (date: number) => {
-        return `${new Date(date).getDay()}/${new Date(date).getMonth() + 1}\n 
-        ${new Date(date).getHours()}:${new Date(date).getMinutes()}`
+        const days = new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : `${new Date(date).getDate()}`
+        const months = new Date(date).getMonth() + 1 < 10 ? `0${new Date(date).getMonth() + 1}` : `${new Date(date).getMonth() + 1}`
+        const hours = new Date(date).getHours() < 10 ? `0${new Date(date).getHours()}` : `${new Date(date).getHours()}`
+        const minutes = new Date(date).getMinutes() < 10 ? `0${new Date(date).getMinutes()}` : `${new Date(date).getMinutes()}`
+        return `${days}/${months} ${hours}:${minutes}`
     }
 
     const toogleMessDate = (e: MouseEvent<HTMLDivElement>, newClassName: 'date-show' | 'date-hide') => {
@@ -37,7 +40,7 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
                     {messages.map(({ date, _id, text, from }) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                             <div className="avatar">
-                                <UserAvatar name={from}/>
+                                <UserAvatar size={55} name={('fdfdfdfdfdffdfd').split('').join(' ')} colors={[from === login ? mainColor : secondColor]}/>
                             </div>
                             <span className='date-hide'>{date && getDate(date)}</span>
                             <div
