@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useEffect, useMemo, useState } from 'react';
+import React, { FC, memo, MouseEvent, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import { ChatView } from '../../../enums/chatView';
@@ -112,4 +112,4 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
     );
 }
 
-export default Nav;
+export default memo(Nav);

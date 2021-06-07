@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useLayoutEffect, useRef } from 'react'
+import React, { FC, memo, MouseEvent, useLayoutEffect, useRef } from 'react'
 import { useSelector } from 'react-redux';
 import { useColor } from '../../../hooks/ContextHooks';
 import UserAvatar from 'react-user-avatar'
@@ -33,6 +33,8 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
         messages.length > 0 && ref?.current?.lastElementChild?.scrollIntoView()
     }, [messages])
 
+    console.log(1)
+
     return (
         <div className="dialogues">
             {messages.length > 0 ?
@@ -59,4 +61,4 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
     );
 }
 
-export default Messages;
+export default memo(Messages);

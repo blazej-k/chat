@@ -4,10 +4,10 @@ import "react-image-gallery/styles/scss/image-gallery.scss";
 
 const Slider: FC = () => {
 
-    const [images, setImages] = useState<{ original: string }[]>([])
+    const [images, setImages] = useState<{original: string, originalAlt: 'slider-image'}[]>([])
 
     const getPhoto = async () => {
-        const result: { original: string, originalAlt: string }[] = []
+        const result: typeof images = []
         //add one to 6 when there'll be new photo
         for (let i = 1; i <= 6; i++) {
             await import(`../../assets/img${i}.jpg`).then(res => {
@@ -33,6 +33,7 @@ const Slider: FC = () => {
                         autoPlay={true}
                         showThumbnails={false}
                         slideInterval={4000}
+                        lazyLoad={true}
                     />
                 }
             </div>

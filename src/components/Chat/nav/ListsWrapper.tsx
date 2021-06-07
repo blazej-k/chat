@@ -1,4 +1,4 @@
-import React, { Children, FC, MouseEvent, cloneElement, isValidElement } from 'react'
+import { Children, FC, MouseEvent, cloneElement, isValidElement } from 'react'
 import { NavList } from './Nav';
 
 interface ListsWrapperProps {

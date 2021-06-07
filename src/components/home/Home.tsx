@@ -6,8 +6,8 @@ import { Redirect } from 'react-router';
 import Footer from '../footer/Footer';
 import animations from '../helpers/animationConfig'
 import HomeDescription from './HomeDescription'
+import Slider from './Slider';
 import '../../style/home/Home.scss';
-const Slider = lazy(() => import('./Slider'))
 const Modal = lazy(() => import('./Modal'))
 
 const Home: FC = () => {
@@ -95,13 +95,11 @@ const Home: FC = () => {
                                 showSpanInfo={showSpanInfo}
                             />
                         <div className="home-info-slider">
-                            <Suspense fallback={<div>Loading</div>}>
-                                <Slider />
-                            </Suspense>
+                            <Slider />
                         </div>
                     </div>
                 </motion.div>
-                <Suspense fallback={null}>
+                <Suspense fallback={<div>loading...</div>}>
                     {(showSignInModal || showSignUpModal) &&
                         <div className='modal-full-screen'>
                             {showSignInModal ? <Modal
