@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useRef } from 'react'
+import React, { ChangeEvent, FC, memo, useEffect, useRef } from 'react'
 import { AiOutlineSend } from 'react-icons/ai';
 import { MdPersonAdd } from 'react-icons/md';
 import { useColor } from '../../../hooks/ContextHooks';
@@ -53,4 +53,4 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendMess, handleInput, i
     );
 }
 
-export default NewMessInput;
+export default memo(NewMessInput);

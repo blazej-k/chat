@@ -33,8 +33,6 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
         messages.length > 0 && ref?.current?.lastElementChild?.scrollIntoView()
     }, [messages])
 
-    console.log(1)
-
     return (
         <div className="dialogues">
             {messages.length > 0 ?

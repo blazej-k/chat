@@ -65,9 +65,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
         setNewMess('')
     }
 
-    const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewMess(e.target.value)
-    }
+    const handleInput = (e: ChangeEvent<HTMLInputElement>) => setNewMess(e.target.value)
 
     return (
         <div className="chat-content">

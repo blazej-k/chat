@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent } from 'react'
+import React, { FC, memo, MouseEvent } from 'react'
 import { MdClear, MdDone } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { ChatView } from '../../../enums/chatView';
@@ -64,4 +64,4 @@ const Lists: FC<ListsProps> = ({ listsStatus, handleListStatus, changeChatView, 
     );
 }
 
-export default Lists;
+export default memo(Lists);
