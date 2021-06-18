@@ -4,23 +4,23 @@ describe('Formik validate', () => {
     test('should return object with login error', () => {
         const values: FormValues = {login: '', password: 'q', keepLogIn: true}
         const res = formikValidate(values, 'signin')
-        expect(res.login).toBeTruthy()
+        expect(res.login).toMatchSnapshot()
     })
     test('should return object with password error', () => {
         const values: FormValues = {login: 'q', password: '', keepLogIn: true}
         const res = formikValidate(values, 'signin')
-        expect(res.password).toBeTruthy()
+        expect(res.password).toMatchSnapshot()
     })
     test('should return object with sex error', () => {
         const values: FormValues = {login: 'q', password: '', keepLogIn: true}
         const res = formikValidate(values, 'signup')
-        expect(res.sex).toBeTruthy()
+        expect(res.sex).toMatchSnapshot()
     })
     test('should return empty errors object(signin)', () => {
         const values: FormValues = {login: 'q', password: 'q', keepLogIn: true}
         const res = formikValidate(values, 'signin')
-        expect(res).toEqual({})
-    })
+        expect(res).toEqual({}) 
+    }) 
     test('should return empty errors object(signup)', () => {
         const values: FormValues = {login: 'q', password: 'q', keepLogIn: true, sex: 'female'}
         const res = formikValidate(values, 'signup')

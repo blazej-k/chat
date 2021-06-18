@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Formik validate should return object with login error 1`] = `true`;
+
+exports[`Formik validate should return object with password error 1`] = `true`;
+
+exports[`Formik validate should return object with sex error 1`] = `true`;

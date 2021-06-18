@@ -1,5 +1,4 @@
-import { MouseEvent } from 'react'
-import { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { RiArrowRightSLine } from 'react-icons/ri';
 import { NavList } from './Nav';
 

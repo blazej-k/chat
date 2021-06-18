@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { FC, useEffect, useRef, useState, MouseEvent } from 'react';
+import React, { FC, useEffect, useRef, useState, MouseEvent } from 'react';
 import ModalSlideDes from './ModalSlideDes';
 import '../../../style/modals/Modals.scss'
 

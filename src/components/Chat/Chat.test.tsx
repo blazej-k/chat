@@ -3,13 +3,10 @@ import { render, screen, waitFor } from '@testing-library/react'
 import Chat from './Chat'
 import SocketProvider from '../context/SocketContext'
 import { Provider } from 'react-redux'
-import { BrowserRouter, MemoryRouter, Route, Switch } from 'react-router-dom'
+import { MemoryRouter, Route, Switch } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
 import { UserReducer } from '../../reducers/UserReducer'
 import { combineReducers, createStore } from 'redux'
-import { createMemoryHistory } from 'history'
-import { Router } from 'react-router-dom'
-import { Options } from 'html-webpack-plugin'
 import Home from '../home/Home'
 
 const exampelUser: User = {
@@ -54,8 +51,8 @@ beforeEach(() => {
 })
 
 describe('Chat', () => {
-    it('should render component', () => {
-        expect(screen.getByText(/welcome back, user/i)).toBeTruthy()
+    it('should render component', async() => {
+        await waitFor(() => expect(screen.getByText(/welcome back, user/i)).toBeTruthy())
     })
 
     it('should render show greeting modal when user sign up', () => {
