@@ -16,26 +16,28 @@ beforeEach(() => {
     } as Response))
 })
 
+afterEach(() => jest.clearAllMocks())
+
 describe('Modal', () => {
-    it('should prevent sending data if username is empty', () => {
+    it('should prevent sending data if username is empty', async() => {
         const ModalProvider = createModal('signin')
         const { getByPlaceholderText } = render(ModalProvider)
         const passwordInput = getByPlaceholderText('Password')
         fireEvent.change(passwordInput, { target: { value: 'pass' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
-        expect(global.fetch).not.toBeCalled()
+        await waitFor(() => expect(global.fetch).not.toBeCalled())
     })
 
-    it('should prevent sending data if password is empty', () => {
+    it('should prevent sending data if password is empty', async() => {
         const ModalProvider = createModal('signin')
         const { getByPlaceholderText } = render(ModalProvider)
         const loginInput = getByPlaceholderText('Username')
         fireEvent.change(loginInput, { target: { value: 'username' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
-        expect(global.fetch).not.toBeCalled()
+        await waitFor(() => expect(global.fetch).not.toBeCalled())
     })
 
-    it('should prevent sending data if sex is empty', () => {
+    it('should prevent sending data if sex is empty', async() => {
         const ModalProvider = createModal('signup')
         render(ModalProvider)
         const { getByPlaceholderText } = screen
@@ -44,7 +46,7 @@ describe('Modal', () => {
         fireEvent.change(loginInput, { target: { value: 'username' } })
         fireEvent.change(passwordInput, { target: { value: 'pass' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
-        expect(global.fetch).not.toBeCalled()
+        await waitFor(() => expect(global.fetch).not.toBeCalled())
     })
 
     it('should sign in', async () => {

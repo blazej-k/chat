@@ -1,5 +1,5 @@
 import React, { FC, memo, MouseEvent, useEffect, useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import { ChatView } from '../../../enums/chatView';
 import { useColor } from '../../hooks/ContextHooks';
@@ -26,7 +26,8 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
     })
     const [showSpanWarning, setShowSpanWarning] = useState(false)
 
-    const { user: { login, waitingFriends, waitingGroups, sex } } = useSelector((store: Store) => store.userReducer)
+    const { login, waitingFriends, waitingGroups, sex } = useSelector((store: Store) => store.userReducer.user, shallowEqual)
+
     const dispatch = useDispatch()
 
     const { mainColor } = useColor()

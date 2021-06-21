@@ -1,6 +1,6 @@
 import React, { FC, memo, MouseEvent } from 'react'
 import { MdClear, MdDone } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import { ChatView } from '../../../enums/chatView';
 import List from './List';
 import ListsWrapper from './ListsWrapper';
@@ -16,7 +16,7 @@ interface ListsProps {
 
 const Lists: FC<ListsProps> = ({ listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission }) => {
 
-    const { user: { friends, groups, waitingFriends, waitingGroups } } = useSelector((store: Store) => store.userReducer)
+    const { friends, groups, waitingFriends, waitingGroups } = useSelector((store: Store) => store.userReducer.user, shallowEqual)
 
     return (
         <ListsWrapper listsStatus={listsStatus} handleListStatus={handleListStatus}>
