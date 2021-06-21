@@ -18,9 +18,12 @@ const getDate = (date: number) => {
     return `${days}/${months} ${hours}:${minutes}`
 }
 
+let Avatar: FC<{colors: string}> = ({colors}) => <UserAvatar size={55} name={('fdfdfdfdfdffdfd').split('').join(' ')} colors={[colors]}/>
+Avatar = memo(Avatar, () => true)
+
 const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
 
-    const { user: { login } } = useSelector((state: Store) => state.userReducer)
+    const login = useSelector((state: Store) => state.userReducer.user.login)
 
     const { mainColor, secondColor } = useColor()
 
@@ -41,7 +44,7 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName }) => {
                     {messages.map(({ date, _id, text, from }) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : ''}>
                             <div className="avatar">
-                                <UserAvatar size={55} name={('fdfdfdfdfdffdfd').split('').join(' ')} colors={[from === login ? mainColor : secondColor]}/>
+                                <Avatar colors={from === login ? mainColor : secondColor}/>
                             </div>
                             <span className='date-hide'>{date && getDate(date)}</span>
                             <div
