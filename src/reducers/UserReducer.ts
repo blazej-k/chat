@@ -117,7 +117,8 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             return state
 
         case GETCURRENTUSER:
-            return state = { loading: false, error: '', user: action.payload }
+            state.user = action.payload
+            return state
 
         case ADDNEWMESSAGE:
             const { from, text, convFriend } = action.payload
@@ -138,7 +139,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     })
                 }
             })
-            state = { ...state, user: { ...state.user, conversations: updatedConv } }
+            state.user.conversations = updatedConv
             return state
 
         case ERRORMESSAGE:

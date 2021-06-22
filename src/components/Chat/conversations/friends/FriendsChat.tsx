@@ -18,8 +18,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
 
     const { client } = useSocket()
 
-    const state = useSelector((state: Store) => state.userReducer)
-    const { user: { login, conversations } } = state
+    const { login, conversations } = useSelector((state: Store) => state.userReducer.user)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -43,7 +42,6 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
 
     useLayoutEffect(() => {
         if (!isNewMess) {
-            const { user: { conversations } } = state
             conversations.forEach(conversation => {
                 if (conversation.login === friendName) {
                     setMessages(conversation.dialogues)
@@ -70,7 +68,7 @@ const FriendsChat: FC<FriendsChatProps> = ({ friendName, isNewMess, messAccepted
     return (
         <div className="chat-content">
             <div className="conversations">
-                <Messages messages={messages} friendName={friendName}/>
+                <Messages messages={messages} friendName={friendName} login={login}/>
                 <NewMess handleInput={handleInput} sendMess={sendPrivateMess} newMess={newMess} />
             </div>
         </div>

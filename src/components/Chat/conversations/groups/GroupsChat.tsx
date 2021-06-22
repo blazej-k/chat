@@ -22,7 +22,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
 
     const { client } = useSocket()
 
-    const { user: { login, groups } } = useSelector((state: Store) => state.userReducer)
+    const { login, groups } = useSelector((state: Store) => state.userReducer.user)
     const dispatch = useDispatch()
 
     useLayoutEffect(() => {
@@ -37,7 +37,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
                     setMessages(prev => [...prev, (groupObj.dialogues.pop() as Dialogues)])
                     : setMessages(groupObj.dialogues)
             }
-            else{
+            else {
                 dispatch(getCurrentUser(login))
             }
             messAccepted()
@@ -96,7 +96,7 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
         <div className="chat-content">
             <div className="conversations">
                 {showInvitePanel && <div className="hide-messages"></div>}
-                <Messages messages={messages} groupName={wantedGroup?.groupName} />
+                <Messages messages={messages} groupName={wantedGroup?.groupName} login={login}/>
                 {!showInvitePanel ? <NewMess
                     newMess={newMess}
                     sendMess={sendGroupMess}
@@ -104,12 +104,12 @@ const GroupsChat: FC<GroupsChatProps> = ({ groupId, isNewMess, messAccepted }) =
                     isGroupShowed={true}
                     changeInputVisiblity={showGroupInvitePanel}
                 /> : <InvitePanel
-                     newMember={newMember} 
-                     handleInput={handleInput} 
-                     sendInvite={sendInvite} 
-                     changeInputVisiblity={showGroupInvitePanel}
-                     groupId={groupId}
-                    />
+                    newMember={newMember}
+                    handleInput={handleInput}
+                    sendInvite={sendInvite}
+                    changeInputVisiblity={showGroupInvitePanel}
+                    groupId={groupId}
+                />
                 }
             </div>
         </div>

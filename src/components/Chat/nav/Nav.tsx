@@ -88,8 +88,8 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
 
     const listsProps = useMemo(() => ({
         listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission
-    }), [listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission])
-
+    }), [listsStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission])
+    
     return (
         <div className={`nav-wrapper ${mainColor}`}>
             <div className="nav">
