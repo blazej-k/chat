@@ -1,14 +1,7 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import Modal from './Modal'
-import { Provider } from 'react-redux';
-import { store } from '../../reducers/store';
+import { fireEvent, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect';
-
-
-const mockIsModalOpen = jest.fn()
-const createModal = (type: 'signin' | 'signup') => <Provider store={store}><Modal type={type} isModalOpen={mockIsModalOpen} /></Provider>
-
+import renderModal from 'test-utils/renderModal';
 
 beforeEach(() => {
     global.fetch = jest.fn(() => Promise.resolve({
@@ -20,8 +13,7 @@ afterEach(() => jest.clearAllMocks())
 
 describe('Modal', () => {
     it('should prevent sending data if username is empty', async() => {
-        const ModalProvider = createModal('signin')
-        const { getByPlaceholderText } = render(ModalProvider)
+        const { getByPlaceholderText } = renderModal()
         const passwordInput = getByPlaceholderText('Password')
         fireEvent.change(passwordInput, { target: { value: 'pass' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
@@ -29,8 +21,7 @@ describe('Modal', () => {
     })
 
     it('should prevent sending data if password is empty', async() => {
-        const ModalProvider = createModal('signin')
-        const { getByPlaceholderText } = render(ModalProvider)
+        const { getByPlaceholderText } = renderModal()
         const loginInput = getByPlaceholderText('Username')
         fireEvent.change(loginInput, { target: { value: 'username' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
@@ -38,8 +29,7 @@ describe('Modal', () => {
     })
 
     it('should prevent sending data if sex is empty', async() => {
-        const ModalProvider = createModal('signup')
-        render(ModalProvider)
+        renderModal()
         const { getByPlaceholderText } = screen
         const loginInput = getByPlaceholderText('Username')
         const passwordInput = getByPlaceholderText('Password')
@@ -50,9 +40,7 @@ describe('Modal', () => {
     })
 
     it('should sign in', async () => {
-        const ModalProvider = createModal('signin')
-        render(ModalProvider)
-        const { getByPlaceholderText } = screen
+        const { getByPlaceholderText } = renderModal()
         const loginInput = getByPlaceholderText('Username')
         const passwordInput = getByPlaceholderText('Password')
         fireEvent.change(loginInput, { target: { value: 'username' } })
@@ -62,9 +50,7 @@ describe('Modal', () => {
     })
 
     it('should sign up', async () => {
-        const ModalProvider = createModal('signup')
-        render(ModalProvider)
-        const { getByPlaceholderText, getByLabelText } = screen
+        const { getByPlaceholderText, getByLabelText } = renderModal('signup')
         const loginInput = getByPlaceholderText('Username')
         const passwordInput = getByPlaceholderText('Password')
         const sexInput = getByLabelText('Male')
