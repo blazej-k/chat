@@ -1,5 +1,4 @@
-import React, { FC, memo, MouseEvent, ReactNode, useEffect, useLayoutEffect, useMemo, useRef } from 'react'
-import { useSelector } from 'react-redux';
+import React, { FC, memo, MouseEvent, useLayoutEffect, useMemo, useRef } from 'react'
 import { useColor } from '../../../hooks/ContextHooks';
 import UserAvatar from 'react-user-avatar'
 

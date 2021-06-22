@@ -16,12 +16,10 @@ const Inputs: FC = () => {
     const [confirmNewFriend, setConfirmNewFriend] = useState(false)
 
     const dispatch = useDispatch()
-    const { userReducer } = useSelector((state: Store) => state)
+    const { login, sex, groups, groups: { length } } = useSelector((state: Store) => state.userReducer.user)
 
     const { mainColor } = useColor()
     const { client } = useSocket()
-
-    const { user: { login, sex, groups, groups: { length } } } = userReducer
 
     const [userGroupsLength, setUserGroupsLength] = useState(length)
 

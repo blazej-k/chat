@@ -6,11 +6,12 @@
   "scripts": {
     "build": "webpack --mode=production",
     "start": "webpack serve --mode=development",
-    "test": "jest --watch"
+    "test": "jest --watchAll --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@testing-library/react-hooks": "^7.0.0",
     "babel": "^6.23.0",
     "css-loader": "^5.1.2",
     "formik": "^2.2.6",

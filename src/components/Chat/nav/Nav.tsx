@@ -91,7 +91,7 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
     }), [listsStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission])
     
     return (
-        <div className={`nav-wrapper ${mainColor}`}>
+        <div className={`nav-wrapper ${mainColor}`} data-testid='nav'>
             <div className="nav">
                 <h1 className={mainColor}>{login}</h1>
                 <ul>

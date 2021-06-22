@@ -3,12 +3,9 @@ import { screen, waitFor } from '@testing-library/react'
 import Chat from './Chat'
 import renderWithRouter from 'test-utils/renderWithProviders' 
 
-beforeEach(() => {
-    renderWithRouter(<Chat />)
-})
-
 describe('Chat', () => {
     it('should render component', async() => {
+        renderWithRouter(<Chat />)
         await waitFor(() => expect(screen.getByText(/welcome back, user/i)).toBeTruthy())
     })
 
