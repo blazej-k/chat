@@ -8,6 +8,12 @@ interface ModalProps {
     showModal: (value: false) => void
 }
 
+const Circle: FC<{ refs: HTMLDivElement[], index: number, slideIndex: number }> = ({ refs, index, slideIndex }) => (
+    <div className="circle-wrapper" id={`circle${index}`} ref={el => el && refs.push(el)}>
+        <div className={`circle ${slideIndex === index ? 'active' : ''}`}></div>
+    </div>
+)
+
 const Modal: FC<ModalProps> = ({ login, showModal }) => {
 
     const [slideIndex, setSlideIndex] = useState(0)
@@ -77,19 +83,13 @@ const Modal: FC<ModalProps> = ({ login, showModal }) => {
                     <h1>Welcome {login}!</h1>
                     <div className="slide" ref={slideRef}>
                         <div className="description">
-                           <ModalSlideDes index={slideIndex}/>
+                            <ModalSlideDes index={slideIndex} />
                         </div>
                     </div>
                     <div className="nav" ref={navRef}>
-                        <div className="circle-wrapper" id='circle1' ref={el => el && refs.push(el)}>
-                            <div className="circle active"></div>
-                        </div>
-                        <div className="circle-wrapper" id='circle2' ref={el => el && refs.push(el)}>
-                            <div className="circle"></div>
-                        </div>
-                        <div className="circle-wrapper" id='circle3' ref={el => el && refs.push(el)}>
-                            <div className="circle"></div>
-                        </div>
+                        <Circle refs={refs} index={0} slideIndex={slideIndex}/>
+                        <Circle refs={refs} index={1} slideIndex={slideIndex}/>
+                        <Circle refs={refs} index={2} slideIndex={slideIndex}/>
                     </div>
                     <div className="buttons-wrapper">
                         <div className="buttons">
