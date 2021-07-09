@@ -9,10 +9,10 @@ import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInf
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import animations from '../helpers/animationConfig'
 import useShowChatView from '../hooks/ChatHooks';
-import '../../style/chat/Chat.scss'
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorChat from './ErrorChat';
 import Nav from './nav/Nav';
+import '../../style/chat/Chat.scss'
 const Home = lazy(() => import('./home/Home'))
 const FriendsChat = lazy(() => import('./conversations/friends/FriendsChat'));
 const GroupsChat = lazy(() => import('./conversations/groups/GroupsChat'));
@@ -27,7 +27,7 @@ const Chat: FC = () => {
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
     const { client, handleDisconnecting, handleConnecting, getNewPrivateMess, getNewGroupMess } = useSocket()
-    const [{ showHome, showFriend, showGroup, friendName, groupId }, changeChatView] = useShowChatView()
+    const [{ showHome, showFriend, showGroup, friendName, groupId }] = useShowChatView()
 
     const dispatch = useDispatch()
     const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)
@@ -100,7 +100,7 @@ const Chat: FC = () => {
                                 </div>
                             }
                             <NewMessInfo show={show} text={text} from={from} />
-                            <Nav changeChatView={changeChatView} />
+                            <Nav />
                             <div className="chat-content-wrapper">
                                 <Suspense fallback={<div>Loading...</div>}>
                                     {showHome && <Home isNew={isNew} />}

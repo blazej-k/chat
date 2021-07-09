@@ -33,8 +33,8 @@ describe('ColorContext', () => {
         expect(screen.queryByTestId('main')?.className).toEqual('orange')
         expect(screen.queryByTestId('second')?.className).toEqual('green')
     })
-    test('should show custom component with specific classNames(colors)', async() => {
-        renderWithColorProvider(<Nav changeChatView={jest.fn()}/>)
+    test('should show custom component with specific classNames(colors)', () => {
+        renderWithColorProvider(<Nav />)
         const nav = screen.getByTestId('nav')
         const userLogin = screen.getByRole('heading')
         expect(userLogin.className).toEqual('blue')

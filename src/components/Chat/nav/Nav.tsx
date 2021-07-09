@@ -2,12 +2,9 @@ import React, { FC, memo, MouseEvent, useEffect, useMemo, useState } from 'react
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import { ChatView } from '../../../enums/chatView';
+import useShowChatView from '../../hooks/ChatHooks';
 import { useColor } from '../../hooks/ContextHooks';
 import Lists from './Lists';
-
-interface NavProps {
-    changeChatView: (type: ChatView, name?: string) => void
-}
 
 export interface NavList<T, N> {
     friends: T | N,
@@ -16,7 +13,7 @@ export interface NavList<T, N> {
     waitingGroups: T | N
 }
 
-const Nav: FC<NavProps> = ({ changeChatView }) => {
+const Nav: FC = () => {
 
     const [listsStatus, setListsStatus] = useState<NavList<'collection-close', 'collection-open'>>({
         friends: 'collection-close',
@@ -31,6 +28,8 @@ const Nav: FC<NavProps> = ({ changeChatView }) => {
     const dispatch = useDispatch()
 
     const { mainColor } = useColor()
+
+    const [, changeChatView] = useShowChatView()
 
     useEffect(() => {
         let collectionToClose: 'waitingGroups' | 'waitingFriends' | '' = ''

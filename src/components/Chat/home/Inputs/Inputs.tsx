@@ -1,7 +1,4 @@
-import * as React from 'react';
-import { ChangeEvent, useState } from 'react';
-import { useEffect } from 'react';
-import { FC } from 'react';
+import React, { ChangeEvent, useState, useEffect, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGroup } from '../../../../actions/CommunityActions';
 import { sendInvite } from '../../../../actions/UserActions';

@@ -29,4 +29,4 @@ export const ColorContext = createContext<Context>({
     changeMainColor: () => null,
     changeSecondColor: () => null
 })
-export default  ColorProvider
+export default ColorProvider

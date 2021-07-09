@@ -22,11 +22,11 @@ const List: FC<ListProps> = ({ type, list, listsStatus, children, handleListStat
                 {list.length > 0 ?
                     <>
                         <span onClick={(e) => handleListStatus(e)}>{getListName(type)}</span>
-                        <RiArrowRightSLine />
+                        <RiArrowRightSLine/>
                     </> :
                     <>
                         <span className='empty-list'>{getListName(type)}</span>
-                        <RiArrowRightSLine className='empty-list' />
+                        <RiArrowRightSLine className='empty-list'/>
                     </>
                 }
                 {list.length > 0 && listsStatus[type] === 'collection-open' &&

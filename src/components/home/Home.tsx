@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from 'react';
 import { motion } from "framer-motion"
-import HeaderAnimation from '../helpers/HeaderAnimation';
+import createHeaderAnimation from '../helpers/HeaderAnimation';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 import Footer from '../footer/Footer';
@@ -34,7 +34,7 @@ const Home: FC = () => {
             }
         }
         setRandomColors(result)
-        if (ref && ref.current) HeaderAnimation(ref.current, result)
+        if (ref && ref.current) createHeaderAnimation(ref.current, result)
     }, [])
 
     useEffect(() => {
@@ -121,4 +121,3 @@ const Home: FC = () => {
 }
 
 export default Home;
-

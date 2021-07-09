@@ -1,4 +1,4 @@
-const HeaderAnimation = (current: HTMLHeadingElement, colors: string[]) => {
+const createHeaderAnimation = (current: HTMLHeadingElement, colors: string[]) => {
     const text = current.textContent?.split("") || []
     current.textContent = ''
     let i = 0
@@ -14,4 +14,4 @@ const HeaderAnimation = (current: HTMLHeadingElement, colors: string[]) => {
     }, 60)
 }
 
-export default HeaderAnimation
+export default createHeaderAnimation
