@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode=production --env production",
-    "start": "webpack serve --mode=development",
+    "start": "webpack serve --mode=development --env devtool=eval-source-map",
+    "test-performance": "webpack serve --mode=development --env devtool=eval",
     "test": "jest --watchAll --detectOpenHandles"
   },
   "author": "",

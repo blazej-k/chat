@@ -17,7 +17,7 @@ module.exports = env => {
         resolve: {
             extensions: ['.ts', '.tsx', '.js']
         },
-        devtool: !env.production && 'eval',
+        devtool: !env.production && env.devtool,
         module: {
             rules: [
                 {
