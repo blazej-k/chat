@@ -19,8 +19,6 @@ getPhotos().then(res => images = res)
 
 const Slider: FC = () => {
 
-    console.log('slider')
-
     const [showSlider, setShowSlider] = useState(false)
 
     return (
@@ -32,7 +30,7 @@ const Slider: FC = () => {
                     showFullscreenButton={false}
                     showPlayButton={false}
                     showNav={false}
-                    // autoPlay={true}
+                    autoPlay={true}
                     showThumbnails={false}
                     slideInterval={4000}
                     lazyLoad={true}

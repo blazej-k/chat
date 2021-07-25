@@ -8,7 +8,7 @@ import { useSocket } from '../hooks/ContextHooks';
 import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';
 import animations from '../helpers/animationConfig'
-import useShowChatView from '../hooks/ChatHooks';
+import { useShowChatView } from '../hooks/ContextHooks';
 import { ErrorBoundary } from 'react-error-boundary'
 import ErrorChat from './ErrorChat';
 import Nav from './nav/Nav';
@@ -27,7 +27,7 @@ const Chat: FC = () => {
     const { isNew } = useParams<{ isNew: 'true' | 'false' }>()
 
     const { client, handleDisconnecting, handleConnecting, getNewPrivateMess, getNewGroupMess } = useSocket()
-    const [{ showHome, showFriend, showGroup, friendName, groupId }] = useShowChatView()
+    const { chatView: { friendName, showFriend, groupId, showGroup, showHome } } = useShowChatView()
 
     const dispatch = useDispatch()
     const { userReducer: { user: { login, groups, conversations } } } = useSelector((store: Store) => store)

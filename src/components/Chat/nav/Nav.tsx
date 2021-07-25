@@ -2,7 +2,7 @@ import React, { FC, memo, MouseEvent, useEffect, useMemo, useState } from 'react
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import { confirmFriendsInvite, logOut, removeInvite, joinToGroup } from '../../../actions/UserActions'
 import { ChatView } from '../../../enums/chatView';
-import useShowChatView from '../../hooks/ChatHooks';
+import { useShowChatView } from '../../hooks/ContextHooks';
 import { useColor } from '../../hooks/ContextHooks';
 import Lists from './Lists';
 
@@ -29,7 +29,7 @@ const Nav: FC = () => {
 
     const { mainColor } = useColor()
 
-    const [, changeChatView] = useShowChatView()
+    const { changeChatView } = useShowChatView()
 
     useEffect(() => {
         let collectionToClose: 'waitingGroups' | 'waitingFriends' | '' = ''
@@ -88,7 +88,7 @@ const Nav: FC = () => {
     const listsProps = useMemo(() => ({
         listsStatus, handleListStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission
     }), [listsStatus, changeChatView, handleNewFriendDecission, handleNewGroupDecission])
-    
+
     return (
         <div className={`nav-wrapper ${mainColor}`} data-testid='nav'>
             <div className="nav">
@@ -103,7 +103,7 @@ const Nav: FC = () => {
                             onClick={handleLogOut}
                         >
                             Log out
-                    </span>
+                        </span>
                         {showSpanWarning && <span className='log-out-warning'>Are you sure to leave?</span>}
                     </li>
                 </ul>

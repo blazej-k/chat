@@ -1,4 +1,5 @@
-import { useReducer } from "react"
+import React, { FC, useReducer } from 'react'
+import { createContext } from 'react'
 import { ChatView } from "../../enums/chatView"
 
 interface ChatViewProps {
@@ -14,31 +15,47 @@ interface ChatViewAction {
     name: string
 }
 
+interface Context {
+    chatView: ChatViewProps,
+    changeChatView: (type: ChatView, name?: string) => void
+}
+
 const chatViewReducer = (state: ChatViewProps, action: ChatViewAction) => {
     switch (action.type) {
-        case 'HOME':
+        case ChatView.home:
             return state = { showHome: true, showFriend: false, showGroup: false, friendName: '', groupId: '' }
-        case 'FRIENDS':
+        case ChatView.friends:
             return state = { showHome: false, showFriend: true, showGroup: false, friendName: action.name, groupId: '' }
-        case 'GROUPS':
+        case ChatView.groups:
             return state = { showHome: false, showFriend: false, showGroup: true, friendName: '', groupId: action.name }
         default:
             return state
     }
 }
 
-const useShowChatView = (): [ChatViewProps, (type: ChatView, name?: string) => void] => {
-    const initChatView: ChatViewProps = {
-        showFriend: false,
-        showGroup: false,
-        showHome: true,
-        friendName: '',
-        groupId: ''
-    }
+const initChatView: ChatViewProps = {
+    showFriend: false,
+    showGroup: false,
+    showHome: true,
+    friendName: '',
+    groupId: ''
+}
+ 
+const ChatViewProvider: FC = ({children}) => {
+
     const [chatView, dispatch] = useReducer(chatViewReducer, initChatView)
     const changeChatView = (type: ChatView, name = '') => dispatch({ type, name })
 
-    return [chatView, changeChatView]
+    return (
+        <ChatViewContext.Provider value={{chatView, changeChatView}}>
+            {children}
+        </ChatViewContext.Provider>
+    );
 }
 
-export default useShowChatView
+const ChatViewContext = createContext<Context>({
+    chatView: initChatView,
+    changeChatView: () => null
+})
+
+export {ChatViewContext, ChatViewProvider}
