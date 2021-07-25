@@ -1,5 +1,5 @@
 import React, { FC, lazy, Suspense } from "react";
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { AnimatePresence } from "framer-motion"
 import { ChatViewProvider } from "./context/ChatViewContext";
 const Home = lazy(() => import('./home/Home'))

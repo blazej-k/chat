@@ -22,20 +22,22 @@ const Slider: FC = () => {
     const [showSlider, setShowSlider] = useState(false)
 
     return (
-        <div className="slider-wrapper" style={{textAlign: !showSlider ? 'center' : 'start'}}>
+        <div className="slider-wrapper" style={{ textAlign: !showSlider ? 'center' : 'start' }}>
             {!showSlider && <Loader type='Watch' color='black' width='40px' />}
             <div className='slider' style={{ opacity: showSlider ? 1 : 0 }}>
-                <ImageGallery
-                    items={images}
-                    showFullscreenButton={false}
-                    showPlayButton={false}
-                    showNav={false}
-                    autoPlay={true}
-                    showThumbnails={false}
-                    slideInterval={4000}
-                    lazyLoad={true}
-                    onImageLoad={() => setShowSlider(true)}
-                />
+                {images && (
+                    <ImageGallery
+                        items={images && images}
+                        showFullscreenButton={false}
+                        showPlayButton={false}
+                        showNav={false}
+                        autoPlay={true}
+                        showThumbnails={false}
+                        slideInterval={4000}
+                        lazyLoad={true}
+                        onImageLoad={() => setShowSlider(true)}
+                    />
+                )}
             </div>
         </div>
     )

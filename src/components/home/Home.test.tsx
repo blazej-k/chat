@@ -12,7 +12,8 @@ beforeEach(() => {
 describe('Home', () => {
     it('should show home page', async() => {
         const { getByText } = screen;
-        await waitFor(() => expect(getByText('ChatZilla')).toBeInTheDocument())
+        const text = getByText('ChatZilla')
+        await waitFor(() => expect(text).toBeTruthy())
     });
     it('should show sign in modal after click', async() => {
         const { getByText, getByTestId } = screen;
