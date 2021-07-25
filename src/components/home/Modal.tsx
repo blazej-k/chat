@@ -3,11 +3,8 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserError, userAuth } from "../../actions/UserActions";
 import validate from '../helpers/FormikValidate'
-// import Loader from "react-loader-spinner";
+import Loader from "react-loader-spinner";
 import '../../style/modals/Modals.scss'
-
-// let removeUserError: Function
-// let userAuth: Function
 
 interface ModalProps {
     isModalOpen: (value: false) => void,
@@ -79,7 +76,11 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
     return (
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
             <div className="modal-box">
-                <div data-testid={type === 'signin' ? 'm-sign-in' : 'm-sign-up'} className='modal sign-in-modal' id={!showModal ? 'modal-close' : ''}>
+                <div
+                    data-testid={type === 'signin' ? 'm-sign-in' : 'm-sign-up'}
+                    className='modal sign-in-modal'
+                    id={!showModal ? 'modal-close' : ''}
+                >
                     <h1>
                         {type === 'signup' ? 'Create your new account' : 'Sign In'}
                     </h1>
@@ -115,11 +116,12 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                                 </label>
                                 <label>Female
                                     <input
-                                    type="radio"
-                                    name="sex"
-                                    value='female'
-                                    onChange={handleChange}
-                                /></label>
+                                        type="radio"
+                                        name="sex"
+                                        value='female'
+                                        onChange={handleChange}
+                                    />
+                                </label>
                                 {errors.sex && <span className='form-validate-sex'>Required</span>}
                             </div>
                         }
@@ -130,10 +132,10 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         />
                         <label htmlFor="keep-login">Keep me log in</label><br />
                         {type === 'signin' && <span className='redirect' onClick={redirectToSecondModal}>Create new acount!</span>}
-                        {/* <div className="loader">
+                        <div className="loader">
                             {store.loading && 'Loading...'}
                             <Loader type='Watch' color='black' visible={store.loading} width='40px' />
-                        </div> */}
+                        </div>
                         <div className="buttons-wrapper">
                             <div className="buttons">
                                 <button onClick={closeModal} className='red' type='button'>cancel</button>
