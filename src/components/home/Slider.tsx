@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, memo, useState } from "react";
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import Loader from "react-loader-spinner";
@@ -19,6 +19,8 @@ getPhotos().then(res => images = res)
 
 const Slider: FC = () => {
 
+    console.log('slider')
+
     const [showSlider, setShowSlider] = useState(false)
 
     return (
@@ -30,7 +32,7 @@ const Slider: FC = () => {
                     showFullscreenButton={false}
                     showPlayButton={false}
                     showNav={false}
-                    autoPlay={true}
+                    // autoPlay={true}
                     showThumbnails={false}
                     slideInterval={4000}
                     lazyLoad={true}
@@ -41,5 +43,5 @@ const Slider: FC = () => {
     )
 };
 
-export default Slider;
+export default memo(Slider);
 

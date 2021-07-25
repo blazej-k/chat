@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 
 interface HomeDescriptionProps {
@@ -35,4 +35,4 @@ const HomeDescription: FC<HomeDescriptionProps> = ({buttonHover, buttonClick, co
     );
 }
 
-export default HomeDescription;
+export default memo(HomeDescription);

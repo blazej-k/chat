@@ -1,4 +1,4 @@
-import React, { createContext, FC, useState } from "react";
+import React, { createContext, FC, useMemo, useState } from "react";
 
 interface Context {
     mainColor: string,
@@ -16,12 +16,18 @@ const ColorProvider: FC = ({children}) => {
 
     const changeSecondColor = (newColor: string) => setSecondColor(newColor)
 
+    const contextProps = useMemo(() => (
+        {mainColor, secondColor, changeMainColor, changeSecondColor}
+    ), [mainColor, secondColor])
+
     return(
-        <ColorContext.Provider value={{mainColor, secondColor, changeMainColor, changeSecondColor}}>
+        <ColorContext.Provider value={{...contextProps}}>
             {children}
         </ColorContext.Provider>
     )
 }
+
+ColorProvider.displayName = 'ColorProvider'
 
 export const ColorContext = createContext<Context>({
     mainColor: 'blue', 
