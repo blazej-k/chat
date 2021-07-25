@@ -99,7 +99,7 @@ const Home: FC = () => {
                         </div>
                     </div>
                 </motion.div>
-                <Suspense fallback={<div>loading...</div>}>
+                <Suspense fallback={null}>
                     {(showSignInModal || showSignUpModal) &&
                         <div className='modal-full-screen'>
                             {showSignInModal ? <Modal

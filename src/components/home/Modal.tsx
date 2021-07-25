@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserError, userAuth } from "../../actions/UserActions";
 import validate from '../helpers/FormikValidate'
-import Loader from "react-loader-spinner";
+// import Loader from "react-loader-spinner";
 import '../../style/modals/Modals.scss'
 
 // let removeUserError: Function
@@ -130,10 +130,10 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         />
                         <label htmlFor="keep-login">Keep me log in</label><br />
                         {type === 'signin' && <span className='redirect' onClick={redirectToSecondModal}>Create new acount!</span>}
-                        <div className="loader">
+                        {/* <div className="loader">
                             {store.loading && 'Loading...'}
                             <Loader type='Watch' color='black' visible={store.loading} width='40px' />
-                        </div>
+                        </div> */}
                         <div className="buttons-wrapper">
                             <div className="buttons">
                                 <button onClick={closeModal} className='red' type='button'>cancel</button>
