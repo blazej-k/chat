@@ -5,43 +5,38 @@ import { Provider } from 'react-redux';
 import { store } from '../../reducers/store';
 import '@testing-library/jest-dom/extend-expect';
 
+let button: HTMLElement
+
 beforeEach(() => {
-    render(<Provider store={store}><Home /></Provider>)
+    const { getByText } = render(<Provider store={store}><Home /></Provider>)
+    button = getByText(/sign in/i)
 })
 
 describe('Home', () => {
-    it('should show home page', async() => {
-        const { getByText } = screen;
-        const text = getByText('ChatZilla')
+    it('should show home page', async () => {
+        const text = screen.getByText('ChatZilla')
         await waitFor(() => expect(text).toBeInTheDocument())
     });
-    it('should show sign in modal after click', async() => {
-        const { getByText, getByTestId } = screen;
-        const button = getByText(/sign in/i)
+    it('should show sign in modal after click', async () => {
         fireEvent.click(button)
-        await waitFor(() => expect(getByTestId('m-sign-in')).toBeVisible())
+        await waitFor(() => expect(screen.getByTestId('m-sign-in')).toBeVisible())
     })
-    it('should hide modal after click', async() => {
-        const { getByText } = screen
-        const button = getByText(/sign in/i)
+    it('should hide modal after click', async () => {
         fireEvent.click(button)
-        const secondButton = getByText(/cancel/i)
+        const secondButton = screen.getByText(/cancel/i)
         fireEvent.click(secondButton)
         await waitForElementToBeRemoved(() => screen.queryByTestId('m-sign-in'))
     })
     it('should show info is user want create account', async () => {
-        const { getByText } = screen;
-        const button = getByText(/try on/i)
+        button = screen.getByText(/try on/i)
         fireEvent.mouseOver(button)
         await waitFor(() => {
             expect(screen.getByText(/Are you ready/i)).toBeVisible()
         })
     })
     it('should close sign in modal and show sign up modal', async () => {
-        const { getByText } = screen;
-        const button = getByText(/sign in/i)
         fireEvent.click(button)
-        const secondButton = getByText(/Create new acount/i)
+        const secondButton = screen.getByText(/Create new acount/i)
         fireEvent.click(secondButton)
         await waitFor(() => {
             expect(screen.getByTestId('m-sign-up')).toBeVisible()
