@@ -133,7 +133,6 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         <label htmlFor="keep-login">Keep me log in</label><br />
                         {type === 'signin' && <span className='redirect' onClick={redirectToSecondModal}>Create new acount!</span>}
                         <div className="loader">
-                            {store.loading && 'Loading...'}
                             <Loader type='Watch' color='black' visible={store.loading} width='40px' />
                         </div>
                         <div className="buttons-wrapper">

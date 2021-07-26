@@ -1,11 +1,3 @@
-// interface GroupInfo {
-//     sender: string,
-//     groupName: string,
-//     groupId: string,
-//     date: any,
-//     members: GroupMembers[]
-// }
-
 interface Group {
     groupName: string,
     groupId: string,

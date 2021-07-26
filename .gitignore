@@ -3,3 +3,4 @@ dist
 .env
 package-lock.json 
 src/components/others/
+.DS_Store

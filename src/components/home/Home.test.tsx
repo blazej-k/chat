@@ -13,7 +13,7 @@ describe('Home', () => {
     it('should show home page', async() => {
         const { getByText } = screen;
         const text = getByText('ChatZilla')
-        await waitFor(() => expect(text).toBeTruthy())
+        await waitFor(() => expect(text).toBeInTheDocument())
     });
     it('should show sign in modal after click', async() => {
         const { getByText, getByTestId } = screen;
