@@ -11,7 +11,7 @@ module.exports = env => {
         entry: './src/index.tsx',
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: '[name][chunk].js',
+            filename: 'bundle.js',
             publicPath: '/'
         },
         resolve: {
@@ -40,10 +40,30 @@ module.exports = env => {
                 },
                 {
                     test: /\.(png|svg|jpg|jpeg|gif|mp3)$/i,
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]'
-                    }
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {
+                                name: '[name].[ext]',
+                            }
+                        },
+                        {
+                            loader: 'image-webpack-loader',
+                            options: {
+                                mozjpeg: {
+                                    progressive: true,
+                                    quality: 70
+                                },
+                                optipng: {
+                                    enabled: true,
+                                },
+                                pngquant: {
+                                    quality: [0.65, 0.90],
+                                    speed: 4
+                                },
+                            }
+                        }
+                    ]
                 },
             ]
         },

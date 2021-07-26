@@ -62,6 +62,7 @@
     "dotenv-webpack": "^7.0.2",
     "error-overlay-webpack-plugin": "^0.4.2",
     "file-loader": "^6.2.0",
+    "image-webpack-loader": "^7.0.1",
     "jest": "^26.6.3",
     "node-fetch": "^2.6.1",
     "ts-jest": "^26.5.6",
