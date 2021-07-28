@@ -90,6 +90,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                             type="text"
                             name='login'
                             placeholder='Username'
+                            id='login'
                             value={login}
                             onChange={handleChange}
                         />
@@ -98,6 +99,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         <input
                             type="password"
                             name='password'
+                            id='password'
                             placeholder='Password'
                             value={password}
                             onChange={handleChange}
@@ -137,8 +139,8 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         </div>
                         <div className="buttons-wrapper">
                             <div className="buttons">
-                                <button onClick={closeModal} className='red' type='button'>cancel</button>
-                                <button type='submit' className='green'>{type === 'signin' ? 'go' : 'save'}</button>
+                                <button onClick={closeModal} id='cancel' className='red' type='button'>cancel</button>
+                                <button type='submit' id='submit' className='green'>{type === 'signin' ? 'go' : 'save'}</button>
                             </div>
                         </div>
                     </form>

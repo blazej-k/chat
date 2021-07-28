@@ -84,9 +84,9 @@ const Home: FC = () => {
                         <div className="actions">
                             <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
                             <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
-                            <button className={randomColors[0]} onClick={() => handleButtonClick('signin')}>Sign In</button>
+                            <button className={randomColors[0]} id='sign-in' onClick={() => handleButtonClick('signin')}>Sign In</button>
                         </div>
-                    </div>
+                    </div> 
                     <div className="home-info">
                             <HomeDescription
                                 buttonClick={handleButtonClick}

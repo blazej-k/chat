@@ -27,6 +27,7 @@ const HomeDescription: FC<HomeDescriptionProps> = ({buttonHover, buttonClick, co
                 onMouseOver={() => buttonHover(true)}
                 onClick={() => buttonClick('newuser')}
                 className={colors[2]}
+                id='sign-up'
             >
                 try on!
             </button>
