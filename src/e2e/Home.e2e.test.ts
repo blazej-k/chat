@@ -22,7 +22,7 @@ afterAll(async () => {
     await browser.close()
 })
 
-describe('Home e2e', () => {
+describe('E2E', () => {
     it('should open and close sign in modal', async() => {
         await page.click('#sign-in')
         await page.click('#cancel')
@@ -36,4 +36,28 @@ describe('Home e2e', () => {
         await page.click('.redirect')
         await page.click('#cancel')
     })
+    it('should open chat', async() => {
+        await page.click('#sign-in')
+        await page.waitForSelector('#login')
+        await page.type('#login', 'blazej1')
+        await page.type('#password', '1')
+        await page.click('#submit')
+        await page.waitForSelector('.chat-content-wrapper')
+    })
+    it('should show error', async() => {
+        await page.goto('http://localhost:8000')
+        await page.click('#sign-in')
+        await page.type('#login', 'blazej2')
+        await page.type('#password', '1')
+        await page.click('#submit')
+        await page.waitForSelector('.user-auth-error')
+    })
+    it('should show warning when some input is empty', async() => {
+        await page.goto('http://localhost:8000')
+        await page.click('#sign-in')
+        await page.type('#login', 'blazej2')
+        await page.click('#submit')
+        await page.waitForSelector('.form-validate')
+    })
+    
 })
