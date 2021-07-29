@@ -1,8 +1,6 @@
 import puppeteer from 'puppeteer'
 import getTestUtils from '../test-utils/e2e.config'
 
-jest.setTimeout(30000)
-
 let browser: puppeteer.Browser, page: puppeteer.Page
 
 beforeAll(async () => {

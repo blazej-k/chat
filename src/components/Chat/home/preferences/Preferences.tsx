@@ -12,8 +12,12 @@ const Preferences: FC = () => {
 
     return (
         <>
-            <ColorsSection colors={colors} type={'main'} changeColor={changeMainColor}/>
-            <ColorsSection colors={colors} type={'second'} changeColor={changeSecondColor}/>
+            <div className="main-color-wrapper">
+                <ColorsSection colors={colors} type={'main'} changeColor={changeMainColor} />
+            </div>
+            <div className="second-color-wrapper">
+                <ColorsSection colors={colors} type={'second'} changeColor={changeSecondColor} />
+            </div>
         </>
     );
 }

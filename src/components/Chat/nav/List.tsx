@@ -30,7 +30,7 @@ const List: FC<ListProps> = ({ type, list, listsStatus, children, handleListStat
                     </>
                 }
                 {list.length > 0 && listsStatus[type] === 'collection-open' &&
-                    <ul>
+                    <ul id={`list-${type}`}>
                         {children}
                     </ul>
                 }

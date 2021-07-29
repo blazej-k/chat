@@ -5,10 +5,10 @@
   "main": "webpack.config.js",
   "scripts": {
     "build": "webpack --mode=production --env production",
-    "start": "webpack serve --mode=development --env devtool=eval-source-map",
+    "start": "webpack serve --mode=development --env devtool=eval-source-map && echo 'brunch!!!!'",
     "test-performance": "webpack serve --mode=development --env devtool=eval",
     "test": "jest --watchAll --detectOpenHandles --testPathIgnorePatterns=.*e2e.test.ts",
-    "test:e2e": "jest --watch --detectOpenHandles '/e2e/'"
+    "test:e2e": "jest --watch --testTimeout=30000 --detectOpenHandles '/e2e/'"
   },
   "author": "",
   "license": "ISC",
