@@ -37,7 +37,7 @@ const NewMessInput: FC<NewMessInputProps> = ({ newMess, sendMess, handleInput, i
                         <MdPersonAdd size={45} className={secondColor} />
                     </button>
                 </div>}
-                <input value={newMess} ref={ref} className={secondColor} onChange={handleInput} placeholder='New mess...' />
+                <input value={newMess} ref={ref} className={secondColor} id='mess-input' onChange={handleInput} placeholder='New mess...' />
                 <div className="send">
                     <button
                         disabled={!(newMess.length !== 0)}

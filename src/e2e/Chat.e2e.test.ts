@@ -25,10 +25,19 @@ describe('Chat e2e', () => {
         await page.click('.main-color-wrapper > .colors > .select-color > .red')
         await page.click('.second-color-wrapper > .colors > .select-color > .orange')
     })
-    it('should open every nav list', async() => {
+    it('should open every nav list', async () => {
         await page.click('#friends > span')
         await page.waitForSelector('#list-friends > li > span')
         await page.click('#groups > span')
         await page.waitForSelector('#list-groups > li > span')
+    })
+    it('should send message', async () => {
+        await page.click('#list-friends > li > span')
+        await page.type('#mess-input', 'hello')
+        await page.click('.send > button')
+    })
+    it('should log out', async () => {
+        await page.click('#log-out')
+        await page.waitForSelector('.home-wrapper')
     })
 })

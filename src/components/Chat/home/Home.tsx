@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useColor } from '../../hooks/ContextHooks';
 import Inputs from './inputs/Inputs';
@@ -8,14 +7,12 @@ import Preferences from './preferences/Preferences';
 interface HomeProps {
     isNew: 'true' | 'false'
 }
- 
-const Home: FC<HomeProps> = ({isNew}) => {
 
-    const userReducer = useSelector((state: Store) => state.userReducer)
+const Home: FC<HomeProps> = ({ isNew }) => {
 
-    const {mainColor} = useColor()
+    const { user: { login } } = useSelector((state: Store) => state.userReducer)
 
-    const {user: {login}} = userReducer
+    const { mainColor } = useColor()
 
     return (
         <div className="chat-content">
@@ -26,18 +23,18 @@ const Home: FC<HomeProps> = ({isNew}) => {
                 <div className="section">
                     <h2>Community</h2>
                     <div className="inputs-wrapper">
-                        <Inputs/>
+                        <Inputs />
                     </div>
                 </div>
                 <div className="section">
                     <h2>Preferences</h2>
                     <div className="preferences-wrapper">
-                        <Preferences/>
+                        <Preferences />
                     </div>
                 </div>
             </div>
         </div>
     );
 }
- 
+
 export default Home;

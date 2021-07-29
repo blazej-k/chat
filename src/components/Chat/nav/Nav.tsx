@@ -101,6 +101,7 @@ const Nav: FC = () => {
                             onMouseOver={() => handleSpanMouseHover(true)}
                             onMouseLeave={() => handleSpanMouseHover(false)}
                             onClick={handleLogOut}
+                            id='log-out'
                         >
                             Log out
                         </span>
