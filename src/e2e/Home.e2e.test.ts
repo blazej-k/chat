@@ -4,7 +4,7 @@ import getTestUtils from '../test-utils/e2e.config'
 let browser: puppeteer.Browser, page: puppeteer.Page
 
 beforeAll(async () => {
-    ({ browser, page } = await getTestUtils('http://localhost:8000'))
+    ({ browser, page } = await getTestUtils('http://localhost:8000', 50))
 })
 
 afterAll(async () => {

@@ -1,9 +1,9 @@
 import puppeteer from 'puppeteer'
 
-const getTestUtils = async (url: string) => {
+const getTestUtils = async (url: string, slowMo = 100) => {
     let browser, page
     browser = await puppeteer.launch({
-        slowMo: 100,
+        slowMo,
         headless: false,
     })
     page = await browser.newPage()
