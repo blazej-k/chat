@@ -3,8 +3,19 @@ import getTestUtils from '../test-utils/e2e.config'
 
 let browser: puppeteer.Browser, page: puppeteer.Page
 
+const checkIsModalExist = async () => {
+    try {
+        const modal = await page.$eval('.sign-in-modal', elem => elem)
+        expect(modal).toBeUndefined()
+    }
+    catch {
+        const modal = await page.$('.sign-in-modal')
+        expect(modal).toBeNull()
+    }
+}
+
 beforeAll(async () => {
-    ({ browser, page } = await getTestUtils('http://localhost:8000'))
+    ({ browser, page } = await getTestUtils('http://localhost:8000'), 50)
 })
 
 afterAll(async () => {
@@ -19,26 +30,12 @@ describe('Home e2e', () => {
     it('should open and close sign in modal', async () => {
         await page.click('#sign-in')
         await page.click('#cancel')
-        try{
-            const modal = await page.$eval('.sign-in-modal', elem => elem)
-            expect(modal).toBeUndefined()
-        }
-        catch{
-            const modal = await page.$('.sign-in-modal')
-            expect(modal).toBeNull()
-        }
+        checkIsModalExist()
     })
     it('should open and close sign up modal', async () => {
         await page.click('#sign-up')
         await page.click('#cancel')
-        try{
-            const modal = await page.$eval('.sign-in-modal', elem => elem)
-            expect(modal).toBeUndefined()
-        }
-        catch{
-            const modal = await page.$('.sign-in-modal')
-            expect(modal).toBeNull()
-        }
+        checkIsModalExist()
     })
     it('should redirect between modals', async () => {
         await page.click('#sign-in')
