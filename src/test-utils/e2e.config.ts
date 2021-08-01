@@ -1,12 +1,11 @@
 import puppeteer from 'puppeteer'
 
-const getTestUtils = async (url: string, slowMo = 100) => {
-    let browser, page
-    browser = await puppeteer.launch({
+const getTestUtils = async ({ url, headless = false, slowMo = 100 }: { url: string, headless?: boolean, slowMo?: number }) => {
+    let browser = await puppeteer.launch({
         slowMo,
-        headless: false,
+        headless,
     })
-    page = await browser.newPage()
+    let page = await browser.newPage()
     page.setViewport({
         width: 1000,
         height: 800
