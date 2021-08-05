@@ -38,8 +38,8 @@ describe('Chat e2e', () => {
         await page.waitForSelector('#list-friends > li > span')
         await page.click('#groups > span')
         await page.waitForSelector('#list-groups > li > span')
-        const openedList = await page.$$('.collection-open')
-        expect(openedList).toHaveLength(2)
+        const openedLists = await page.$$('.collection-open')
+        expect(openedLists).toHaveLength(2)
     })
     //to fix later
     // it('should send message', async () => {

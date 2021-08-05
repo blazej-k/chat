@@ -41,6 +41,13 @@ describe('Modal', () => {
         await waitFor(() => expect(global.fetch).not.toBeCalled())
     })
 
+    it('should show loader when every input is ok', async() => {
+        fireEvent.change(loginInput, { target: { value: 'username' } })
+        fireEvent.change(passwordInput, { target: { value: 'pass' } })
+        fireEvent.submit(screen.getByTestId('modal-form'))
+        await waitFor(() => expect(screen.getByTestId('loader')).toBeInTheDocument())
+    })
+
     it('should sign in', async () => {
         fireEvent.change(loginInput, { target: { value: 'username' } })
         fireEvent.change(passwordInput, { target: { value: 'pass' } })

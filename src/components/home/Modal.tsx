@@ -73,6 +73,8 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const { handleSubmit, handleChange, values: { login, password }, errors } = formik
 
+    // console.log(errors)
+
     return (
         <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
             <div className="modal-box">
@@ -84,7 +86,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                     <h1>
                         {type === 'signup' ? 'Create your new account' : 'Sign In'}
                     </h1>
-                    {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
+                    {userAuthError && <span className="user-auth-error">Problem: {userAuthError}</span>}
                     <form onSubmit={handleSubmit} data-testid='modal-form'>
                         <input
                             type="text"
@@ -134,9 +136,9 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                         />
                         <label htmlFor="keep-login">Keep me log in</label><br />
                         {type === 'signin' && <span className='redirect' onClick={redirectToSecondModal}>Create new acount!</span>}
-                        <div className="loader">
-                            <Loader type='Watch' color='black' visible={store.loading} width='40px' />
-                        </div>
+                        {store.loading && <div className="loader" data-testid={'loader'}>
+                            <Loader type='Watch' color='black' width='40px' />
+                        </div>}
                         <div className="buttons-wrapper">
                             <div className="buttons">
                                 <button onClick={closeModal} id='cancel' className='red' type='button'>cancel</button>
