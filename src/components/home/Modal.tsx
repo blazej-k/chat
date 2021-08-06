@@ -73,15 +73,13 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const { handleSubmit, handleChange, values: { login, password }, errors } = formik
 
-    // console.log(errors)
-
     return (
-        <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : ''}>
+        <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : undefined}>
             <div className="modal-box">
                 <div
                     data-testid={type === 'signin' ? 'm-sign-in' : 'm-sign-up'}
                     className='modal sign-in-modal'
-                    id={!showModal ? 'modal-close' : ''}
+                    id={!showModal ? 'modal-close' : undefined}
                 >
                     <h1>
                         {type === 'signup' ? 'Create your new account' : 'Sign In'}

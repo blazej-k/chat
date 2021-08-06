@@ -1,4 +1,5 @@
 import { Dispatch } from "react"
+import * as nodeFetch from 'node-fetch'
 import addUserToGroup from "./helpers/addUsertoGroup"
 
 export const SIGNUP = 'signup'
@@ -18,27 +19,30 @@ export const GETCURRENTUSER = 'getcurrentuser'
 export const ADDNEWMESSAGE = 'addnewmesage'
 export const LOGOUT = 'logout'
 
+const fetchData = process.env.NODE_ENV !== 'test' ? window.fetch : nodeFetch.default
 
 export const userAuth = (userInfo: UserAuthInfo) => async (dispatch: Dispatch<UserActionType>) => {
     dispatch({ type: USERLOADING })
     const isUserExist = 'sex' in userInfo ? false : true
     const ENDPOINT = isUserExist ? process.env.SIGN_IN : process.env.SIGN_UP
-    await fetch(ENDPOINT || '', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userInfo),
-    })
-        .then(res => res.json())
-        .then((res: User | { message: string }) => {
-            if ('message' in res) {
-                dispatch({ type: ERRORMESSAGE, payload: res.message })
-            }
-            else {
-                dispatch({ type: isUserExist ? SIGNIN : SIGNUP, payload: res })
-            }
+    if (ENDPOINT) {
+        await fetchData(ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userInfo),
         })
+            .then(res => res.json())
+            .then((res: User | { message: string }) => {
+                if ('message' in res) {
+                    dispatch({ type: ERRORMESSAGE, payload: res.message })
+                }
+                else {
+                    dispatch({ type: isUserExist ? SIGNIN : SIGNUP, payload: res })
+                }
+            })
+    }
 }
 
 export const joinToGroup = (group: Group, login: string, sex: Sex, decision: Decission) => async (dispatch: Dispatch<UserActionType>) => {
@@ -50,7 +54,7 @@ export const joinToGroup = (group: Group, login: string, sex: Sex, decision: Dec
 
 export const sendInvite = (type: 'friend' | 'group', info: WaitingGroup | FriendInfo) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = type === 'friend' ? process.env.INVITE_FRIEND : process.env.INVITE_GROUP
-    await fetch(ENDPOINT || '', {
+    await fetchData(ENDPOINT || '', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -68,7 +72,7 @@ export const sendInvite = (type: 'friend' | 'group', info: WaitingGroup | Friend
 
 export const confirmFriendsInvite = (info: ConfirmFriend) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = process.env.CONFIRM_FRIEND
-    await fetch(ENDPOINT || '', {
+    await fetchData(ENDPOINT || '', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -113,7 +117,7 @@ export const newGroupMessage = (groupId: string, text: string, login: string): N
 
 export const getCurrentUser = (login: string) => async (dispatch: Dispatch<UserActionType>) => {
     const ENDPOINT = process.env.GET_CURRENT_USER
-    await fetch(ENDPOINT || '', {
+    await fetchData(ENDPOINT || '', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
