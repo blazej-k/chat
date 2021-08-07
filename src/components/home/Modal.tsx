@@ -84,7 +84,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                     <h1>
                         {type === 'signup' ? 'Create your new account' : 'Sign In'}
                     </h1>
-                    {userAuthError && <span className="user-auth-error">Problem: {userAuthError}</span>}
+                    {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
                     <form onSubmit={handleSubmit} data-testid='modal-form'>
                         <input
                             type="text"

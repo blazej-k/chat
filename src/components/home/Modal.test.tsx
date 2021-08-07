@@ -2,8 +2,8 @@ import React from 'react';
 import { fireEvent, screen, waitFor } from '@testing-library/react'
 import fetch from 'node-fetch'
 import renderModal from 'test-utils/renderModal';
-import {rest} from 'msw'
-import {setupServer} from 'msw/node'
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
 import { exampleUser } from '../../test-utils/customStore';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -14,7 +14,7 @@ const server = setupServer(
     rest.post(process.env.SIGN_IN || '', (req, res, ctx) => {
         return res(
             ctx.status(200),
-            ctx.json({exampleUser})
+            ctx.json({ exampleUser })
         )
     })
 )
@@ -40,13 +40,13 @@ describe('Modal', () => {
     it('should prevent sending data if username is empty', async () => {
         fireEvent.change(passwordInput, { target: { value: 'pass' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
-        // await waitFor(() => expect(global.fetch).not.toBeCalled())
+        await waitFor(() => expect(spy).not.toBeCalled())
     })
 
     it('should prevent sending data if password is empty', async () => {
         fireEvent.change(loginInput, { target: { value: 'username' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
-        // await waitFor(() => expect(global.fetch).not.toBeCalled())
+        await waitFor(() => expect(spy).not.toBeCalled())
     })
 
     it('should prevent sending data if sex is empty', async () => {
@@ -57,10 +57,10 @@ describe('Modal', () => {
         fireEvent.change(login, { target: { value: 'username' } })
         fireEvent.change(password, { target: { value: 'pass' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
-        // await waitFor(() => expect(global.fetch).not.toBeCalled())
+        await waitFor(() => expect(spy).not.toBeCalled())
     })
 
-    it('should show loader when every input is ok', async() => {
+    it('should show loader when every input is ok', async () => {
         fireEvent.change(loginInput, { target: { value: 'username' } })
         fireEvent.change(passwordInput, { target: { value: 'pass' } })
         fireEvent.submit(screen.getByTestId('modal-form'))
@@ -75,6 +75,15 @@ describe('Modal', () => {
     })
 
     it('should sign up', async () => {
+        server.resetHandlers()
+        server.use(
+            rest.post(process.env.SIGN_UP || '', (req, res, ctx) => {
+                return res(
+                    ctx.status(200),
+                    ctx.json({ exampleUser })
+                )
+            })
+        )
         unmountImplementation()
         const { getByPlaceholderText, getByLabelText } = renderModal('signup')
         const login = getByPlaceholderText('Username')
@@ -84,6 +93,6 @@ describe('Modal', () => {
         fireEvent.change(password, { target: { value: 'pass' } })
         fireEvent.click(sex)
         fireEvent.submit(screen.getByTestId('modal-form'))
-        // await waitFor(() => expect(global.fetch).toBeCalled())
+        await waitFor(() => expect(spy).toBeCalled())
     })
 })
