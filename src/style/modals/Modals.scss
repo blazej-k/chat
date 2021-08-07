@@ -59,8 +59,4 @@
 //when modal is closing
 #modal-wrapper-close {
     animation: removeBackgroundShadow 0.3s;
-    #modal-close {
-        animation: closeModal 0.3s;
-        opacity: 1;
-    }
 }

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserError, userAuth } from "../../actions/UserActions";
@@ -19,6 +19,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const dispatch = useDispatch()
     const store = useSelector((store: Store) => store.userReducer)
+    const ref = useRef<HTMLDivElement>(null)
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -38,10 +39,14 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
     })
 
     useEffect(() => {
+        const timer = setTimeout(() => {
+            if(ref && ref.current) ref.current.style.animationPlayState = 'paused'
+        }, 300)
         document.addEventListener('click', changeModalClass)
         return () => {
             document.removeEventListener('click', changeModalClass)
             dispatch(removeUserError())
+            clearTimeout(timer)
         }
     }, [])
 
@@ -53,6 +58,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
     const closeModal = () => {
         setShowModal(false)
+        if(ref && ref.current) ref.current.style.animationPlayState = 'running'
         //after 0.3s because it's time of scss aniamtion 
         setTimeout(() => isModalOpen(false), 300)
     }
@@ -79,7 +85,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
                 <div
                     data-testid={type === 'signin' ? 'm-sign-in' : 'm-sign-up'}
                     className='modal sign-in-modal'
-                    id={!showModal ? 'modal-close' : undefined}
+                    ref={ref}
                 >
                     <h1>
                         {type === 'signup' ? 'Create your new account' : 'Sign In'}

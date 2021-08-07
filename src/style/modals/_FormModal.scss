@@ -10,7 +10,7 @@
     border-radius: 10px;
     background-color: white;
     padding: 30px 30px 10px 30px;
-    animation: fadeModal 0.3s;
+    animation: fadeModal 0.3s ease infinite alternate;
     h1 {
         margin: 0 0 20px 0;
     }
