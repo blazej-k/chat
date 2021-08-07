@@ -14,12 +14,13 @@ interface ModalProps {
 
 const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
 
-    const [showModal, setShowModal] = useState(true)
     const [userAuthError, setUserAuthError] = useState('')
+
+    const modalRef = useRef<HTMLDivElement>(null)
+    const modalWrapperRef = useRef<HTMLDivElement>(null)
 
     const dispatch = useDispatch()
     const store = useSelector((store: Store) => store.userReducer)
-    const ref = useRef<HTMLDivElement>(null)
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -39,9 +40,7 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
     })
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if(ref && ref.current) ref.current.style.animationPlayState = 'paused'
-        }, 300)
+        const timer = setTimeout(() => changeModalRefsAnimationPlaState('paused'), 300)
         document.addEventListener('click', changeModalClass)
         return () => {
             document.removeEventListener('click', changeModalClass)
@@ -56,18 +55,21 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
         }
     }, [store])
 
+    const changeModalRefsAnimationPlaState = (state: 'running' | 'paused') => {
+        if(modalRef.current && modalWrapperRef.current) {
+            modalRef.current.style.animationPlayState = state
+            modalWrapperRef.current.style.animationPlayState = state
+        }
+    }
+
     const closeModal = () => {
-        setShowModal(false)
-        if(ref && ref.current) ref.current.style.animationPlayState = 'running'
+        changeModalRefsAnimationPlaState('running')
         //after 0.3s because it's time of scss aniamtion 
         setTimeout(() => isModalOpen(false), 300)
     }
 
     const redirectToSecondModal = () => {
-        if (redirectModal) {
-            setShowModal(false)
-            setTimeout(() => redirectModal(), 300)
-        }
+        redirectModal && setTimeout(() => redirectModal(), 300)
     }
 
     const changeModalClass = (e: MouseEvent) => {
@@ -80,12 +82,12 @@ const Modal: FC<ModalProps> = ({ isModalOpen, redirectModal, type }) => {
     const { handleSubmit, handleChange, values: { login, password }, errors } = formik
 
     return (
-        <div className='modal-wrapper' id={!showModal ? 'modal-wrapper-close' : undefined}>
+        <div className='modal-wrapper' ref={modalWrapperRef}>
             <div className="modal-box">
                 <div
                     data-testid={type === 'signin' ? 'm-sign-in' : 'm-sign-up'}
                     className='modal sign-in-modal'
-                    ref={ref}
+                    ref={modalRef}
                 >
                     <h1>
                         {type === 'signup' ? 'Create your new account' : 'Sign In'}

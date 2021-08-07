@@ -6,7 +6,8 @@
     top: 0;
     position: fixed;
     background-color: rgba(0, 0, 0, .8);
-    animation: backgroundShadow 0.3s;
+    will-change: background-color;
+    animation: backgroundShadow 0.3s infinite alternate;
     z-index: 1;
     height: 100vh;
     margin: 0;
@@ -54,9 +55,4 @@
             }
         }
     }
-}
-
-//when modal is closing
-#modal-wrapper-close {
-    animation: removeBackgroundShadow 0.3s;
 }
