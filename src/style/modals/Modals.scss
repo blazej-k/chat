@@ -1,17 +1,17 @@
 @import "../helpers/keyframes";
 @import "../helpers/colors";
 
+
 .modal-wrapper {
-    width: 100vw;
     top: 0;
+    width: 100%;
+    height: 100%;
     position: fixed;
-    background-color: rgba(0, 0, 0, .8);
-    will-change: background-color;
-    animation: backgroundShadow 0.3s infinite alternate;
     z-index: 1;
-    height: 100vh;
     margin: 0;
     padding: 0;
+    animation: backgroundShadow 0.3s alternate infinite;
+    background-color: rgba(0, 0, 0, .8);
     .modal-box {
         position: absolute;
         width: 45%;

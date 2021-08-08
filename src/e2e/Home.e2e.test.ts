@@ -39,12 +39,12 @@ describe('Home e2e', () => {
     })
     it('should redirect between modals', async () => {
         await page.click('#sign-in')
+        await page.waitForSelector('.redirect')
         await page.click('.redirect')
+        await page.waitForSelector('.sign-in-modal')
         let modal = await page.$('.sign-in-modal')
         expect(modal).toBeDefined()
         await page.click('#cancel')
-        modal = await page.$eval('.sign-in-modal', elem => elem)
-        expect(modal).toBeUndefined()
     })
     it('should open chat page', async () => {
         await page.click('#sign-in')

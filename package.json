@@ -9,7 +9,7 @@
     "test-performance": "webpack serve --mode=development --env devtool=eval",
     "test:unit": "echo 'branch!!!!' && jest --watchAll --detectOpenHandles --testPathIgnorePatterns=.*e2e.test.ts",
     "test:e2e": "echo 'branch!!!!' && jest --watch --testTimeout=30000 --detectOpenHandles '/e2e/'",
-    "test:all": "jest --detectOpenHandles --testTimeout=10000"
+    "test:all": "jest --detectOpenHandles --testTimeout=30000"
   },
   "author": "",
   "license": "ISC",

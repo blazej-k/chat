@@ -10,6 +10,8 @@ import Slider from './Slider';
 import '../../style/home/Home.scss';
 const Modal = lazy(() => import('./Modal'))
 
+let timer: NodeJS.Timeout | null = null
+
 const Home: FC = () => {
 
     const colors = ['red', 'green', 'blue', 'orange']
@@ -20,7 +22,8 @@ const Home: FC = () => {
     const [showSignUpModal, setShowSignUpModal] = useState(false)
     const [newUser, setNewUser] = useState(false)
 
-    const ref = useRef<HTMLHeadingElement>(null)
+    const headerRef = useRef<HTMLHeadingElement>(null)
+    const modalWrapperRef = useRef<HTMLDivElement>(null)
 
     const store = useSelector((store: Store) => store.userReducer)
 
@@ -34,8 +37,15 @@ const Home: FC = () => {
             }
         }
         setRandomColors(result)
-        if (ref && ref.current) createHeaderAnimation(ref.current, result)
+        headerRef.current && createHeaderAnimation(headerRef.current, result)
+        return () => {
+            timer && clearTimeout(timer)
+        }
     }, [])
+
+    const setModalBackgroundAnimationState = (state: 'running' | 'paused') => {
+        modalWrapperRef.current!.style.animationPlayState = state
+    }
 
     useEffect(() => {
         if (showSignUpModal && !newUser) {
@@ -61,9 +71,11 @@ const Home: FC = () => {
                 console.log('work clicked')
                 break;
             case 'newuser':
+                timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 310)
                 setShowSignUpModal(true)
                 break;
             default:
+                timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 310)
                 setShowSignInModal(true)
                 break;
         }
@@ -72,7 +84,11 @@ const Home: FC = () => {
     const redirectModal = () => {
         setShowSignInModal(false)
         setShowSignUpModal(true)
+        timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 310)
     }
+
+    const handleDispalyFirstModal = (dispaly: boolean) => setShowSignInModal(dispaly)
+    const handleDispalySecondModal = (dispaly: boolean) => setShowSignUpModal(dispaly)
 
     return (
         <>
@@ -80,20 +96,20 @@ const Home: FC = () => {
                 {store.user.login && <Redirect to={`/chat/${newUser}`} />}
                 <motion.div className="home" variants={animations} initial='out' animate='in'>
                     <div className="header">
-                        <h1 ref={ref}>ChatZilla</h1>
+                        <h1 ref={headerRef}>ChatZilla</h1>
                         <div className="actions">
                             <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
                             <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
                             <button className={randomColors[0]} id='sign-in' onClick={() => handleButtonClick('signin')}>Sign In</button>
                         </div>
-                    </div> 
+                    </div>
                     <div className="home-info">
-                            <HomeDescription
-                                buttonClick={handleButtonClick}
-                                buttonHover={handleButtonHover}
-                                colors={randomColors}
-                                showSpanInfo={showSpanInfo}
-                            />
+                        <HomeDescription
+                            buttonClick={handleButtonClick}
+                            buttonHover={handleButtonHover}
+                            colors={randomColors}
+                            showSpanInfo={showSpanInfo}
+                        />
                         <div className="home-info-slider">
                             <Slider />
                         </div>
@@ -101,14 +117,16 @@ const Home: FC = () => {
                 </motion.div>
                 <Suspense fallback={null}>
                     {(showSignInModal || showSignUpModal) &&
-                        <div className='modal-full-screen'>
+                        <div className='modal-wrapper' ref={modalWrapperRef}>
                             {showSignInModal ? <Modal
-                                isModalOpen={setShowSignInModal}
+                                toogleModal={handleDispalyFirstModal}
                                 redirectModal={redirectModal}
+                                setBackgroundAnimationState={setModalBackgroundAnimationState}
                                 type='signin'
                             /> :
                                 <Modal
-                                    isModalOpen={setShowSignUpModal}
+                                    toogleModal={handleDispalySecondModal}
+                                    setBackgroundAnimationState={setModalBackgroundAnimationState}
                                     type='signup'
                                 />}
                         </div>

@@ -11,10 +11,10 @@
 
 @keyframes backgroundShadow {
     from{
-        background-color: rgba(0, 0, 0, 0);
+        opacity: 0;
     }
     to{
-        background-color: rgba(0, 0, 0, 0.8);
+        opacity: 1;
     }
 }
 
