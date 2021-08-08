@@ -62,8 +62,8 @@
                     @include buttonStyle;
                 }
                 #span-slider {
-                    position: relative;
-                    animation: slide 0.2s;
+                    display: inline-block;
+                    animation: slide 0.2s both;
                 }
                 span {
                     @include multiColors("color");
