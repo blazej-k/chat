@@ -10,8 +10,8 @@
     border-radius: 10px;
     background-color: white;
     padding: 30px 30px 10px 30px;
-    will-change: opacity transform;
-    animation: fadeModal 0.3s infinite alternate ease-in-out;
+    will-change: opacity, transform;
+    animation: fadeModal 0.3s infinite alternate cubic-bezier(.36,.9,.98,.98);
     opacity: 1 !important;
     h1 {
         margin: 0 0 20px 0;

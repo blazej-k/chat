@@ -10,6 +10,7 @@
     z-index: 1;
     margin: 0;
     padding: 0;
+    will-change: opacity;
     animation: backgroundShadow 0.3s alternate infinite;
     background-color: rgba(0, 0, 0, .8);
     .modal-box {
