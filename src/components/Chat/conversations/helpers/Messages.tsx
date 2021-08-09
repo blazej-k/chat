@@ -9,6 +9,11 @@ interface MessagesProps {
     login: string
 }
 
+interface AvatarProps {
+    colors: string | string[],
+    name: string
+}
+
 const getDate = (date: number) => {
     const days = new Date(date).getDate() < 10 ? `0${new Date(date).getDate()}` : `${new Date(date).getDate()}`
     const months = new Date(date).getMonth() + 1 < 10 ? `0${new Date(date).getMonth() + 1}` : `${new Date(date).getMonth() + 1}`
@@ -17,7 +22,9 @@ const getDate = (date: number) => {
     return `${days}/${months} ${hours}:${minutes}`
 }
 
-let Avatar: FC<{ colors: string }> = ({ colors }) => <UserAvatar size={55} name={('fdfdfdfdfdffdfd').split('').join(' ')} colors={[colors]} />
+let Avatar: FC<AvatarProps> = ({ colors, name }) => (
+    <UserAvatar size={65} name={(name).split('').join(' ')} colors={[colors]} />
+)
 Avatar = memo(Avatar, () => true)
 
 const Messages: FC<MessagesProps> = ({ messages, friendName, groupName, login }) => {
@@ -39,9 +46,9 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName, login })
             {messages.length > 0 ?
                 <ul ref={ref}>
                     {messages.map(({ date, _id, text, from }) => (
-                        <li key={_id || date} className={from === login ? 'my-mess' : ''}>
+                        <li key={_id || date} className={from === login ? 'my-mess' : 'other-mess'}>
                             <div className="avatar">
-                                <Avatar colors={from === login ? mainColor : secondColor} />
+                                <Avatar colors={from === login ? mainColor : secondColor} name={from}/>
                             </div>
                             <span className='date-hide'>{date && getDate(date)}</span>
                             <div

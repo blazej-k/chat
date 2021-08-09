@@ -8,11 +8,11 @@
     max-height: 100vh;
     flex-wrap: wrap;
     overflow-y: hidden;
-    .hide-messages{
+    .hide-messages {
         z-index: 1;
         height: 90vh;
         width: 100%;
-        opacity: .5;
+        opacity: 0.5;
         position: fixed;
         background-color: white;
     }
@@ -68,19 +68,21 @@
                     max-width: 100%;
                     margin-top: 10px;
                     overflow-wrap: break-word;
+                    flex-direction: row-reverse;
                 }
                 &.my-mess {
                     float: right;
                     flex-direction: row-reverse;
-                    .avatar {
-                        text-align: right;
-                        * {
-                            text-overflow: ellipsis;
-                            // white-space: nowrap;
-                            overflow: hidden;
-                            color: white;
-                            font-size: 90%;
-                        }
+                }
+                &.other-mess .avatar,
+                &.my-mess .avatar {
+                    text-align: right;
+                    * {
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        color: white;
+                        font-size: 90%;
                     }
                 }
             }
@@ -96,11 +98,11 @@
             margin: auto;
             height: 10vh;
             margin-right: 5px;
-            button{
+            button {
                 background-color: transparent;
                 border: none;
                 cursor: pointer;
-                svg{
+                svg {
                     @include multiColors("color");
                 }
             }
