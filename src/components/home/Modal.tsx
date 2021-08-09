@@ -57,6 +57,7 @@ const Modal: FC<ModalProps> = ({ toogleModal, redirectModal, setBackgroundAnimat
 
     const setAnimationState = (state: 'running' | 'paused') => {
         modalRef.current!.style.animationPlayState = state
+        if(state === 'paused') modalRef.current!.style.opacity = '1'
     }
 
     const closeModal = () => {
