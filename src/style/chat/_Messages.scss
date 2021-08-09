@@ -34,55 +34,72 @@
             padding: 20px 0;
             list-style-type: none;
             overflow: auto;
+            display: flex;
+            flex-wrap: wrap;
             li {
                 margin: 10px 0;
-                float: left;
-                clear: both;
-                max-width: 50%;
+                width: auto;
                 display: flex;
                 flex-wrap: wrap;
-                .avatar {
-                    width: 100%;
-                }
-                > span {
-                    color: $gray;
-                    display: block;
-                    font-size: 70%;
-                    flex-basis: 100%;
-                    text-align: center;
-                    &.date-hide {
-                        opacity: 0;
+                flex-basis: 100%;
+                .mess-wrapper{
+                    display: flex;
+                    flex-wrap: wrap;
+                    margin: 10px 10px 0;
+                    max-width: 50%;
+                    .mess {
+                        @include multiColors("background-color");
+                        color: white;
+                        padding: 10px;
+                        border-radius: 10px;
+                        font-size: 120%;
+                        margin-top: 10px;
+                        overflow-wrap: break-word;
                     }
-                    &.date-show {
-                        opacity: 1;
+                    span {
+                        color: $gray;
+                        font-size: 70%;
+                        flex-basis: 100%;
+                        &.date-hide {
+                            opacity: 0;
+                        }
+                        &.date-show {
+                            opacity: 1;
+                        }
                     }
                 }
-                .mess {
-                    clear: both;
-                    @include multiColors("background-color");
-                    color: white;
-                    padding: 10px;
-                    border-radius: 10px;
-                    font-size: 120%;
-                    width: auto;
-                    max-width: 100%;
-                    margin-top: 10px;
-                    overflow-wrap: break-word;
-                    flex-direction: row-reverse;
+                &.my-mes {
+                    justify-content: flex-start;
+                    .mess-wrapper{
+                        justify-content: flex-start;
+                        span{
+                            text-align: left;
+                            margin-left: 10px;
+                        }
+                    }
                 }
-                &.my-mess {
-                    float: right;
-                    flex-direction: row-reverse;
+                &.other-mess {
+                    justify-content: flex-end;
+                    .mess-wrapper{
+                        justify-content: flex-end;
+                        span{
+                            text-align: right;
+                            margin-right: 10px;
+                        }
+                    }
+                    .avatar{
+                        order: 2;
+                    }
                 }
                 &.other-mess .avatar,
                 &.my-mess .avatar {
-                    text-align: right;
                     * {
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         overflow: hidden;
                         color: white;
                         font-size: 90%;
+                        text-align: right;
                     }
                 }
             }

@@ -23,7 +23,7 @@ const getDate = (date: number) => {
 }
 
 let Avatar: FC<AvatarProps> = ({ colors, name }) => (
-    <UserAvatar size={65} name={(name).split('').join(' ')} colors={[colors]} />
+    <UserAvatar size={60} name={(name).split('').join(' ')} colors={[colors]} />
 )
 Avatar = memo(Avatar, () => true)
 
@@ -48,15 +48,17 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName, login })
                     {messages.map(({ date, _id, text, from }) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : 'other-mess'}>
                             <div className="avatar">
-                                <Avatar colors={from === login ? mainColor : secondColor} name={from}/>
+                                <Avatar colors={from === login ? mainColor : secondColor} name={from} />
                             </div>
-                            <span className='date-hide'>{date && getDate(date)}</span>
-                            <div
-                                className={`${from === login ? mainColor : secondColor} mess`}
-                                onMouseOver={(e) => toogleMessDate(e, 'date-show')}
-                                onMouseLeave={(e) => toogleMessDate(e, 'date-hide')}
-                            >
-                                {text}
+                            <div className="mess-wrapper">
+                                <span className='date-hide'>{date && getDate(date)}</span>
+                                <div
+                                    className={`${from === login ? mainColor : secondColor} mess`}
+                                    onMouseOver={(e) => toogleMessDate(e, 'date-show')}
+                                    onMouseLeave={(e) => toogleMessDate(e, 'date-hide')}
+                                >
+                                    {text}
+                                </div>
                             </div>
                         </li>
                     ))}
