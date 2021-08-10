@@ -45,11 +45,13 @@ const Messages: FC<MessagesProps> = ({ messages, friendName, groupName, login })
         <div className="dialogues">
             {messages.length > 0 ?
                 <ul ref={ref}>
-                    {messages.map(({ date, _id, text, from }) => (
+                    {messages.map(({ date, _id, text, from }, index) => (
                         <li key={_id || date} className={from === login ? 'my-mess' : 'other-mess'}>
+                            {index > 0 && messages[index - 1].from !== from && (
                             <div className="avatar">
                                 <Avatar colors={from === login ? mainColor : secondColor} name={from} />
                             </div>
+                            )}
                             <div className="mess-wrapper">
                                 <span className='date-hide'>{date && getDate(date)}</span>
                                 <div

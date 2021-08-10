@@ -37,29 +37,35 @@
             display: flex;
             flex-wrap: wrap;
             li {
-                margin: 10px 0;
+                margin: 0;
                 width: auto;
                 display: flex;
                 flex-wrap: wrap;
                 flex-basis: 100%;
-                .mess-wrapper{
+                .avatar{
+                    padding: 7px 0 !important;
+                }
+                .mess-wrapper {
                     display: flex;
-                    flex-wrap: wrap;
-                    margin: 10px 10px 0;
+                    margin: 0 10px 0;
                     max-width: 50%;
+                    align-items: center;
+                    flex-direction: row;
                     .mess {
                         @include multiColors("background-color");
                         color: white;
                         padding: 10px;
                         border-radius: 10px;
                         font-size: 120%;
-                        margin-top: 10px;
+                        margin-top: 6px;
                         overflow-wrap: break-word;
                     }
                     span {
                         color: $gray;
                         font-size: 70%;
-                        flex-basis: 100%;
+                        margin-left: 10px;
+                        margin-top: 10px;
+                        white-space: nowrap;
                         &.date-hide {
                             opacity: 0;
                         }
@@ -68,26 +74,18 @@
                         }
                     }
                 }
-                &.my-mes {
+                &.my-mess {
                     justify-content: flex-start;
-                    .mess-wrapper{
-                        justify-content: flex-start;
-                        span{
-                            text-align: left;
-                            margin-left: 10px;
-                        }
+                    .mess-wrapper > span {
+                        order: 1;
                     }
                 }
                 &.other-mess {
                     justify-content: flex-end;
-                    .mess-wrapper{
-                        justify-content: flex-end;
-                        span{
-                            text-align: right;
-                            margin-right: 10px;
-                        }
+                    .mess-wrapper > span {
+                        margin-right: 10px;
                     }
-                    .avatar{
+                    .avatar {
                         order: 2;
                     }
                 }
