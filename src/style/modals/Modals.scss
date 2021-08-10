@@ -11,7 +11,7 @@
     margin: 0;
     padding: 0;
     will-change: opacity;
-    animation: backgroundShadow 0.3s alternate infinite ease-in-out;
+    animation: backgroundShadow .3s alternate infinite ease-in-out;
     background-color: rgba(0, 0, 0, .8);
     .modal-box {
         position: absolute;

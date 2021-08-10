@@ -9,6 +9,7 @@ import HomeDescription from './HomeDescription'
 import Slider from './Slider';
 import '../../style/home/Home.scss';
 const Modal = lazy(() => import('./Modal'))
+// import Modal from './Modal'
 
 let timer: NodeJS.Timeout | null = null
 
@@ -71,11 +72,11 @@ const Home: FC = () => {
                 console.log('work clicked')
                 break;
             case 'newuser':
-                timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 310)
+                timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
                 setShowSignUpModal(true)
                 break;
             default:
-                timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 310)
+                timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
                 setShowSignInModal(true)
                 break;
         }
@@ -84,7 +85,7 @@ const Home: FC = () => {
     const redirectModal = () => {
         setShowSignInModal(false)
         setShowSignUpModal(true)
-        timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 310)
+        timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
     }
 
     const handleDispalyFirstModal = (dispaly: boolean) => setShowSignInModal(dispaly)
@@ -100,7 +101,14 @@ const Home: FC = () => {
                         <div className="actions">
                             <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
                             <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
-                            <button className={randomColors[0]} id='sign-in' onClick={() => handleButtonClick('signin')}>Sign In</button>
+                            <button 
+                                className={randomColors[0]} 
+                                id='sign-in' 
+                                onClick={() => handleButtonClick('signin')}
+                                onMouseEnter={() => import('./Modal')}
+                            >
+                                Sign In
+                            </button>
                         </div>
                     </div>
                     <div className="home-info">

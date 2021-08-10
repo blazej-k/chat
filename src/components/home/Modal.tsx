@@ -40,7 +40,7 @@ const Modal: FC<ModalProps> = ({ toogleModal, redirectModal, setBackgroundAnimat
     })
 
     useEffect(() => {
-        const timer = setTimeout(() => setAnimationState('paused'), 295)
+        const timer = setTimeout(() => setAnimationState('paused'), 300)
         document.addEventListener('click', handleClickOutsideModal)
         return () => {
             document.removeEventListener('click', handleClickOutsideModal)
