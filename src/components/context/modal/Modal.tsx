@@ -1,5 +1,5 @@
-import React, { createContext, FC, useEffect, useRef } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { createContext, FC, useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeUserError } from '../../../actions/UserActions'
 import Buttons from './Buttons'
 import Form, { FormProps } from './Form'
@@ -9,7 +9,7 @@ interface ModalProps {
     headerContent: string,
     type: 'signin' | 'signup',
     setBackgroundAnimationState: (state: 'running' | 'paused') => void,
-    toogleModal: (show: boolean) => void
+    toogleModal: (show: boolean) => void,
 }
 
 interface ModalChildren {
@@ -26,37 +26,43 @@ export interface ModalContextProps {
 
 export type ModalType = FC<ModalProps> & ModalChildren
 
+let timer: NodeJS.Timeout | null = null
+
 const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimationState, toogleModal }) => {
 
-    const modalRef = useRef<HTMLDivElement>(null)
+    const [userAuthError, setUserAuthError] = useState('')
 
+    const modalRef = useRef<HTMLDivElement>(null)
+      
+    const store = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if(modalRef.current) timer = setTimeout(() => setModalAnimationState('paused'), 300)
         document.addEventListener('click', handleClickOutsideModal)
         return () => {
             document.removeEventListener('click', handleClickOutsideModal)
             dispatch(removeUserError())
+            timer && clearTimeout(timer)
         }
     }, [])
 
     useEffect(() => {
-        const timer = setTimeout(() => setModalAnimationState('paused'), 300)
-        return () => {
-            clearTimeout(timer)
+        if (store.error && store.error !== userAuthError) {
+            setUserAuthError(store.error)
         }
-    }, [type])
+    }, [store])
 
     const setModalAnimationState = (state: 'running' | 'paused') => {
         modalRef.current!.style.animationPlayState = state
-        if (state === 'paused') modalRef.current!.style.opacity = '1'
+        if(state === 'paused') modalRef.current!.style.opacity = '1'
     }
 
     const closeModal = () => {
         setBackgroundAnimationState('running')
         setModalAnimationState('running')
         //after 0.3s because it's time of scss aniamtion 
-        setTimeout(() => toogleModal(false), 300)
+        timer = setTimeout(() => toogleModal(false), 300)
     }
 
     const handleClickOutsideModal = (e: MouseEvent) => {
@@ -75,6 +81,7 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
                     ref={modalRef}
                 >
                     <h1>{headerContent}</h1>
+                    {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
                     {children}
                 </div>
             </div>

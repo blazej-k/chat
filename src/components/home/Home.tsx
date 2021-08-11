@@ -46,6 +46,7 @@ const Home: FC = () => {
 
     const setModalBackgroundAnimationState = (state: 'running' | 'paused') => {
         modalWrapperRef.current!.style.animationPlayState = state
+        if(state === 'paused') modalWrapperRef.current!.style.opacity = '1'
     }
 
     useEffect(() => {
@@ -144,7 +145,7 @@ const Home: FC = () => {
                                     toogleModal={showSignInModal ? handleDispalyFirstModal : handleDispalySecondModal}
                                 >
                                     <Modal.Form redirectToSecondModal={redirectModal}/>
-                                    <Modal.Buttons/>
+                                    {/* <Modal.Buttons/> */}
                                 </Modal>
                         </div>
                     )}
