@@ -8,8 +8,8 @@ import animations from '../helpers/animationConfig'
 import HomeDescription from './HomeDescription'
 import Slider from './Slider';
 import '../../style/home/Home.scss';
-const Modal = lazy(() => import('./Modal'))
-// import Modal from './Modal'
+// const Modal = lazy(() => import('../context/modal/Modal'))
+import Modal from '../context/modal/Modal'
 
 let timer: NodeJS.Timeout | null = null
 
@@ -105,7 +105,7 @@ const Home: FC = () => {
                                 className={randomColors[0]} 
                                 id='sign-in' 
                                 onClick={() => handleButtonClick('signin')}
-                                onMouseEnter={() => import('./Modal')}
+                                // onMouseEnter={() => import('./Modal')}
                             >
                                 Sign In
                             </button>
@@ -124,9 +124,9 @@ const Home: FC = () => {
                     </div>
                 </motion.div>
                 <Suspense fallback={null}>
-                    {(showSignInModal || showSignUpModal) &&
+                    {(showSignInModal || showSignUpModal) && (
                         <div className='modal-wrapper' ref={modalWrapperRef}>
-                            {showSignInModal ? <Modal
+                            {/* {showSignInModal ? <Modal
                                 toogleModal={handleDispalyFirstModal}
                                 redirectModal={redirectModal}
                                 setBackgroundAnimationState={setModalBackgroundAnimationState}
@@ -136,9 +136,18 @@ const Home: FC = () => {
                                     toogleModal={handleDispalySecondModal}
                                     setBackgroundAnimationState={setModalBackgroundAnimationState}
                                     type='signup'
-                                />}
+                                />} */}
+                                <Modal 
+                                    type={showSignInModal ? 'signin' : 'signup'}
+                                    headerContent={showSignInModal ? 'Sign In' : 'Create your new account'}
+                                    setBackgroundAnimationState={setModalBackgroundAnimationState}
+                                    toogleModal={showSignInModal ? handleDispalyFirstModal : handleDispalySecondModal}
+                                >
+                                    <Modal.Form redirectToSecondModal={redirectModal}/>
+                                    <Modal.Buttons/>
+                                </Modal>
                         </div>
-                    }
+                    )}
                 </Suspense>
             </div>
             <Footer />
