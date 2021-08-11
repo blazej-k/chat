@@ -19,8 +19,7 @@ const Home: FC = () => {
 
     const [randomColors, setRandomColors] = useState<string[]>([])
     const [showSpanInfo, setShowSpanInfo] = useState(false)
-    const [showSignInModal, setShowSignInModal] = useState(false)
-    const [showSignUpModal, setShowSignUpModal] = useState(false)
+    const [modalType, setModalType] = useState<'signin' | 'signup' | null>(null)
     const [newUser, setNewUser] = useState(false)
 
     const headerRef = useRef<HTMLHeadingElement>(null)
@@ -50,13 +49,9 @@ const Home: FC = () => {
     }
 
     useEffect(() => {
-        if (showSignUpModal && !newUser) {
-            setNewUser(true)
-        }
-        else if (!showSignUpModal && newUser) {
-            setNewUser(false)
-        }
-    }, [showSignUpModal])
+        if (modalType === 'signup' && !newUser) setNewUser(true)
+        else setNewUser(false)
+    }, [modalType])
 
     const handleButtonHover = (show: boolean) => {
         setShowSpanInfo(show)
@@ -74,23 +69,21 @@ const Home: FC = () => {
                 break;
             case 'newuser':
                 timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
-                setShowSignUpModal(true)
+                setModalType('signup')
                 break;
             default:
                 timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
-                setShowSignInModal(true)
+                setModalType('signin')
                 break;
         }
     }
 
     const redirectModal = () => {
-        setShowSignInModal(false)
-        setShowSignUpModal(true)
+        setModalType('signup')
         timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
     }
 
-    const handleDispalyFirstModal = (dispaly: boolean) => setShowSignInModal(dispaly)
-    const handleDispalySecondModal = (dispaly: boolean) => setShowSignUpModal(dispaly)
+    const changeModalType = (newModalType: typeof modalType) => setModalType(newModalType)
 
     return (
         <>
@@ -125,7 +118,7 @@ const Home: FC = () => {
                     </div>
                 </motion.div>
                 <Suspense fallback={null}>
-                    {(showSignInModal || showSignUpModal) && (
+                    {modalType && (
                         <div className='modal-wrapper' ref={modalWrapperRef}>
                             {/* {showSignInModal ? <Modal
                                 toogleModal={handleDispalyFirstModal}
@@ -139,10 +132,10 @@ const Home: FC = () => {
                                     type='signup'
                                 />} */}
                                 <Modal 
-                                    type={showSignInModal ? 'signin' : 'signup'}
-                                    headerContent={showSignInModal ? 'Sign In' : 'Create your new account'}
+                                    type={modalType}
+                                    headerContent={modalType === 'signin' ? 'Sign In' : 'Create your new account'}
                                     setBackgroundAnimationState={setModalBackgroundAnimationState}
-                                    toogleModal={showSignInModal ? handleDispalyFirstModal : handleDispalySecondModal}
+                                    toogleModal={changeModalType}
                                 >
                                     <Modal.Form redirectToSecondModal={redirectModal}/>
                                     {/* <Modal.Buttons/> */}

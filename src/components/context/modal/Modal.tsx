@@ -9,7 +9,7 @@ interface ModalProps {
     headerContent: string,
     type: 'signin' | 'signup',
     setBackgroundAnimationState: (state: 'running' | 'paused') => void,
-    toogleModal: (show: boolean) => void,
+    toogleModal: (modalType: 'signin' | 'signup' | null) => void,
 }
 
 interface ModalChildren {
@@ -38,14 +38,19 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(modalRef.current) timer = setTimeout(() => setModalAnimationState('paused'), 300)
         document.addEventListener('click', handleClickOutsideModal)
         return () => {
             document.removeEventListener('click', handleClickOutsideModal)
             dispatch(removeUserError())
-            timer && clearTimeout(timer)
         }
     }, [])
+    
+    useEffect(() => {
+        if(modalRef.current) timer = setTimeout(() => setModalAnimationState('paused'), 300)
+        return () => {
+            timer && clearTimeout(timer)
+        }
+    }, [type])
 
     useEffect(() => {
         if (store.error && store.error !== userAuthError) {
@@ -54,6 +59,7 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
     }, [store])
 
     const setModalAnimationState = (state: 'running' | 'paused') => {
+        console.log(state)
         modalRef.current!.style.animationPlayState = state
         if(state === 'paused') modalRef.current!.style.opacity = '1'
     }
@@ -62,7 +68,7 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
         setBackgroundAnimationState('running')
         setModalAnimationState('running')
         //after 0.3s because it's time of scss aniamtion 
-        timer = setTimeout(() => toogleModal(false), 300)
+        timer = setTimeout(() => toogleModal(null), 300)
     }
 
     const handleClickOutsideModal = (e: MouseEvent) => {
