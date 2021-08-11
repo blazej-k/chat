@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import ReactDOM from 'react-dom'
 import Page from './components/Page'
-import SocketProvider from './components/context/SocketContext';
+import SocketProvider from './components/context/socketContext/SocketContext';
 import MetaTags from 'react-meta-tags';
 import './style/index.scss'
 import { Provider } from 'react-redux';

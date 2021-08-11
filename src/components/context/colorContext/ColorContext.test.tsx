@@ -1,8 +1,8 @@
 import React, { FC } from 'react'
-import { useColor } from '../hooks/ContextHooks'
+import { useColor } from '../../hooks/ContextHooks'
 import {fireEvent, screen} from '@testing-library/react'
 import renderWithColorProvider from 'test-utils/renderWithColorProvider'
-import Nav from '../chat/nav/Nav'
+import Nav from '../../chat/nav/Nav'
 
 const TestedComponent: FC<{newMainColor?: string, newSecondColor?: string}> = ({newMainColor = '', newSecondColor = ''}) => {
     const { mainColor, secondColor, changeMainColor, changeSecondColor } = useColor()

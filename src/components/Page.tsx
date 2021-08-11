@@ -1,7 +1,7 @@
 import React, { FC, lazy, Suspense } from "react";
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { AnimatePresence } from "framer-motion"
-import { ChatViewProvider } from "./context/ChatViewContext";
+import { ChatViewProvider } from "./context/chatViewContext/ChatViewContext";
 const Home = lazy(() => import('./home/Home'))
 const Chat = lazy(() => import('./chat/Chat'))
 

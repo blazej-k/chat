@@ -3,7 +3,7 @@ import { AnimatePresence } from "framer-motion"
 import { render } from "@testing-library/react"
 import { Provider } from "react-redux"
 import { MemoryRouter, Switch, Route } from "react-router-dom"
-import SocketProvider from "../components/context/SocketContext"
+import SocketProvider from "../components/context/socketContext/SocketContext"
 import Home from "../components/home/Home"
 import {getStore, exampleUser} from "./customStore"
 

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router';
 import Modal from './modal/Modal';
-import ColorProvider from '../context/ColorContext';
+import ColorProvider from '../context/colorContext/ColorContext';
 import { useSocket } from '../hooks/ContextHooks';
 import NewMessInfo, { initNewMessInfo } from './conversations/helpers/NewMessInfo'
 import { addNewMessage, getCurrentUser, newGroupMessage } from '../../actions/UserActions';

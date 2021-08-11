@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import React, { ReactElement } from 'react'
 import { Provider } from 'react-redux'
-import ColorProvider from '../components/context/ColorContext'
+import ColorProvider from '../components/context/colorContext/ColorContext'
 import { getStore } from './customStore'
 
 const renderWithColorProvider = (ui: ReactElement) => render(

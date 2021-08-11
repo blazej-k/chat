@@ -1,6 +1,6 @@
 import React, { FC, useReducer } from 'react'
 import { createContext } from 'react'
-import { ChatView } from "../../enums/chatView"
+import { ChatView } from "../../../enums/chatView"
 
 interface ChatViewProps {
     showHome: boolean,
