@@ -17,10 +17,22 @@ Modal.Form = Form
 Modal.Buttons = Buttons
 
 let timer: NodeJS.Timeout | null = null
-const colors = ['red', 'green', 'blue', 'orange']
+
+const randomColors = (() => {
+    const result: string[] = []
+    const colors = ['red', 'green', 'blue', 'orange']
+    for (let i = 0; i < 3;) {
+        const number = Math.floor(Math.random() * 4)
+        if (result.indexOf(colors[number]) === -1) {
+            result.push(colors[number])
+            i++
+        }
+    }
+    return result
+})()
+
 const Home: FC = () => {
 
-    const [randomColors, setRandomColors] = useState<string[]>([])
     const [showSpanInfo, setShowSpanInfo] = useState(false)
     const [modalType, setModalType] = useState<'signin' | 'signup' | null>(null)
     const [newUser, setNewUser] = useState(false);
@@ -32,16 +44,7 @@ const Home: FC = () => {
     const store = useSelector((store: Store) => store.userReducer)
 
     useLayoutEffect(() => {
-        const result: string[] = []
-        for (let i = 0; i < 3;) {
-            const number = Math.floor(Math.random() * 4)
-            if (result.indexOf(colors[number]) === -1) {
-                result.push(colors[number])
-                i++
-            }
-        }
-        setRandomColors(result)
-        headerRef.current && createHeaderAnimation(headerRef.current, result)
+        headerRef.current && createHeaderAnimation(headerRef.current, randomColors)
         return () => {
             timer && clearTimeout(timer)
         }
