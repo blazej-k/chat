@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState, Suspense } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useRef, useState, Suspense, lazy } from 'react';
 import { motion } from "framer-motion"
 import createHeaderAnimation from '../helpers/HeaderAnimation';
 import { useSelector } from 'react-redux';
@@ -8,18 +8,22 @@ import animations from '../helpers/animationConfig'
 import HomeDescription from './HomeDescription'
 import Slider from './Slider';
 import '../../style/home/Home.scss';
-// const Modal = lazy(() => import('../context/modal/Modal'))
-import Modal from '../context/modal/Modal'
+import Form from '../context/modal/Form';
+import Buttons from '../context/modal/Buttons';
+import { ModalType } from '../context/modal/Modal';
+const LazyModal: any = lazy(() => import('../context/modal/Modal'));
+const Modal = (LazyModal as ModalType)
+Modal.Form = Form
+Modal.Buttons = Buttons
 
 let timer: NodeJS.Timeout | null = null
 const colors = ['red', 'green', 'blue', 'orange']
-
 const Home: FC = () => {
 
     const [randomColors, setRandomColors] = useState<string[]>([])
     const [showSpanInfo, setShowSpanInfo] = useState(false)
     const [modalType, setModalType] = useState<'signin' | 'signup' | null>(null)
-    const [newUser, setNewUser] = useState(false)
+    const [newUser, setNewUser] = useState(false);
 
     const headerRef = useRef<HTMLHeadingElement>(null)
     const modalWrapperRef = useRef<HTMLDivElement>(null)
@@ -103,7 +107,7 @@ const Home: FC = () => {
                                 className={randomColors[0]} 
                                 id='sign-in' 
                                 onClick={() => handleButtonClick('signin')}
-                                // onMouseEnter={() => import('./Modal')}
+                                onMouseEnter={() => import('./Modal')}
                             >
                                 Sign In
                             </button>
@@ -122,7 +126,7 @@ const Home: FC = () => {
                     </div>
                 </motion.div>
                 <Suspense fallback={null}>
-                    {modalType && (
+                    {modalType  && (
                         <div className='modal-wrapper' ref={modalWrapperRef}>
                                 <Modal 
                                     type={modalType}
@@ -130,7 +134,7 @@ const Home: FC = () => {
                                     setBackgroundAnimationState={setModalBackgroundAnimationState}
                                     toogleModal={changeModalType}
                                 >
-                                    <Modal.Form redirectToSecondModal={redirectModal} ref={formRef as React.Ref<HTMLFormElement>}/>
+                                    <Modal.Form redirectToSecondModal={redirectModal} ref={formRef as React.Ref<HTMLFormElement>}/> 
                                     <Modal.Buttons handleSubimt={handleSubmit}/>
                                 </Modal>
                         </div>
