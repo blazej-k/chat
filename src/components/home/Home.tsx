@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState, lazy, Suspense } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useRef, useState, Suspense } from 'react';
 import { motion } from "framer-motion"
 import createHeaderAnimation from '../helpers/HeaderAnimation';
 import { useSelector } from 'react-redux';
@@ -24,6 +24,7 @@ const Home: FC = () => {
 
     const headerRef = useRef<HTMLHeadingElement>(null)
     const modalWrapperRef = useRef<HTMLDivElement>(null)
+    const formRef = useRef<HTMLFormElement>()
 
     const store = useSelector((store: Store) => store.userReducer)
 
@@ -85,6 +86,12 @@ const Home: FC = () => {
 
     const changeModalType = (newModalType: typeof modalType) => setModalType(newModalType)
 
+    const handleSubmit = () => {
+        formRef.current?.dispatchEvent(
+            new Event('submit', { cancelable: true, bubbles: true })
+        )
+    }
+
     return (
         <>
             <div className="home-wrapper">
@@ -120,25 +127,14 @@ const Home: FC = () => {
                 <Suspense fallback={null}>
                     {modalType && (
                         <div className='modal-wrapper' ref={modalWrapperRef}>
-                            {/* {showSignInModal ? <Modal
-                                toogleModal={handleDispalyFirstModal}
-                                redirectModal={redirectModal}
-                                setBackgroundAnimationState={setModalBackgroundAnimationState}
-                                type='signin'
-                            /> :
-                                <Modal
-                                    toogleModal={handleDispalySecondModal}
-                                    setBackgroundAnimationState={setModalBackgroundAnimationState}
-                                    type='signup'
-                                />} */}
                                 <Modal 
                                     type={modalType}
                                     headerContent={modalType === 'signin' ? 'Sign In' : 'Create your new account'}
                                     setBackgroundAnimationState={setModalBackgroundAnimationState}
                                     toogleModal={changeModalType}
                                 >
-                                    <Modal.Form redirectToSecondModal={redirectModal}/>
-                                    {/* <Modal.Buttons/> */}
+                                    <Modal.Form redirectToSecondModal={redirectModal} ref={formRef as React.Ref<HTMLFormElement>}/>
+                                    <Modal.Buttons handleSubimt={handleSubmit}/>
                                 </Modal>
                         </div>
                     )}

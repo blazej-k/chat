@@ -1,5 +1,6 @@
 import { useFormik } from 'formik'
-import React, { FC, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
+import { forwardRef } from 'react'
 import Loader from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import { userAuth } from '../../../actions/UserActions'
@@ -13,12 +14,12 @@ export interface FormProps {
 
 let timer: NodeJS.Timeout | null = null
 
-const Form: FC<FormProps> = ({ redirectToSecondModal }) => {
+const Form = forwardRef<HTMLFormElement, FormProps>(({ redirectToSecondModal }, ref) => {
 
     const store = useSelector((store: Store) => store.userReducer)
     const dispatch = useDispatch()
 
-    const { type, setModalAnimationState, setBackgroundAnimationState, closeModal } = useModal()
+    const { type, setModalAnimationState, setBackgroundAnimationState } = useModal()
 
     const formik = useFormik<FormValues>({
         initialValues: {
@@ -52,7 +53,7 @@ const Form: FC<FormProps> = ({ redirectToSecondModal }) => {
     const { handleSubmit, handleChange, values: { login, password }, errors } = formik
 
     return (
-        <form onSubmit={handleSubmit} data-testid='modal-form'>
+        <form onSubmit={handleSubmit} ref={ref} data-testid='modal-form'>
             <input
                 type="text"
                 name='login'
@@ -104,14 +105,8 @@ const Form: FC<FormProps> = ({ redirectToSecondModal }) => {
             {store.loading && <div className="loader" data-testid={'loader'}>
                 <Loader type='Watch' color='black' width='40px' />
             </div>}
-            <div className="buttons-wrapper">
-                <div className="buttons">
-                    <button onClick={closeModal} id='cancel' className='red' type='button'>cancel</button>
-                    <button type='submit' id='submit' className='green'>{type === 'signin' ? 'go' : 'save'}</button>
-                </div>
-            </div>
         </form>
     );
-}
+})
 
 export default Form;

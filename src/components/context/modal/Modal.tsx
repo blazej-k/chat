@@ -1,7 +1,7 @@
-import React, { createContext, FC, useEffect, useRef, useState } from 'react'
+import React, { createContext, FC, ForwardRefExoticComponent, RefAttributes, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUserError } from '../../../actions/UserActions'
-import Buttons from './Buttons'
+import Buttons, { ButtonsProps } from './Buttons'
 import Form, { FormProps } from './Form'
 import '../../../style/modals/Modals.scss'
 
@@ -13,8 +13,8 @@ interface ModalProps {
 }
 
 interface ModalChildren {
-    Form: FC<FormProps>
-    Buttons: FC
+    Form: ForwardRefExoticComponent<FormProps & RefAttributes<HTMLFormElement>>
+    Buttons: FC<ButtonsProps>
 }
 
 export interface ModalContextProps {
@@ -59,7 +59,6 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
     }, [store])
 
     const setModalAnimationState = (state: 'running' | 'paused') => {
-        console.log(state)
         modalRef.current!.style.animationPlayState = state
         if(state === 'paused') modalRef.current!.style.opacity = '1'
     }
