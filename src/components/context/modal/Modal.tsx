@@ -1,4 +1,4 @@
-import React, { createContext, FC, ForwardRefExoticComponent, RefAttributes, useEffect, useRef, useState } from 'react'
+import React, { createContext, FC, ForwardRefExoticComponent, RefAttributes, useEffect, useMemo, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeUserError } from '../../../actions/UserActions'
 import Buttons, { ButtonsProps } from './Buttons'
@@ -77,8 +77,10 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
         }
     }
 
+    const conetxtProps = useMemo(() => ({closeModal, type, setModalAnimationState, setBackgroundAnimationState}), [type])
+
     return (
-        <ModalContext.Provider value={{ closeModal, type, setModalAnimationState, setBackgroundAnimationState }}>
+        <ModalContext.Provider value={conetxtProps}>
             <div className="modal-box">
                 <div
                     data-testid={type === 'signin' ? 'm-sign-in' : 'm-sign-up'}
@@ -101,6 +103,7 @@ const ModalContext = createContext<ModalContextProps>({
     setBackgroundAnimationState: () => null
 })
 
+Modal.displayName = 'Modal'
 Modal.Form = Form
 Modal.Buttons = Buttons
 

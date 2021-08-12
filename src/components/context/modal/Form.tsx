@@ -1,5 +1,5 @@
 import { useFormik } from 'formik'
-import React, { useEffect } from 'react'
+import React, { memo, useEffect } from 'react'
 import { forwardRef } from 'react'
 import Loader from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
@@ -108,5 +108,6 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ redirectToSecondModal }, 
         </form>
     );
 })
+Form.displayName = 'Form'
 
-export default Form;
+export default memo(Form);

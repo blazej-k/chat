@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 import { useModal } from '../../hooks/ContextHooks';
 
 export interface ButtonsProps {
@@ -19,4 +19,4 @@ const Buttons: FC<ButtonsProps> = ({ handleSubimt }) => {
     );
 }
 
-export default Buttons;
+export default memo(Buttons);

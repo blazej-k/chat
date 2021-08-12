@@ -12,10 +12,9 @@ import '../../style/home/Home.scss';
 import Modal from '../context/modal/Modal'
 
 let timer: NodeJS.Timeout | null = null
+const colors = ['red', 'green', 'blue', 'orange']
 
 const Home: FC = () => {
-
-    const colors = ['red', 'green', 'blue', 'orange']
 
     const [randomColors, setRandomColors] = useState<string[]>([])
     const [showSpanInfo, setShowSpanInfo] = useState(false)
@@ -44,19 +43,17 @@ const Home: FC = () => {
         }
     }, [])
 
-    const setModalBackgroundAnimationState = (state: 'running' | 'paused') => {
-        modalWrapperRef.current!.style.animationPlayState = state
-        if(state === 'paused') modalWrapperRef.current!.style.opacity = '1'
-    }
-
     useEffect(() => {
         if (modalType === 'signup' && !newUser) setNewUser(true)
         else setNewUser(false)
     }, [modalType])
 
-    const handleButtonHover = (show: boolean) => {
-        setShowSpanInfo(show)
+    const setModalBackgroundAnimationState = (state: 'running' | 'paused') => {
+        modalWrapperRef.current!.style.animationPlayState = state
+        if(state === 'paused') modalWrapperRef.current!.style.opacity = '1'
     }
+
+    const handleButtonHover = (show: boolean) => setShowSpanInfo(show)
 
     const handleButtonClick = (type: 'support' | 'work' | 'signin' | 'newuser') => {
         switch (type) {
