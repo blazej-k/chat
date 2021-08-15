@@ -6,6 +6,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { exampleUser } from '../../test-utils/customStore';
 import '@testing-library/jest-dom/extend-expect';
+import { ModalTypeEnum } from '../../enums/modalType';
 
 let unmountImplementation: () => void;
 let loginInput: HTMLElement, passwordInput: HTMLElement;
@@ -85,7 +86,7 @@ describe('Modal', () => {
             })
         )
         unmountImplementation()
-        const { getByPlaceholderText, getByLabelText } = renderModal('signup')
+        const { getByPlaceholderText, getByLabelText } = renderModal(ModalTypeEnum.signup)
         const login = getByPlaceholderText('Username')
         const password = getByPlaceholderText('Password')
         const sex = getByLabelText('Male')

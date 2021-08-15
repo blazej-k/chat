@@ -8,7 +8,7 @@ import { ModalTypeEnum } from '../../../enums/modalType'
 import Header from './Header'
 
 interface ModalProps {
-    type: 'signin' | 'signup',
+    type: ModalTypeEnum,
     setBackgroundAnimationState: (state: 'running' | 'paused') => void,
     toogleModal: (modalType: ModalTypeEnum) => void,
 }
@@ -20,7 +20,7 @@ interface ModalChildren {
 }
 
 export interface ModalContextProps {
-    type: 'signin' | 'signup',
+    type: ModalTypeEnum,
     setBackgroundAnimationState: (state: 'running' | 'paused') => void,
     setModalAnimationState: (state: 'running' | 'paused') => void,
     closeModal: () => void,
@@ -88,7 +88,7 @@ const Modal: ModalType = ({ children, type, setBackgroundAnimationState, toogleM
 }
 
 const ModalContext = createContext<ModalContextProps>({
-    type: 'signin',
+    type: ModalTypeEnum.none,
     closeModal: () => null,
     setModalAnimationState: () => null,
     setBackgroundAnimationState: () => null

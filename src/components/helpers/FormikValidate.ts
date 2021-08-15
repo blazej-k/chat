@@ -1,4 +1,6 @@
-const validate = (values: FormValues, type: 'signup' | 'signin') => {
+import { ModalTypeEnum } from "../../enums/modalType"
+
+const validate = (values: FormValues, type: ModalTypeEnum) => {
     const { login, password, sex } = values
     const errors: FormErrors = {} as FormErrors
     if (login.length === 0) {
@@ -7,7 +9,7 @@ const validate = (values: FormValues, type: 'signup' | 'signin') => {
     if (password.length === 0) {
         errors.password = true
     }
-    if (!sex && type === 'signup') {
+    if (!sex && type === ModalTypeEnum.signup) {
         errors.sex = true
     }
     return errors

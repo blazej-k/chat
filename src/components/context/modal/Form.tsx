@@ -4,6 +4,7 @@ import { forwardRef } from 'react'
 import Loader from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
 import { userAuth } from '../../../actions/UserActions'
+import { ModalTypeEnum } from '../../../enums/modalType'
 import validate from '../../helpers/FormikValidate'
 import { useModal } from '../../hooks/ContextHooks'
 
@@ -30,7 +31,7 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ redirectToSecondModal }, 
         },
         validate: values => validate(values, type),
         onSubmit: values => {
-            if (type === 'signin') {
+            if (type === ModalTypeEnum.signin) {
                 delete values.sex
             }
             const form: UserAuthInfo = values
