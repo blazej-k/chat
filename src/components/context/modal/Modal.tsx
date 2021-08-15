@@ -1,5 +1,5 @@
 import React, { createContext, FC, ForwardRefExoticComponent, RefAttributes, useEffect, useMemo, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { removeUserError } from '../../../actions/UserActions'
 import Buttons, { ButtonsProps } from './Buttons'
 import Form, { FormProps } from './Form'
@@ -33,7 +33,7 @@ let timer: NodeJS.Timeout | null = null
 const Modal: ModalType = ({ children, type, setBackgroundAnimationState, toogleModal }) => {
 
     const modalRef = useRef<HTMLDivElement>(null)
-    
+
     const dispatch = useDispatch()
 
     useEffect(() => {

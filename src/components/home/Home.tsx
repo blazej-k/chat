@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useLayoutEffect, useRef, useState, Suspense, lazy } from 'react';
+import React, { FC, useEffect, useLayoutEffect, useRef, useState, Suspense, lazy, Ref } from 'react';
 import { motion } from "framer-motion"
 import createHeaderAnimation from '../helpers/HeaderAnimation';
 import { useSelector } from 'react-redux';
@@ -11,10 +11,13 @@ import '../../style/home/Home.scss';
 import Form from '../context/modal/Form';
 import Buttons from '../context/modal/Buttons';
 import { ModalType } from '../context/modal/Modal';
+import { ModalTypeEnum } from '../../enums/modalType'
+import Header from '../context/modal/Header';
 const LazyModal: any = lazy(() => import('../context/modal/Modal'));
 const Modal = (LazyModal as ModalType)
 Modal.Form = Form
 Modal.Buttons = Buttons
+Modal.Header = Header
 
 let timer: NodeJS.Timeout | null = null
 
@@ -34,7 +37,7 @@ const randomColors = (() => {
 const Home: FC = () => {
 
     const [showSpanInfo, setShowSpanInfo] = useState(false)
-    const [modalType, setModalType] = useState<'signin' | 'signup' | null>(null)
+    const [modalType, setModalType] = useState<ModalTypeEnum>(ModalTypeEnum.none)
     const [newUser, setNewUser] = useState(false);
 
     const headerRef = useRef<HTMLHeadingElement>(null)
@@ -51,13 +54,13 @@ const Home: FC = () => {
     }, [])
 
     useEffect(() => {
-        if (modalType === 'signup' && !newUser) setNewUser(true)
+        if (modalType === ModalTypeEnum.signup && !newUser) setNewUser(true)
         else setNewUser(false)
     }, [modalType])
 
     const setModalBackgroundAnimationState = (state: 'running' | 'paused') => {
         modalWrapperRef.current!.style.animationPlayState = state
-        if(state === 'paused') modalWrapperRef.current!.style.opacity = '1'
+        if (state === 'paused') modalWrapperRef.current!.style.opacity = '1'
     }
 
     const handleButtonHover = (show: boolean) => setShowSpanInfo(show)
@@ -74,17 +77,17 @@ const Home: FC = () => {
                 break;
             case 'newuser':
                 timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
-                setModalType('signup')
+                setModalType(ModalTypeEnum.signup)
                 break;
             default:
                 timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
-                setModalType('signin')
+                setModalType(ModalTypeEnum.signin)
                 break;
         }
     }
 
     const redirectModal = () => {
-        setModalType('signup')
+        setModalType(ModalTypeEnum.signup)
         timer = setTimeout(() => setModalBackgroundAnimationState('paused'), 300)
     }
 
@@ -106,9 +109,9 @@ const Home: FC = () => {
                         <div className="actions">
                             <button className={randomColors[1]} onClick={() => handleButtonClick('support')}>Support</button>
                             <button className={randomColors[2]} onClick={() => handleButtonClick('work')}>Work with us</button>
-                            <button 
-                                className={randomColors[0]} 
-                                id='sign-in' 
+                            <button
+                                className={randomColors[0]}
+                                id='sign-in'
                                 onClick={() => handleButtonClick('signin')}
                                 onMouseEnter={() => import('./Modal')}
                             >
@@ -129,17 +132,17 @@ const Home: FC = () => {
                     </div>
                 </motion.div>
                 <Suspense fallback={null}>
-                    {modalType  && (
+                    {modalType && (
                         <div className='modal-wrapper' ref={modalWrapperRef}>
-                                <Modal 
-                                    type={modalType}
-                                    headerContent={modalType === 'signin' ? 'Sign In' : 'Create your new account'}
-                                    setBackgroundAnimationState={setModalBackgroundAnimationState}
-                                    toogleModal={changeModalType}
-                                >
-                                    <Modal.Form redirectToSecondModal={redirectModal} ref={formRef as React.Ref<HTMLFormElement>}/> 
-                                    <Modal.Buttons handleSubimt={handleSubmit}/>
-                                </Modal>
+                            <Modal 
+                                type={modalType}
+                                setBackgroundAnimationState={setModalBackgroundAnimationState}
+                                toogleModal={changeModalType}
+                            >
+                                <Modal.Header>{modalType === 'signin' ? 'Sign In' : 'Create your new account'}</Modal.Header>
+                                <Modal.Form redirectToSecondModal={redirectModal} ref={formRef as Ref<HTMLFormElement>} />
+                                <Modal.Buttons handleSubimt={handleSubmit} />
+                            </Modal>
                         </div>
                     )}
                 </Suspense>
