@@ -113,7 +113,7 @@ const Home: FC = () => {
                                 className={randomColors[0]}
                                 id='sign-in'
                                 onClick={() => handleButtonClick('signin')}
-                                onMouseEnter={() => import('./Modal')}
+                                onMouseEnter={() => import('../context/modal/Modal')}
                             >
                                 Sign In
                             </button>

@@ -1,4 +1,4 @@
-import React, { createContext, FC, ForwardRefExoticComponent, RefAttributes, useEffect, useMemo, useRef, useState } from 'react'
+import React, { createContext, FC, ForwardRefExoticComponent, RefAttributes, useEffect, useMemo, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import { removeUserError } from '../../../actions/UserActions'
 import Buttons, { ButtonsProps } from './Buttons'
@@ -43,9 +43,9 @@ const Modal: ModalType = ({ children, type, setBackgroundAnimationState, toogleM
             dispatch(removeUserError())
         }
     }, [])
-    
+
     useEffect(() => {
-        if(modalRef.current) timer = setTimeout(() => setModalAnimationState('paused'), 300)
+        if (modalRef.current) timer = setTimeout(() => setModalAnimationState('paused'), 300)
         return () => {
             timer && clearTimeout(timer)
         }
@@ -53,7 +53,7 @@ const Modal: ModalType = ({ children, type, setBackgroundAnimationState, toogleM
 
     const setModalAnimationState = (state: 'running' | 'paused') => {
         modalRef.current!.style.animationPlayState = state
-        if(state === 'paused') modalRef.current!.style.opacity = '1'
+        if (state === 'paused') modalRef.current!.style.opacity = '1'
     }
 
     const closeModal = () => {
@@ -65,12 +65,10 @@ const Modal: ModalType = ({ children, type, setBackgroundAnimationState, toogleM
 
     const handleClickOutsideModal = (e: MouseEvent) => {
         const { className } = e.target as Element
-        if (className === 'modal-wrapper') {
-            closeModal()
-        }
+        className === 'modal-wrapper' && closeModal()
     }
 
-    const conetxtProps = useMemo(() => ({closeModal, type, setModalAnimationState, setBackgroundAnimationState}), [type])
+    const conetxtProps = useMemo(() => ({ closeModal, type, setModalAnimationState, setBackgroundAnimationState }), [type])
 
     return (
         <ModalContext.Provider value={conetxtProps}>

@@ -4,9 +4,9 @@ import fetch from 'node-fetch'
 import renderModal from 'test-utils/renderModal';
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
-import { exampleUser } from '../../test-utils/customStore';
+import { exampleUser } from '../../../test-utils/customStore';
 import '@testing-library/jest-dom/extend-expect';
-import { ModalTypeEnum } from '../../enums/modalType';
+import { ModalTypeEnum } from '../../../enums/modalType';
 
 let unmountImplementation: () => void;
 let loginInput: HTMLElement, passwordInput: HTMLElement;

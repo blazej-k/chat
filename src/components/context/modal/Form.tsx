@@ -1,5 +1,5 @@
-import { useFormik } from 'formik'
 import React, { memo, useEffect } from 'react'
+import { useFormik } from 'formik'
 import { forwardRef } from 'react'
 import Loader from 'react-loader-spinner'
 import { useDispatch, useSelector } from 'react-redux'
@@ -88,7 +88,7 @@ const Form = forwardRef<HTMLFormElement, FormProps>(({ redirectToSecondModal }, 
                     <label>Female
                         <input
                             type="radio"
-                            name="sex"
+                            name="sex" 
                             value='female'
                             onChange={handleChange}
                         />
