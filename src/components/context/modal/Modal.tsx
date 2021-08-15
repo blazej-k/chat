@@ -4,17 +4,19 @@ import { removeUserError } from '../../../actions/UserActions'
 import Buttons, { ButtonsProps } from './Buttons'
 import Form, { FormProps } from './Form'
 import '../../../style/modals/Modals.scss'
+import { ModalTypeEnum } from '../../../enums/modalType'
+import Header from './Header'
 
 interface ModalProps {
-    headerContent: string,
     type: 'signin' | 'signup',
     setBackgroundAnimationState: (state: 'running' | 'paused') => void,
-    toogleModal: (modalType: 'signin' | 'signup' | null) => void,
+    toogleModal: (modalType: ModalTypeEnum) => void,
 }
 
 interface ModalChildren {
     Form: ForwardRefExoticComponent<FormProps & RefAttributes<HTMLFormElement>>
-    Buttons: FC<ButtonsProps>
+    Buttons: FC<ButtonsProps>,
+    Header: FC
 }
 
 export interface ModalContextProps {
@@ -28,13 +30,10 @@ export type ModalType = FC<ModalProps> & ModalChildren
 
 let timer: NodeJS.Timeout | null = null
 
-const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimationState, toogleModal }) => {
-
-    const [userAuthError, setUserAuthError] = useState('')
+const Modal: ModalType = ({ children, type, setBackgroundAnimationState, toogleModal }) => {
 
     const modalRef = useRef<HTMLDivElement>(null)
-      
-    const store = useSelector((store: Store) => store.userReducer)
+    
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -52,12 +51,6 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
         }
     }, [type])
 
-    useEffect(() => {
-        if (store.error && store.error !== userAuthError) {
-            setUserAuthError(store.error)
-        }
-    }, [store])
-
     const setModalAnimationState = (state: 'running' | 'paused') => {
         modalRef.current!.style.animationPlayState = state
         if(state === 'paused') modalRef.current!.style.opacity = '1'
@@ -67,7 +60,7 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
         setBackgroundAnimationState('running')
         setModalAnimationState('running')
         //after 0.3s because it's time of scss aniamtion 
-        timer = setTimeout(() => toogleModal(null), 300)
+        timer = setTimeout(() => toogleModal(ModalTypeEnum.none), 300)
     }
 
     const handleClickOutsideModal = (e: MouseEvent) => {
@@ -87,8 +80,6 @@ const Modal: ModalType = ({ children, headerContent, type, setBackgroundAnimatio
                     className='modal sign-in-modal'
                     ref={modalRef}
                 >
-                    <h1>{headerContent}</h1>
-                    {userAuthError && <span className="user-auth-error">{userAuthError}</span>}
                     {children}
                 </div>
             </div>
@@ -106,6 +97,7 @@ const ModalContext = createContext<ModalContextProps>({
 Modal.displayName = 'Modal'
 Modal.Form = Form
 Modal.Buttons = Buttons
+Modal.Header = Header
 
 export default Modal
 export { ModalContext }
