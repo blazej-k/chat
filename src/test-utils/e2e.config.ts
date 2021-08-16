@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer'
 
-const getTestUtils = async ({ url, headless = false, slowMo = 100 }: { url: string, headless?: boolean, slowMo?: number }) => {
+const getTestUtils = async ({ url, headless = false, slowMo = 50 }: { url: string, headless?: boolean, slowMo?: number }) => {
     let browser = await puppeteer.launch({
         slowMo,
         headless,

@@ -36,6 +36,7 @@
         overflow: hidden;
         .chat-content{
             overflow: clip;
+            padding: 0 2px;
             @import 'Home';
             @import 'Messages';
         }

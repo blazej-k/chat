@@ -15,7 +15,7 @@ const checkIsModalExist = async () => {
 }
 
 beforeAll(async () => {
-    ({ browser, page } = await getTestUtils({ url: 'http://localhost:8000', slowMo: 50 }))
+    ({ browser, page } = await getTestUtils({ url: 'http://localhost:8000' }))
 })
 
 afterAll(async () => {
