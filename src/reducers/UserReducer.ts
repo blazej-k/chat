@@ -117,11 +117,11 @@ export const UserReducer = (state = initState, action: UserActionType) => {
             return state
 
         case GETCURRENTUSER:
-            state.user = action.payload
-            return state
+            return state = { loading: false, error: '', user: action.payload }
 
         case ADDNEWMESSAGE:
             const { from, text, convFriend } = action.payload
+            console.log(from, text, convFriend)
             const updatedConv = state.user.conversations
             const conversationObj = updatedConv.find(conversation => conversation.login === convFriend)
             if (!conversationObj) {
@@ -139,7 +139,7 @@ export const UserReducer = (state = initState, action: UserActionType) => {
                     })
                 }
             })
-            state.user.conversations = updatedConv
+            state = { ...state, user: { ...state.user, conversations: updatedConv } }
             return state
 
         case ERRORMESSAGE:
